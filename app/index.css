@@ -1,6 +1,4 @@
 @import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -181,66 +179,4 @@
         @apply bg-background text-foreground;
         letter-spacing: var(--tracking-normal);
     }
-}
-
-@layer utilities {
-  /* Glassmorphism */
-  .glass {
-    @apply bg-card/60 backdrop-blur-md border border-border/40;
-  }
-
-  .glass-strong {
-    @apply bg-card/80 backdrop-blur-xl border border-border/60;
-  }
-
-  /* AI Glow gradient */
-  .ai-glow {
-    background: linear-gradient(180deg, color-mix(in oklch, var(--primary) 5%, transparent) 0%, transparent 100%);
-  }
-
-  .ai-radial-glow {
-    background: radial-gradient(circle at 50% 50%, color-mix(in oklch, var(--primary) 7%, transparent) 0%, transparent 70%);
-  }
-
-  /* Custom scrollbar */
-  .scrollbar-thin {
-    scrollbar-width: thin;
-    scrollbar-color: var(--muted) transparent;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    background: var(--muted);
-    border-radius: 10px;
-  }
-
-  /* 3D card flip */
-  .perspective-1000 {
-    perspective: 1000px;
-  }
-
-  .card-inner {
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-style: preserve-3d;
-  }
-
-  .card-flipped {
-    transform: rotateY(180deg);
-  }
-
-  .card-face {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
-
-  .card-back {
-    transform: rotateY(180deg);
-  }
 }
