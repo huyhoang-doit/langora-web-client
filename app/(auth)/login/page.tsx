@@ -23,12 +23,10 @@ export default function LoginPage() {
 
         <div className="z-10 w-full max-w-xl px-12">
           <div className="mb-10">
-            <div className="inline-flex items-center space-x-2 bg-muted/50 px-4 py-2 rounded-full mb-4 border border-border">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <span className="text-xs font-bold uppercase tracking-widest text-primary">
-                Next-Gen Language OS
-              </span>
-            </div>
+            <Link href="/" className="inline-block mb-6 hover:opacity-80 transition-opacity">
+              <img src="/big-logo.png" className="h-12 w-auto scale-150 origin-left select-none" alt="Langora Logo" />
+            </Link>
+
             <h1 className="text-5xl font-bold text-foreground mb-6 leading-tight">
               Unlock Clarity with{" "}
               <span className="text-primary">Langora</span>.
@@ -110,10 +108,9 @@ export default function LoginPage() {
         <div className="w-full max-w-[440px] z-20">
           {/* Mobile Logo */}
           <div className="lg:hidden flex justify-center mb-10">
-            <div className="flex items-center gap-2">
-              <Globe className="w-6 h-6 text-primary" />
-              <span className="text-2xl font-bold">Langora</span>
-            </div>
+            <Link href="/" className="hover:opacity-80 transition-opacity">
+              <img src="/big-logo.png" className="h-10 w-auto scale-150 origin-center select-none" alt="Langora Logo" />
+            </Link>
           </div>
 
           <header className="mb-8">
@@ -127,15 +124,11 @@ export default function LoginPage() {
             {/* Social Logins */}
             <div className="grid grid-cols-2 gap-3">
               <Button variant="outline" className="h-12 flex items-center justify-center gap-2">
-                <svg className="w-4 h-4" viewBox="0 0 24 24">
-                  <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.92 3.4-1.92 4.48-1.4 1.52-3.6 3.12-7.92 3.12-6.72 0-12.12-5.48-12.12-12.2s5.4-12.2 12.12-12.2c3.6 0 6.32 1.44 8.24 3.24l2.4-2.4c-2.48-2.32-5.72-3.76-10.64-3.76-9.12 0-16.64 7.52-16.64 16.64s7.52 16.64 16.64 16.64c4.96 0 8.68-1.64 11.56-4.64 3-3 3.88-7.2 3.88-10.6 0-1.04-.08-1.84-.24-2.64h-15.2z" fill="#EA4335" />
-                </svg>
+                <img src="/icons/google.svg" alt="Google" className="w-5 h-5" />
                 Google
               </Button>
               <Button variant="outline" className="h-12 flex items-center justify-center gap-2">
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-                </svg>
+                <img src="/icons/github.svg" alt="GitHub" className="w-5 h-5 dark:invert" />
                 GitHub
               </Button>
             </div>

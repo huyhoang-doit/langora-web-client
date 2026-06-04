@@ -12,6 +12,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 export default function LandingPage() {
   return (
@@ -24,7 +25,9 @@ export default function LandingPage() {
       {/* TopNavBar */}
       <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-border shadow-sm">
         <div className="flex justify-between items-center h-20 px-6 md:px-12 max-w-7xl mx-auto">
-          <div className="text-2xl font-bold text-primary tracking-tight">Langora</div>
+          <Link href="/" className="hover:opacity-80 transition-opacity mr-8">
+            <img src="/big-logo.png" className="h-12 w-auto scale-150 origin-left select-none" alt="Langora Logo" />
+          </Link>
           <div className="hidden md:flex gap-10 items-center">
             {["Features", "How it works", "Testimonials", "Pricing"].map((item) => (
               <a
@@ -213,7 +216,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+      <section className="py-12 px-6 md:px-12 max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-16 tracking-tight text-foreground">Tính năng nổi bật</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
@@ -264,22 +267,23 @@ export default function LandingPage() {
       </section>
 
       {/* Testimonials */}
-      <section id="testimonials" className="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+      <section id="testimonials" className="py-12 px-6 md:px-12 max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-16 tracking-tight text-foreground">Được tin dùng bởi hàng ngàn học viên</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { name: "Minh Trí", role: "IELTS Learner (8.0 Target)", quote: "Langora thực sự thay đổi cách mình học writing. Phản hồi từ AI cực kỳ chi tiết và giúp mình nhận ra những lỗi ngữ pháp trước đây luôn bỏ qua." },
-            { name: "Phương Anh", role: "Business English", quote: "Giao diện hiện đại, tối giản giúp mình tập trung hoàn toàn vào việc học. Hệ thống Flashcard rất gây nghiện và hiệu quả cho từ vựng chuyên ngành.", featured: true },
-            { name: "Quốc Bảo", role: "Japanese Learner", quote: "Việc học tiếng Nhật trở nên dễ dàng hơn rất nhiều. AI Coach giải thích các cấu trúc ngữ pháp phức tạp một cách rất dễ hiểu." },
-          ].map(({ name, role, quote, featured }) => (
+            { name: "Minh Trí", role: "IELTS Learner (8.0 Target)", quote: "Langora thực sự thay đổi cách mình học writing. Phản hồi từ AI cực kỳ chi tiết và giúp mình nhận ra những lỗi ngữ pháp trước đây luôn bỏ qua.", avatar: "/avatar/person-1.jpg" },
+            { name: "Phương Anh", role: "Business English", quote: "Giao diện hiện đại, tối giản giúp mình tập trung hoàn toàn vào việc học. Hệ thống Flashcard rất gây nghiện và hiệu quả cho từ vựng chuyên ngành.", featured: true, avatar: "/avatar/person-2.jpg" },
+            { name: "Quốc Bảo", role: "Japanese Learner", quote: "Việc học tiếng Nhật trở nên dễ dàng hơn rất nhiều. AI Coach giải thích các cấu trúc ngữ pháp phức tạp một cách rất dễ hiểu.", avatar: "/avatar/person-3.jpg" },
+          ].map(({ name, role, quote, featured, avatar }) => (
             <div
               key={name}
               className={`glass p-6 rounded-xl ${featured ? "border-2 border-primary/30 shadow-lg shadow-primary/10" : ""}`}
             >
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-14 h-14 rounded-full bg-muted flex items-center justify-center text-lg font-bold text-primary">
-                  {name[0]}
-                </div>
+                <Avatar size="lg">
+                  <AvatarImage src={avatar} alt={name} />
+                  <AvatarFallback>{name[0]}</AvatarFallback>
+                </Avatar>
                 <div>
                   <div className="font-bold text-sm text-foreground">{name}</div>
                   <div className="text-xs text-primary">{role}</div>
@@ -292,7 +296,7 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+      <section id="pricing" className="py-12 px-6 md:px-12 max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-16 tracking-tight text-foreground">Lựa chọn gói học tập của bạn</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
@@ -376,7 +380,7 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-6 md:px-12">
+      <section className="py-12 px-6 md:px-12">
         <div className="max-w-3xl mx-auto text-center">
           <div className="glass rounded-2xl p-12 border border-primary/20 ai-radial-glow overflow-hidden relative">
             <h2 className="text-3xl font-bold mb-4 tracking-tight text-foreground relative z-10">
