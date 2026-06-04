@@ -72,8 +72,8 @@ export default function LandingPage() {
                   Bắt đầu học miễn phí
                 </Button>
               </Link>
-              <Button variant="outline" size="lg" className="h-14 px-8 rounded-xl font-medium text-base">
-                Xem bản demo
+              <Button variant="outline" size="lg" className="h-14 px-8 rounded-xl font-medium text-base" asChild>
+                <a href="#demo-section">Xem bản demo</a>
               </Button>
             </div>
           </div>
@@ -170,6 +170,45 @@ export default function LandingPage() {
               <div className="text-sm text-muted-foreground font-medium">{label}</div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Demo Video Section */}
+      <section id="demo-section" className="py-12 px-6 md:px-12 max-w-7xl mx-auto scroll-mt-24">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <h2 className="text-3xl md:text-5xl font-extrabold mb-6 tracking-tight text-foreground">
+            Khám phá sức mạnh của <span className="text-primary">Langora</span>
+          </h2>
+        </div>
+
+        {/* Video Player in Premium Device Mockup */}
+        <div className="relative max-w-5xl mx-auto">
+          {/* Ambient Glow behind the video */}
+          <div className="absolute -inset-1 rounded-[2.5rem] bg-gradient-to-tr from-primary/20 to-indigo-500/20 opacity-30 blur-2xl group-hover:opacity-50 transition duration-1000 -z-10" />
+
+          <div className="w-full bg-card rounded-2xl border border-border shadow-2xl overflow-hidden relative group">
+            {/* Browser Header Mockup */}
+            <div className="p-4 border-b border-border bg-muted/40 flex justify-between items-center">
+              <div className="flex gap-2">
+                <div className="w-3 h-3 rounded-full bg-destructive/60" />
+                <div className="w-3 h-3 rounded-full bg-muted-foreground/30" />
+                <div className="w-3 h-3 rounded-full bg-primary/50" />
+              </div>
+              <div className="text-xs text-muted-foreground font-mono select-none">langora-demo.mov</div>
+              <div className="w-14" /> {/* Spacer to align title center */}
+            </div>
+
+            {/* Video container */}
+            <div className="relative aspect-video bg-black flex items-center justify-center">
+              <video
+                src="/demo.mov"
+                className="w-full h-full object-cover"
+                controls
+                playsInline
+                preload="metadata"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -326,9 +365,8 @@ export default function LandingPage() {
               </ul>
               <Button
                 variant={featured ? "default" : "outline"}
-                className={`w-full py-6 rounded-xl font-bold text-sm transition-all active:scale-95 ${
-                  featured ? "shadow-lg shadow-primary/20" : ""
-                }`}
+                className={`w-full py-6 rounded-xl font-bold text-sm transition-all active:scale-95 ${featured ? "shadow-lg shadow-primary/20" : ""
+                  }`}
               >
                 {cta}
               </Button>
