@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import React, { use } from "react";
-import { ArrowLeft, BookOpen, Brain, Sparkles, Check } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowLeft, Brain, Sparkles, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -27,15 +26,15 @@ export default function LessonDetailPage({ params }: LessonPageProps) {
   return (
     <div className="flex flex-col h-full overflow-hidden bg-background" id={`lesson-detail-${id}`}>
       {/* Header */}
-      <header className="flex items-center gap-4 px-6 h-16 bg-background/80 backdrop-blur-xl border-b sticky top-0 z-30 flex-shrink-0">
+      <header className="flex items-center gap-4 px-6 h-16 bg-background/80 backdrop-blur-xl border-b-2 border-border/60 sticky top-0 z-30 flex-shrink-0">
         <Link href="/learn">
-          <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full border border-border">
+          <Button variant="ghost" size="icon" className="btn-edu w-9 h-9 border-2 border-border bg-transparent text-foreground hover:bg-muted flex items-center justify-center">
             <ArrowLeft className="w-4 h-4" />
           </Button>
         </Link>
         <div>
-          <h2 className="text-xl font-bold text-foreground">Lesson Workspace</h2>
-          <p className="text-xs text-muted-foreground">{lessonInfo.title}</p>
+          <h2 className="text-xl font-black text-foreground text-heading">Lesson Workspace</h2>
+          <p className="text-xs text-muted-foreground font-semibold">{lessonInfo.title}</p>
         </div>
       </header>
 
@@ -43,69 +42,61 @@ export default function LessonDetailPage({ params }: LessonPageProps) {
       <div className="flex-grow overflow-y-auto p-6 scrollbar-thin">
         <div className="max-w-4xl mx-auto">
           <Tabs defaultValue="theory" className="space-y-6">
-            <div className="flex justify-between items-center border-b pb-2">
-              <TabsList className="bg-muted/50 rounded-lg p-1">
-                <TabsTrigger value="theory" className="rounded-md px-4 py-2 text-xs font-bold">Theory</TabsTrigger>
-                <TabsTrigger value="practice" className="rounded-md px-4 py-2 text-xs font-bold">Practice</TabsTrigger>
-                <TabsTrigger value="ai-notes" className="rounded-md px-4 py-2 text-xs font-bold">AI Companion Notes</TabsTrigger>
+            <div className="flex flex-wrap gap-4 justify-between items-center border-b-2 border-border/60 pb-3">
+              <TabsList className="bg-muted/50 rounded-xl p-1 border-2 border-border/40">
+                <TabsTrigger value="theory" className="rounded-lg px-4 py-2 text-xs font-black text-heading data-[state=active]:bg-primary data-[state=active]:text-primary-foreground border-2 border-transparent data-[state=active]:border-primary-foreground/15">Theory</TabsTrigger>
+                <TabsTrigger value="practice" className="rounded-lg px-4 py-2 text-xs font-black text-heading data-[state=active]:bg-primary data-[state=active]:text-primary-foreground border-2 border-transparent data-[state=active]:border-primary-foreground/15">Practice</TabsTrigger>
+                <TabsTrigger value="ai-notes" className="rounded-lg px-4 py-2 text-xs font-black text-heading data-[state=active]:bg-primary data-[state=active]:text-primary-foreground border-2 border-transparent data-[state=active]:border-primary-foreground/15">AI Notes</TabsTrigger>
               </TabsList>
-              <Button size="sm" className="font-bold text-xs gap-1 hover:shadow-[0_0_12px_rgba(168,240,106,0.35)] transition-all">
+              <Button size="sm" className="btn-edu h-9 px-4 text-xs border-2 bg-primary text-primary-foreground hover:bg-primary/95 flex items-center gap-1.5">
                 Mark as Completed <Check className="w-3.5 h-3.5" />
               </Button>
             </div>
 
             <TabsContent value="theory" className="space-y-6 outline-none">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg font-bold">Overview & Rules</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4 text-sm text-muted-foreground leading-relaxed">
-                  <p className="text-foreground">{lessonInfo.desc}</p>
+              <div className="card-edu p-6 bg-card space-y-4">
+                <h4 className="text-lg font-black text-heading text-foreground">Overview & Rules</h4>
+                <div className="space-y-4 text-sm text-muted-foreground leading-relaxed font-semibold text-learning">
+                  <p className="text-foreground font-black">{lessonInfo.desc}</p>
                   <div className="space-y-3 pt-2">
                     {lessonInfo.points.map((pt, i) => (
                       <div key={i} className="flex gap-3 items-start">
-                        <span className="w-5 h-5 rounded-full bg-primary/10 border border-primary/20 text-primary flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">{i + 1}</span>
+                        <span className="w-5 h-5 rounded-full bg-primary/10 border-2 border-primary/20 text-primary flex items-center justify-center text-xs font-black flex-shrink-0 mt-0.5 text-heading">{i + 1}</span>
                         <span>{pt}</span>
                       </div>
                     ))}
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
-              <Card>
-                <CardContent className="p-6 space-y-4">
-                  <h4 className="font-bold text-sm text-foreground">Structural Formula</h4>
-                  <div className="p-4 bg-muted/50 border border-border rounded-xl font-mono text-xs text-foreground leading-relaxed">
-                    If + Past Perfect (had + V3), ... would have + V3<br />
-                    Example: If I had studied harder, I would have passed the JLPT N2 exam last December.
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="card-edu p-6 bg-card space-y-4">
+                <h4 className="font-black text-sm text-foreground text-heading">Structural Formula</h4>
+                <div className="p-4 bg-muted/50 border-2 border-border/40 rounded-xl font-mono text-xs text-foreground leading-relaxed">
+                  If + Past Perfect (had + V3), ... would have + V3<br />
+                  Example: If I had studied harder, I would have passed the JLPT N2 exam last December.
+                </div>
+              </div>
             </TabsContent>
 
             <TabsContent value="practice" className="space-y-6 outline-none">
-              <Card>
-                <CardContent className="p-6 text-center space-y-4">
-                  <Brain className="w-12 h-12 text-primary mx-auto" />
-                  <h4 className="font-bold text-base text-foreground">Interactive Practice Ready</h4>
-                  <p className="text-muted-foreground text-sm max-w-md mx-auto">Test your knowledge with 10 custom sentences. AI will score your answers immediately.</p>
-                  <Button className="font-bold">Start Practice Session</Button>
-                </CardContent>
-              </Card>
+              <div className="card-edu p-6 text-center bg-card space-y-4">
+                <Brain className="w-12 h-12 text-primary mx-auto animate-pulse" />
+                <h4 className="font-black text-base text-foreground text-heading">Interactive Practice Ready</h4>
+                <p className="text-muted-foreground text-sm max-w-md mx-auto font-medium text-learning">Test your knowledge with 10 custom sentences. AI will score your answers immediately.</p>
+                <Button className="btn-edu h-11 px-6 text-sm border-2 bg-primary text-primary-foreground hover:bg-primary/95">Start Practice Session</Button>
+              </div>
             </TabsContent>
 
             <TabsContent value="ai-notes" className="space-y-6 outline-none">
-              <Card className="border-primary/20 bg-primary/5">
-                <CardContent className="p-6 space-y-3">
-                  <div className="flex items-center gap-2 text-primary">
-                    <Sparkles className="w-4 h-4" />
-                    <span className="text-xs font-bold uppercase tracking-wide">AI Companion (Ora) Suggestions</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Based on your previous writing history, you often forget the auxiliary "have" in Type 3 conditional results. Make sure to double check your past participle structures in this exercise.
-                  </p>
-                </CardContent>
-              </Card>
+              <div className="card-edu p-6 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent border-primary/20 space-y-3">
+                <div className="flex items-center gap-2 text-primary">
+                  <Sparkles className="w-4 h-4" />
+                  <span className="text-xs font-black uppercase tracking-widest text-heading">AI Companion (Ora) Suggestions</span>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed font-semibold text-learning">
+                  Based on your previous writing history, you often forget the auxiliary "have" in Type 3 conditional results. Make sure to double check your past participle structures in this exercise.
+                </p>
+              </div>
             </TabsContent>
           </Tabs>
         </div>

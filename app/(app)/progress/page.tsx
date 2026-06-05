@@ -1,10 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { LineChart, BookOpen, PenLine, SpellCheck, Trophy, Calendar, ChevronRight } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { BookOpen, PenLine, SpellCheck, Trophy, Calendar, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 
 export default function ProgressPage() {
   const sections = [
@@ -18,10 +16,10 @@ export default function ProgressPage() {
   return (
     <div className="flex flex-col h-full overflow-hidden bg-background" id="progress-overview-page">
       {/* Header */}
-      <header className="flex justify-between items-center px-6 h-16 bg-background/80 backdrop-blur-xl border-b sticky top-0 z-30 flex-shrink-0">
+      <header className="flex justify-between items-center px-6 h-16 bg-background/80 backdrop-blur-xl border-b-2 border-border/60 sticky top-0 z-30 flex-shrink-0">
         <div>
-          <h2 className="text-xl font-bold text-foreground">Progress & Analytics</h2>
-          <p className="text-xs text-muted-foreground">Detailed reports of your linguistic performance</p>
+          <h2 className="text-lg font-black text-foreground text-heading">Progress & Analytics</h2>
+          <p className="text-xs text-muted-foreground font-semibold">Detailed reports of your linguistic performance</p>
         </div>
       </header>
 
@@ -32,31 +30,38 @@ export default function ProgressPage() {
             {sections.map((sec) => {
               const Icon = sec.icon;
               return (
-                <Card key={sec.name} className="hover:border-primary/50 transition-colors flex flex-col justify-between">
-                  <CardHeader className="pb-3">
-                    <span className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+                <div key={sec.name} className="card-edu card-edu-interactive p-6 bg-card flex flex-col justify-between">
+                  <div className="space-y-4">
+                    <span className="w-10 h-10 rounded-xl bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-primary">
                       <Icon className="w-5 h-5" />
                     </span>
-                    <CardTitle className="text-base font-bold text-foreground mt-4">{sec.name}</CardTitle>
-                    <CardDescription className="text-xs leading-relaxed text-muted-foreground">{sec.desc}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="pt-0 pb-6 space-y-4">
-                    <div className="space-y-1">
-                      <div className="flex justify-between text-[10px] font-bold text-muted-foreground">
+                    <div>
+                      <h3 className="text-base font-black text-foreground text-heading">{sec.name}</h3>
+                      <p className="text-xs leading-relaxed text-muted-foreground mt-2 font-semibold text-learning">{sec.desc}</p>
+                    </div>
+                  </div>
+                  <div className="pt-6 space-y-4">
+                    <div className="space-y-1.5">
+                      <div className="flex justify-between text-[9px] font-black text-muted-foreground uppercase text-heading">
                         <span>{sec.value}</span>
-                        <span>{sec.pct}%</span>
+                        <span className="text-primary">{sec.pct}%</span>
                       </div>
-                      <Progress value={sec.pct} className="h-1 bg-muted" indicatorClassName="bg-primary" />
+                      <div className="h-2.5 w-full bg-muted rounded-full overflow-hidden border-2 border-border/40">
+                        <div 
+                          className="h-full bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-400" 
+                          style={{ width: `${sec.pct}%` }} 
+                        />
+                      </div>
                     </div>
                     <div className="flex justify-end">
                       <Link href={sec.href}>
-                        <Button size="sm" variant="outline" className="font-bold text-xs gap-1 border-primary/20 text-primary hover:bg-primary/5">
+                        <Button size="sm" variant="outline" className="btn-edu h-9 px-4 text-xs border-2 bg-transparent text-primary hover:bg-primary/5 border-primary/20">
                           View Report <ChevronRight className="w-3.5 h-3.5" />
                         </Button>
                       </Link>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               );
             })}
           </div>

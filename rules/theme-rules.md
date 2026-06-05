@@ -123,3 +123,20 @@ Rồng con **Ora** là linh vật và là người bạn đồng hành AI xuyên
 - **Tư duy bố cục**: Thiết kế theo phong cách nhiệm vụ hàng ngày (Today's Mission), mục tiêu học tập (Learning Path), thay vì bố cục cột dữ liệu admin truyền thống.
 - **Trải nghiệm Mobile-first**: Học tập diễn ra nhiều trên điện thoại. Hãy đảm bảo tất cả các component, đặc biệt là Flashcards và Quiz, được căn chỉnh hoàn hảo trên các màn hình nhỏ. Sử dụng `grid grid-cols-1 md:grid-cols-2` và ẩn các thông tin phụ bằng `hidden lg:block`.
 - **Sidebar điều hướng**: Sử dụng [app-sidebar.tsx](file:///Volumes/KingSton%201TB/Web/Langora/langora-web-client/components/app-sidebar.tsx) có sẵn với các hiệu ứng kính mờ (glassmorphism) và bo góc mềm mại.
+
+---
+
+## 8. Quy chuẩn Sidebar & Điều hướng (Sidebar & Navigation Rules)
+
+Để đồng bộ phong cách điều hướng cao cấp:
+- **Logo của ứng dụng**: Luôn sử dụng icon rồng Ora `🐲` bọc trong khung viền 2px (`border-2 bg-primary/10 border-primary/20 rounded-xl`). Chữ tiêu đề "Langora" dùng font `Be Vietnam Pro` (`text-heading` / `font-black`).
+- **Nút điều hướng đang hoạt động (Active Item)**:
+  - Phải có viền `border-2 border-primary/20` và nền `bg-primary/5`.
+  - Có bóng đổ phẳng tactile nhẹ dưới chân: `shadow-[0_4px_0_0_rgba(99,102,241,0.1)]`.
+  - Có hiệu ứng nhấc nhẹ lên: `translate-y-[-2px]`.
+- **Nút điều hướng thông thường (Inactive Item)**:
+  - Có viền ẩn `border-2 border-transparent` để tránh hiện tượng nhấp nháy hoặc dịch chuyển bố cục khi chuyển trạng thái active.
+  - Hover chuyển màu nền mờ nhạt: `hover:bg-muted/40 hover:text-foreground`.
+- **Điều hướng Mobile (Mobile Bottom Nav)**:
+  - Sử dụng class `.glass` làm nền kính mờ mượt mà và viền trên dày 2px (`border-t-2 border-border/80`).
+  - Active item trên mobile có bóng đổ nhẹ và nền nổi bật `bg-primary/10 border border-primary/20`.

@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { CheckCircle, XCircle, ArrowLeft } from "lucide-react";
+import { CheckCircle, XCircle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { PublicNavbar } from "@/components/public-navbar";
+import { PublicFooter } from "@/components/public-footer";
 
 export default function PricingPage() {
   const plans = [
@@ -55,49 +56,49 @@ export default function PricingPage() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] ai-radial-glow opacity-20" />
       </div>
 
-      {/* Nav */}
-      <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-border shadow-sm">
-        <div className="flex justify-between items-center h-20 px-6 md:px-12 max-w-7xl mx-auto">
-          <Link href="/" className="hover:opacity-80 transition-opacity flex items-center gap-3">
-            <img src="/big-logo.png" className="h-10 w-auto" alt="Langora Logo" />
-          </Link>
-          <div className="flex items-center gap-4">
-            <ThemeToggle />
-            <Link href="/login">
-              <Button className="font-bold text-sm">Get Started</Button>
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <PublicNavbar />
 
-      {/* Content */}
-      <main className="pt-36 pb-24 px-6 md:px-12 max-w-5xl mx-auto relative z-10">
-        <div className="mb-16 text-center max-w-3xl mx-auto">
-          <Link href="/" className="text-sm text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-2 mb-6">
-            <ArrowLeft className="w-4 h-4" /> Back to home
-          </Link>
-          <h1 className="text-4xl md:text-5xl font-black mb-4">Transparent Pricing</h1>
-          <p className="text-lg text-muted-foreground">
-            Invest in your language skills. Choose a plan that matches your learning goals.
-          </p>
+      {/* Hero */}
+      <section className="pt-40 pb-16 px-6 md:px-12 max-w-5xl mx-auto text-center relative z-10">
+        <div className="inline-flex items-center gap-2 bg-primary/10 border-2 border-primary/20 px-4 py-1.5 rounded-full mb-6">
+          <Sparkles className="w-3.5 h-3.5 text-primary" />
+          <span className="text-xs font-black uppercase tracking-widest text-primary">Transparent Pricing</span>
         </div>
+        <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight text-heading leading-[1.1]">
+          Invest in Your{" "}
+          <span className="bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-400 bg-clip-text text-transparent">
+            Language Skills
+          </span>
+        </h1>
+        <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed font-medium">
+          Choose a plan that matches your learning goals. No hidden fees.
+        </p>
+      </section>
 
+      {/* Plans */}
+      <section className="pb-20 px-6 md:px-12 max-w-5xl mx-auto relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {plans.map(({ name, price, period, features, cta, featured, badge }) => (
             <div
               key={name}
-              className={`glass p-10 rounded-2xl flex flex-col relative ${featured ? "border-2 border-primary shadow-2xl shadow-primary/10" : "border border-border"}`}
+              className={`card-edu p-10 flex flex-col relative ${
+                featured
+                  ? "border-primary bg-primary/5 shadow-md"
+                  : "border-border"
+              }`}
             >
               {badge && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest border-2 border-primary-foreground/20 shadow-md">
                   {badge}
                 </div>
               )}
               <div className="mb-8">
-                <h3 className="text-xl font-bold mb-2">{name}</h3>
-                <div className="text-5xl font-black">
+                <h3 className="text-xl font-black mb-2 text-heading">{name}</h3>
+                <div className="text-5xl font-black text-foreground text-heading">
                   {price}
-                  <span className="text-sm text-muted-foreground font-normal">{period}</span>
+                  <span className="text-sm text-muted-foreground font-normal ml-0.5">
+                    {period}
+                  </span>
                 </div>
               </div>
               <ul className="space-y-3 mb-10 flex-grow">
@@ -108,24 +109,46 @@ export default function PricingPage() {
                     ) : (
                       <XCircle className="w-4 h-4 flex-shrink-0 text-muted-foreground opacity-30" />
                     )}
-                    <span>{text}</span>
+                    <span
+                      className={
+                        ok && featured
+                          ? "text-primary font-bold text-learning"
+                          : "text-foreground font-semibold text-learning"
+                      }
+                    >
+                      {text}
+                    </span>
                   </li>
                 ))}
               </ul>
-              <Button
-                variant={featured ? "default" : "outline"}
-                className={`w-full py-6 rounded-xl font-bold text-sm ${featured ? "shadow-lg shadow-primary/20" : ""}`}
-              >
-                {cta}
-              </Button>
+              <Link href="/register">
+                <Button
+                  variant={featured ? "default" : "outline"}
+                  className={`btn-edu w-full py-6 text-sm border-2 font-black uppercase tracking-wide ${
+                    featured
+                      ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                      : "bg-transparent text-foreground hover:bg-muted"
+                  }`}
+                >
+                  {cta}
+                </Button>
+              </Link>
             </div>
           ))}
         </div>
-      </main>
 
-      <footer className="border-t py-12 text-center text-xs text-muted-foreground">
-        © 2024 Langora. Engineered for cognitive clarity.
-      </footer>
+        {/* Guarantee */}
+        <div className="mt-12 card-edu p-6 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent border-primary/20 flex gap-4 items-center max-w-2xl mx-auto">
+          <span className="text-3xl flex-shrink-0">🐲</span>
+          <p className="text-sm text-muted-foreground font-semibold text-learning">
+            All paid plans come with a{" "}
+            <span className="text-foreground font-black text-heading">7-day money-back guarantee</span>.
+            Try Langora risk-free and feel the difference.
+          </p>
+        </div>
+      </section>
+
+      <PublicFooter />
     </div>
   );
 }

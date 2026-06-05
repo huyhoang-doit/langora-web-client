@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { PenLine, History, Sparkles, LineChart, FileText, ChevronRight, Play } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { History, Sparkles, LineChart, FileText, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function WritingHomePage() {
@@ -16,10 +15,10 @@ export default function WritingHomePage() {
   return (
     <div className="flex flex-col h-full overflow-hidden bg-background" id="writing-home-page">
       {/* Header */}
-      <header className="flex justify-between items-center px-6 h-16 bg-background/80 backdrop-blur-xl border-b sticky top-0 z-30 flex-shrink-0">
+      <header className="flex justify-between items-center px-6 h-16 bg-background/80 backdrop-blur-xl border-b-2 border-border/60 sticky top-0 z-30 flex-shrink-0">
         <div>
-          <h2 className="text-xl font-bold text-foreground">Writing Labs</h2>
-          <p className="text-xs text-muted-foreground">Develop native phrasing and composition skills</p>
+          <h2 className="text-xl font-black text-foreground text-heading">Writing Labs</h2>
+          <p className="text-xs text-muted-foreground font-semibold">Develop native phrasing and composition skills</p>
         </div>
       </header>
 
@@ -31,22 +30,24 @@ export default function WritingHomePage() {
             {options.map((opt) => {
               const Icon = opt.icon;
               return (
-                <Card key={opt.name} className="hover:border-primary/50 transition-colors flex flex-col justify-between">
-                  <CardHeader className="pb-3">
-                    <span className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+                <div key={opt.name} className="card-edu card-edu-interactive p-6 bg-card flex flex-col justify-between">
+                  <div className="space-y-4">
+                    <span className="w-10 h-10 rounded-xl bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-primary">
                       <Icon className="w-5 h-5" />
                     </span>
-                    <CardTitle className="text-base font-bold text-foreground mt-4">{opt.name}</CardTitle>
-                    <CardDescription className="text-xs leading-relaxed text-muted-foreground">{opt.desc}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="pt-0 pb-6 flex justify-end">
+                    <div>
+                      <h3 className="text-base font-black text-foreground text-heading">{opt.name}</h3>
+                      <p className="text-xs leading-relaxed text-muted-foreground mt-2 font-medium text-learning">{opt.desc}</p>
+                    </div>
+                  </div>
+                  <div className="pt-6 flex justify-end">
                     <Link href={opt.href}>
-                      <Button size="sm" className="font-bold text-xs gap-1">
+                      <Button size="sm" className="btn-edu h-9 px-4 text-xs border-2 bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-1">
                         {opt.cta} <ChevronRight className="w-3.5 h-3.5" />
                       </Button>
                     </Link>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               );
             })}
           </div>

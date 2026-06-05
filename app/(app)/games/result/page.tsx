@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Award, Trophy, ArrowRight, Zap, RefreshCw } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { ArrowLeft, ArrowRight, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function GameResultPage() {
@@ -15,15 +14,15 @@ export default function GameResultPage() {
   return (
     <div className="flex flex-col h-full overflow-hidden bg-background" id="game-result-page">
       {/* Header */}
-      <header className="flex items-center gap-4 px-6 h-16 bg-background/80 backdrop-blur-xl border-b sticky top-0 z-30 flex-shrink-0">
+      <header className="flex items-center gap-4 px-6 h-16 bg-background/80 backdrop-blur-xl border-b-2 border-border/60 sticky top-0 z-30 flex-shrink-0">
         <Link href="/games">
-          <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full border border-border">
+          <Button variant="ghost" size="icon" className="btn-edu w-9 h-9 border-2 border-border bg-transparent text-foreground hover:bg-muted flex items-center justify-center p-0 rounded-full">
             <ArrowLeft className="w-4 h-4" />
           </Button>
         </Link>
         <div>
-          <h2 className="text-xl font-bold text-foreground">Session Performance</h2>
-          <p className="text-xs text-muted-foreground">Results from your gamified study session</p>
+          <h2 className="text-lg font-black text-foreground text-heading">Session Performance</h2>
+          <p className="text-xs text-muted-foreground font-semibold">Results from your gamified study session</p>
         </div>
       </header>
 
@@ -31,33 +30,33 @@ export default function GameResultPage() {
       <div className="flex-grow overflow-y-auto p-6 flex flex-col items-center justify-center gap-8 scrollbar-thin">
         <div className="w-full max-w-xl text-center space-y-8">
           <div className="space-y-3">
-            <div className="w-16 h-16 bg-primary/10 rounded-full border border-primary/20 flex items-center justify-center mx-auto text-primary animate-bounce">
-              <Trophy className="w-8 h-8" />
-            </div>
-            <h2 className="text-2xl font-black text-foreground">Congratulations!</h2>
-            <p className="text-sm text-muted-foreground max-w-md mx-auto">You performed exceptionally in matching words. You've earned bonus XP for completing the test quickly.</p>
+            <div className="text-6xl animate-bounce mb-2">🐲</div>
+            <h2 className="text-2xl font-black text-foreground text-heading">Congratulations!</h2>
+            <p className="text-sm text-muted-foreground max-w-md mx-auto font-semibold">
+              Ora is super proud of you! You performed exceptionally in matching words and earned bonus XP for completing the test quickly.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {stats.map(({ label, value, desc }) => (
-              <Card key={label} className="border-border hover:border-primary/30 transition-colors">
-                <CardContent className="p-5 flex flex-col items-center text-center">
-                  <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">{label}</span>
-                  <span className="text-xl font-extrabold text-primary my-1">{value}</span>
-                  <span className="text-[10px] text-muted-foreground font-semibold">{desc}</span>
-                </CardContent>
-              </Card>
+              <div key={label} className="card-edu p-5 flex flex-col items-center text-center bg-card">
+                <span className="text-[10px] text-primary uppercase font-black tracking-widest text-heading">{label}</span>
+                <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-400 my-1 text-heading">
+                  {value}
+                </span>
+                <span className="text-[10px] text-muted-foreground font-semibold">{desc}</span>
+              </div>
             ))}
           </div>
 
           <div className="flex gap-4 max-w-sm mx-auto pt-4">
             <Link href="/games" className="flex-1">
-              <Button variant="outline" className="w-full py-6 rounded-xl font-bold border-border flex items-center justify-center gap-1.5">
+              <Button variant="outline" className="btn-edu w-full border-2 border-border bg-transparent text-foreground hover:bg-muted font-bold text-sm h-12 flex items-center justify-center gap-1.5">
                 <RefreshCw className="w-4 h-4" /> Play Again
               </Button>
             </Link>
             <Link href="/dashboard" className="flex-1">
-              <Button className="w-full py-6 rounded-xl font-bold hover:shadow-[0_0_15px_rgba(168,240,106,0.3)] transition-all flex items-center justify-center gap-1.5">
+              <Button className="btn-edu w-full border-2 border-primary bg-primary text-primary-foreground hover:bg-primary/95 font-bold text-sm h-12 flex items-center justify-center gap-1.5">
                 Done <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>

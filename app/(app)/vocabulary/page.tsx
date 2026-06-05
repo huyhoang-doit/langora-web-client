@@ -1,12 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { Search, Bell, BookMarked, Volume2, Plus, Zap, ArrowRight, FolderOpen, Compass } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Search, Bell, BookMarked, Volume2, Zap, FolderOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function VocabularyPage() {
@@ -60,36 +58,36 @@ export default function VocabularyPage() {
   return (
     <div className="flex flex-col h-full overflow-hidden bg-background font-sans" id="vocabulary-lab-page">
       {/* Header */}
-      <header className="flex flex-col px-8 py-5 gap-4 border-b-2 border-border sticky top-0 bg-background/80 backdrop-blur-xl z-10 flex-shrink-0">
+      <header className="flex flex-col px-8 py-5 gap-4 border-b-2 border-border/60 sticky top-0 bg-background/80 backdrop-blur-xl z-10 flex-shrink-0">
         <div className="flex justify-between items-center w-full">
           <div className="flex flex-col">
-            <h2 className="text-xl font-black text-foreground tracking-tight">Vocabulary Lab</h2>
-            <p className="text-xs text-muted-foreground">Manage and master your curated lexicon</p>
+            <h2 className="text-xl font-black text-foreground tracking-tight text-heading">Vocabulary Lab</h2>
+            <p className="text-xs text-muted-foreground font-semibold">Manage and master your curated lexicon</p>
           </div>
           <div className="flex items-center gap-4">
             <div className="relative w-72 hidden md:block">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
               <Input
-                className="w-full bg-muted/50 pl-9 border-2 border-border rounded-xl focus-visible:ring-1 focus-visible:ring-primary py-5 text-xs"
+                className="w-full bg-muted/30 pl-9 border-2 border-border rounded-xl focus-visible:ring-1 focus-visible:ring-primary py-5 text-xs font-semibold"
                 placeholder="Search specific words..."
                 type="text"
               />
             </div>
-            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary rounded-full">
-              <Bell className="w-5 h-5" />
+            <Button variant="ghost" size="icon" className="btn-edu w-9 h-9 border-2 border-border bg-transparent text-muted-foreground hover:text-primary flex items-center justify-center">
+              <Bell className="w-4 h-4" />
             </Button>
-            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary rounded-full">
-              <BookMarked className="w-5 h-5" />
+            <Button variant="ghost" size="icon" className="btn-edu w-9 h-9 border-2 border-border bg-transparent text-muted-foreground hover:text-primary flex items-center justify-center">
+              <BookMarked className="w-4 h-4" />
             </Button>
           </div>
         </div>
 
         {/* Filters & Actions */}
         <div className="flex items-center gap-3 overflow-x-auto pb-1 flex-wrap sm:flex-nowrap">
-          <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest whitespace-nowrap">Filters:</span>
+          <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest whitespace-nowrap text-heading">Filters:</span>
           
           <Select defaultValue="all-levels">
-            <SelectTrigger className="w-[140px] h-8 text-[10px] font-bold rounded-full bg-muted/50 border-2 border-border">
+            <SelectTrigger className="w-[140px] h-8 text-[10px] font-black rounded-full bg-muted/50 border-2 border-border">
               <SelectValue placeholder="Level" />
             </SelectTrigger>
             <SelectContent>
@@ -102,7 +100,7 @@ export default function VocabularyPage() {
           </Select>
 
           <Select defaultValue="business">
-            <SelectTrigger className="w-[140px] h-8 text-[10px] font-bold rounded-full bg-muted/50 border-2 border-border">
+            <SelectTrigger className="w-[140px] h-8 text-[10px] font-black rounded-full bg-muted/50 border-2 border-border">
               <SelectValue placeholder="Topic" />
             </SelectTrigger>
             <SelectContent>
@@ -112,14 +110,14 @@ export default function VocabularyPage() {
             </SelectContent>
           </Select>
 
-          <div className="h-5 w-px bg-border mx-1" />
+          <div className="h-5 w-[2px] bg-border/80 mx-1" />
           <Link href="/vocabulary/topics">
-            <Button size="sm" variant="outline" className="btn-edu h-8 text-[10px] font-black border-2">
+            <Button size="sm" variant="outline" className="btn-edu h-8 text-[10px] font-black border-2 bg-transparent text-foreground hover:bg-muted">
               <FolderOpen className="w-3.5 h-3.5" /> View Topics
             </Button>
           </Link>
           <Link href="/vocabulary/ai-generator">
-            <Button size="sm" className="btn-edu h-8 text-[10px] font-black">
+            <Button size="sm" className="btn-edu h-8 text-[10px] font-black border-2 bg-primary text-primary-foreground hover:bg-primary/95">
               ✨ AI Generator
             </Button>
           </Link>
@@ -127,7 +125,7 @@ export default function VocabularyPage() {
       </header>
 
       {/* Vocabulary Grid Content */}
-      <div className="flex-1 overflow-y-auto p-8 scrollbar-thin">
+      <div className="flex-grow overflow-y-auto p-8 scrollbar-thin">
         <div className="max-w-6xl mx-auto space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {vocabularyWords.map((word) => (
@@ -137,40 +135,43 @@ export default function VocabularyPage() {
               >
                 {/* Header */}
                 <div className="flex justify-between items-start">
-                  <Badge variant="secondary" className="text-[9px] font-bold uppercase tracking-wide bg-muted border-2 border-border/40 text-muted-foreground">
+                  <Badge variant="secondary" className="text-[9px] font-black uppercase tracking-widest bg-muted border-2 border-border/40 text-muted-foreground">
                     {word.level} • {word.topic}
                   </Badge>
-                  <div className="flex gap-1">
-                    <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full border-2 border-border/40 text-muted-foreground hover:text-primary">
-                      <Volume2 className="w-3.5 h-3.5" />
-                    </Button>
-                  </div>
+                  <Button variant="ghost" size="icon" className="btn-edu w-8 h-8 border-2 border-border/40 bg-transparent text-muted-foreground hover:text-primary flex items-center justify-center">
+                    <Volume2 className="w-3.5 h-3.5" />
+                  </Button>
                 </div>
 
                 {/* Word Content */}
                 <div className="space-y-1">
-                  <h3 className="text-xl font-black text-indigo-500 tracking-tight">{word.word}</h3>
-                  <p className="text-xs text-muted-foreground italic">{word.phonetic}</p>
-                  <p className="text-xs text-foreground leading-relaxed line-clamp-3 pt-1 text-learning">{word.definition}</p>
+                  <h3 className="text-xl font-black text-indigo-500 tracking-tight text-heading">{word.word}</h3>
+                  <p className="text-xs text-muted-foreground italic font-medium">{word.phonetic}</p>
+                  <p className="text-xs text-foreground leading-relaxed line-clamp-3 pt-1 text-learning font-medium">{word.definition}</p>
                 </div>
 
                 {/* Mastery Progress */}
                 <div className="mt-auto pt-2 space-y-1.5">
-                  <div className="flex justify-between items-center text-[9px] font-bold">
+                  <div className="flex justify-between items-center text-[9px] font-black text-heading">
                     <span className="text-muted-foreground">Mastery</span>
                     <span className="text-indigo-500">{word.mastery}%</span>
                   </div>
-                  <Progress value={word.mastery} className="h-1.5 bg-muted" indicatorClassName="bg-indigo-500" />
+                  <div className="h-2 w-full bg-muted rounded-full overflow-hidden border-2 border-border/40">
+                    <div 
+                      className="h-full bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-400" 
+                      style={{ width: `${word.mastery}%` }} 
+                    />
+                  </div>
                 </div>
 
                 {/* Footer */}
-                <div className="flex items-center justify-between pt-2 border-t border-border/40">
-                  <span className={`flex items-center gap-1.5 text-[9px] font-bold px-2 py-0.5 rounded-full border-2 ${word.difficultyColor}`}>
+                <div className="flex items-center justify-between pt-2 border-t-2 border-border/40">
+                  <span className={`flex items-center gap-1.5 text-[9px] font-black px-2 py-0.5 rounded-full border-2 ${word.difficultyColor} text-heading`}>
                     <span className={`w-1.5 h-1.5 rounded-full ${word.difficultyDot}`} />
                     {word.difficulty}
                   </span>
                   <Link href="/vocabulary/flashcard">
-                    <Button size="sm" className="btn-edu h-8 px-4 text-[10px] font-black border-2">
+                    <Button size="sm" className="btn-edu h-8 px-4 text-[10px] font-black border-2 bg-primary text-primary-foreground hover:bg-primary/95">
                       Practice
                     </Button>
                   </Link>
@@ -182,21 +183,23 @@ export default function VocabularyPage() {
             <div className="card-edu col-span-1 sm:col-span-2 p-6 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent relative overflow-hidden group">
               <div className="flex justify-between items-start relative z-10">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-bold text-indigo-500 uppercase">Weekly Milestone</span>
-                  <h4 className="font-black text-lg text-foreground">You've mastered 24 words!</h4>
-                  <p className="text-xs text-muted-foreground max-w-sm leading-relaxed">Your retention rate is currently estimated at 82%. Keep it up to stabilize the memory curves.</p>
+                  <span className="text-[10px] font-black text-indigo-500 uppercase text-heading">Weekly Milestone</span>
+                  <h4 className="font-black text-lg text-foreground text-heading">You've mastered 24 words!</h4>
+                  <p className="text-xs text-muted-foreground max-w-sm leading-relaxed font-medium">Your retention rate is currently estimated at 82%. Keep it up to stabilize the memory curves.</p>
                 </div>
-                <div className="p-3 bg-indigo-500/10 border-2 border-indigo-500/20 text-indigo-500 rounded-full animate-pulse">
+                <div className="p-3 bg-indigo-500/10 border-2 border-indigo-500/20 text-indigo-500 rounded-full animate-pulse flex-shrink-0 flex items-center justify-center w-11 h-11">
                   <Zap className="w-5 h-5" />
                 </div>
               </div>
               
               <div className="mt-6 space-y-2 relative z-10">
-                <div className="flex justify-between text-[9px] font-black text-muted-foreground uppercase">
+                <div className="flex justify-between text-[9px] font-black text-muted-foreground uppercase text-heading">
                   <span>Target: 30 Words</span>
                   <span>80% Complete</span>
                 </div>
-                <Progress value={80} className="h-2 bg-muted" indicatorClassName="bg-indigo-500" />
+                <div className="h-2.5 w-full bg-muted rounded-full overflow-hidden border-2 border-border/40">
+                  <div className="h-full bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-400" style={{ width: "80%" }} />
+                </div>
               </div>
               
               {/* Mascot decoration */}

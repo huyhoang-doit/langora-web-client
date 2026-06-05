@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Clock, Award, Star, History, Eye } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Clock, Eye, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function WritingHistoryPage() {
@@ -14,15 +13,15 @@ export default function WritingHistoryPage() {
   return (
     <div className="flex flex-col h-full overflow-hidden bg-background" id="writing-history-page">
       {/* Header */}
-      <header className="flex items-center gap-4 px-6 h-16 bg-background/80 backdrop-blur-xl border-b sticky top-0 z-30 flex-shrink-0">
+      <header className="flex items-center gap-4 px-6 h-16 bg-background/80 backdrop-blur-xl border-b-2 border-border/60 sticky top-0 z-30 flex-shrink-0">
         <Link href="/writing">
-          <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full border border-border">
+          <Button variant="ghost" size="icon" className="btn-edu w-9 h-9 border-2 border-border bg-transparent text-foreground hover:bg-muted flex items-center justify-center">
             <ArrowLeft className="w-4 h-4" />
           </Button>
         </Link>
         <div>
-          <h2 className="text-xl font-bold text-foreground">Writing History</h2>
-          <p className="text-xs text-muted-foreground">Review previous evaluations and revisions</p>
+          <h2 className="text-xl font-black text-foreground text-heading">Writing History</h2>
+          <p className="text-xs text-muted-foreground font-semibold">Review previous evaluations and revisions</p>
         </div>
       </header>
 
@@ -30,27 +29,25 @@ export default function WritingHistoryPage() {
       <div className="flex-grow overflow-y-auto p-6 scrollbar-thin">
         <div className="max-w-3xl mx-auto space-y-4">
           {history.map((item) => (
-            <Card key={item.id} className="hover:border-primary/50 transition-colors">
-              <CardContent className="p-5 flex items-center justify-between gap-4">
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-base text-foreground">{item.title}</span>
-                    <span className="text-[10px] font-bold text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded">
-                      {item.score}
-                    </span>
-                  </div>
-                  <p className="text-xs text-muted-foreground flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5" /> {item.date} • {item.status}
-                  </p>
+            <div key={item.id} className="card-edu card-edu-interactive p-5 bg-card flex items-center justify-between gap-4">
+              <div className="space-y-1 text-heading">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="font-black text-base text-foreground">{item.title}</span>
+                  <span className="text-[10px] font-black text-primary bg-primary/10 border-2 border-primary/20 px-2 py-0.5 rounded-full">
+                    {item.score}
+                  </span>
                 </div>
+                <p className="text-xs text-muted-foreground flex items-center gap-1 font-semibold">
+                  <Clock className="w-3.5 h-3.5" /> {item.date} • {item.status}
+                </p>
+              </div>
 
-                <Link href={`/writing/review/${item.id}`}>
-                  <Button size="sm" variant="outline" className="font-bold text-xs gap-1.5">
-                    View Evaluation <Eye className="w-3.5 h-3.5" />
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
+              <Link href={`/writing/review/${item.id}`} className="flex-shrink-0">
+                <Button size="sm" variant="outline" className="btn-edu h-9 px-4 text-xs border-2 bg-transparent text-foreground hover:bg-muted gap-1.5">
+                  View Evaluation <Eye className="w-3.5 h-3.5" />
+                </Button>
+              </Link>
+            </div>
           ))}
         </div>
       </div>
