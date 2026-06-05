@@ -3,42 +3,16 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./theme-toggle";
-import {
-  LayoutDashboard,
-  BookOpen,
-  Layers,
-  PenLine,
-  SpellCheck,
-  Trophy,
-  Bot,
-  Settings,
-  CircleUser,
-  LogOut,
-  Globe,
-} from "lucide-react";
-
-const navItems = [
-  { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-  { href: "/vocabulary", icon: BookOpen, label: "Vocabulary" },
-  { href: "/flashcards", icon: Layers, label: "Flashcards" },
-  { href: "/writing", icon: PenLine, label: "Writing" },
-  { href: "/grammar", icon: SpellCheck, label: "Grammar" },
-  { href: "/achievements", icon: Trophy, label: "Achievements" },
-  { href: "/ai-assistant", icon: Bot, label: "AI Assistant" },
-  { href: "/settings", icon: Settings, label: "Settings" },
-];
-
-const bottomItems = [
-  { href: "/profile", icon: CircleUser, label: "Profile" },
-];
+import { LogOut, Globe, LayoutDashboard, BookOpen, Bot, CircleUser, Compass } from "lucide-react";
+import { sidebarNavItems, sidebarBottomItems } from "@/app/(app)/sidebar";
 
 export function AppSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden md:flex h-screen w-72 flex-shrink-0 flex-col p-6 gap-2 bg-sidebar border-r border-sidebar-border">
+    <aside className="hidden md:flex h-screen w-72 flex-shrink-0 flex-col p-6 gap-2 bg-sidebar border-r border-sidebar-border overflow-y-auto scrollbar-thin">
       {/* Logo */}
-      <div className="flex items-center gap-3 mb-8 px-1">
+      <div className="flex items-center gap-3 mb-8 px-1 flex-shrink-0">
         <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
           <Globe className="w-5 h-5 text-primary-foreground" strokeWidth={2.5} />
         </div>
@@ -52,7 +26,7 @@ export function AppSidebar() {
 
       {/* Navigation */}
       <nav className="flex-grow flex flex-col gap-1">
-        {navItems.map(({ href, icon: Icon, label }) => {
+        {sidebarNavItems.map(({ href, icon: Icon, label }) => {
           const isActive = pathname === href || pathname.startsWith(href + "/");
           return (
             <Link
@@ -75,8 +49,8 @@ export function AppSidebar() {
       </nav>
 
       {/* Bottom section */}
-      <div className="mt-auto flex flex-col gap-1 border-t border-sidebar-border pt-4">
-        {bottomItems.map(({ href, icon: Icon, label }) => (
+      <div className="mt-auto flex flex-col gap-1 border-t border-sidebar-border pt-4 flex-shrink-0">
+        {sidebarBottomItems.map(({ href, icon: Icon, label }) => (
           <Link
             key={href}
             href={href}
@@ -90,7 +64,7 @@ export function AppSidebar() {
           <span className="text-sm text-muted-foreground">Theme</span>
           <ThemeToggle />
         </div>
-        <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-destructive hover:text-destructive hover:bg-destructive/10 transition-all duration-200 w-full text-left">
+        <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-destructive hover:text-destructive hover:bg-destructive/10 transition-all duration-200 w-full text-left cursor-pointer">
           <LogOut className="w-5 h-5" />
           Logout
         </button>
@@ -104,13 +78,14 @@ export function MobileBottomNav() {
 
   const mobileItems = [
     { href: "/dashboard", icon: LayoutDashboard, label: "Home" },
+    { href: "/learn", icon: Compass, label: "Learn" },
     { href: "/vocabulary", icon: BookOpen, label: "Vocab" },
-    { href: "/ai-assistant", icon: Bot, label: "AI" },
+    { href: "/ora", icon: Bot, label: "Ora" },
     { href: "/profile", icon: CircleUser, label: "Profile" },
   ];
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 glass-strong border-t border-border h-16 flex items-center justify-around px-4">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 glass-strong border-t border-border h-16 flex items-center justify-around px-2">
       {mobileItems.map(({ href, icon: Icon, label }) => {
         const isActive = pathname === href || pathname.startsWith(href + "/");
         return (
@@ -122,15 +97,15 @@ export function MobileBottomNav() {
             }`}
           >
             <Icon className="w-5 h-5" strokeWidth={isActive ? 2.5 : 2} />
-            <span className="text-[10px] font-bold uppercase">{label}</span>
+            <span className="text-[9px] font-bold uppercase">{label}</span>
           </Link>
         );
       })}
       
       {/* Theme Toggle cho Mobile */}
-      <div className="flex flex-col items-center gap-1 text-muted-foreground ml-2 border-l border-border pl-4">
+      <div className="flex flex-col items-center gap-1 text-muted-foreground border-l border-border pl-2">
         <ThemeToggle />
-        <span className="text-[10px] font-bold uppercase mt-[-4px]">Theme</span>
+        <span className="text-[9px] font-bold uppercase mt-[-4px]">Theme</span>
       </div>
     </div>
   );
