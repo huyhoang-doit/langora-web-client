@@ -1,3 +1,6 @@
+"use client";
+
+import Link from "next/link";
 import {
   BookOpen,
   Flame,
@@ -11,266 +14,330 @@ import {
   BookMarked,
   Bot,
   Search,
+  CheckCircle,
+  Trophy,
+  Award,
+  Zap,
+  Heart,
+  ChevronRight
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 
-const stats = [
-  { icon: BookOpen, label: "Words Learned", value: "1,250", trend: "+48 this week", color: "text-primary" },
-  { icon: Flame, label: "Current Streak", value: "15 Days", progress: 75 },
-  { icon: PenLine, label: "Writing Score", value: "8.5/10", note: "Advanced Level" },
-  { icon: Timer, label: "Study Time", value: "12h 30m", note: "Target: 15h" },
-];
-
-const weeklyData = [
-  { day: "MON", pct: 40 },
-  { day: "TUE", pct: 60 },
-  { day: "WED", pct: 35 },
-  { day: "THU", pct: 85 },
-  { day: "FRI", pct: 70 },
-  { day: "SAT", pct: 95 },
-  { day: "SUN", pct: 50 },
-];
-
-const aiRecs = [
-  { type: "Targeted Lesson", title: "Advanced Tenses", desc: "Master conditional structures in professional contexts." },
-  { type: "Vocabulary Pack", title: "Business English", desc: "24 new idioms for corporate negotiation." },
-  { type: "AI Writing Task", title: "Reflect on your day", desc: "Practice descriptive adjectives and past participles." },
-];
-
-const grammarAreas = [
-  { name: "Tenses", pct: 65, note: "Focus on Past Perfect Continuous usage.", color: "bg-primary" },
-  { name: "Articles", pct: 42, note: "Review definite vs indefinite article rules.", color: "bg-destructive" },
-  { name: "Prepositions", pct: 78, note: "Strong performance. Keep practicing phrasal verbs.", color: "bg-primary" },
-];
+// Ora Mascot Icon component
+function OraMascot({ className = "w-8 h-8" }) {
+  return (
+    <div className={`rounded-full bg-indigo-500/10 border-2 border-indigo-500/20 flex items-center justify-center text-lg ${className}`}>
+      🐲
+    </div>
+  );
+}
 
 export default function DashboardPage() {
+  const stats = [
+    { label: "Words Mastered", value: "1,250", icon: BookOpen, color: "text-indigo-500" },
+    { label: "Daily Streak", value: "15 Days", icon: Flame, color: "text-amber-500" },
+    { label: "Writing Band", value: "8.5", icon: PenLine, color: "text-pink-500" },
+    { label: "Study Time", value: "12h 30m", icon: Timer, color: "text-cyan-500" },
+  ];
+
   return (
-    <div className="flex flex-col h-full overflow-hidden bg-background">
-      {/* TopAppBar */}
-      <header className="flex justify-between items-center w-full px-6 h-16 bg-background/80 backdrop-blur-xl border-b sticky top-0 z-30 flex-shrink-0">
+    <div className="flex flex-col h-full overflow-hidden bg-background font-sans" id="langora-dashboard">
+      {/* Top Bar */}
+      <header className="flex justify-between items-center w-full px-8 h-20 bg-background/80 backdrop-blur-xl border-b-2 border-border sticky top-0 z-30 flex-shrink-0">
         <div className="flex items-center gap-6">
-          <h2 className="font-bold text-xl md:hidden text-foreground">Langora</h2>
-          <div className="hidden md:flex relative items-center">
-            <Search className="absolute left-3 w-4 h-4 text-muted-foreground" />
-            <Input
-              className="w-64 pl-9 bg-muted/50 border-none focus-visible:ring-1 focus-visible:ring-primary"
-              placeholder="Quick search..."
-              type="text"
-            />
+          <div className="flex items-center gap-3">
+            <OraMascot className="w-10 h-10 text-xl" />
+            <div>
+              <h2 className="text-xl font-black text-foreground tracking-tight">Langora Workspace</h2>
+              <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">Target: English B2</p>
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 border-r pr-4">
-            <Button variant="ghost" size="icon" className="text-muted-foreground">
+          <div className="flex items-center gap-2 border-r-2 pr-4 border-border">
+            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary rounded-full">
               <Bell className="w-5 h-5" />
             </Button>
-            <Button variant="ghost" size="icon" className="text-muted-foreground">
+            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary rounded-full">
               <BookMarked className="w-5 h-5" />
             </Button>
           </div>
-          <div className="flex items-center gap-2 cursor-pointer group">
+          <div className="flex items-center gap-3 cursor-pointer group">
             <div className="text-right hidden sm:block">
-              <p className="text-sm font-medium group-hover:text-primary transition-colors">Hoang</p>
-              <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-tighter">Pro Member</p>
+              <p className="text-sm font-bold group-hover:text-primary transition-colors">Hoang</p>
+              <p className="text-[9px] text-primary font-bold uppercase tracking-widest">Pro Member</p>
             </div>
-            <Avatar className="h-10 w-10 ring-2 ring-border group-hover:ring-primary transition-all">
-              <AvatarFallback className="bg-muted text-foreground">👤</AvatarFallback>
+            <Avatar className="h-10 w-10 border-2 border-border group-hover:border-primary transition-all">
+              <AvatarFallback className="bg-muted text-foreground font-bold">H</AvatarFallback>
             </Avatar>
           </div>
         </div>
       </header>
 
-      {/* Scrollable Content Area */}
-      <div className="flex-grow overflow-y-auto scrollbar-thin p-6">
-        <div className="max-w-7xl mx-auto space-y-6">
-
-          {/* Welcome Card + Stats */}
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            {/* Welcome Card */}
-            <Card className="lg:col-span-4 ai-glow overflow-hidden relative group border-border">
-              <CardContent className="p-6">
-                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                  <div>
-                    <h3 className="text-2xl font-semibold mb-2 text-foreground">Hi Hoang 👋</h3>
-                    <p className="text-muted-foreground max-w-xl">
-                      You've completed 85% of your daily goal. Continue your learning streak and unlock the{" "}
-                      <span className="text-primary font-bold">Polyglot Badge</span> today.
-                    </p>
-                  </div>
-                  <Button className="font-bold hover:shadow-[0_0_20px_rgba(168,240,106,0.3)] transition-all flex items-center gap-2 self-start md:self-center">
-                    Continue Learning
-                    <ArrowRight className="w-4 h-4" />
-                  </Button>
+      {/* Main Grid Content */}
+      <div className="flex-grow overflow-y-auto p-8 scrollbar-thin space-y-8">
+        <div className="max-w-6xl mx-auto space-y-8">
+          
+          {/* 1. Welcome Hero (Linear + Headspace vibe) */}
+          <div className="relative overflow-hidden rounded-[24px] border-2 border-indigo-500/20 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent p-8 md:p-10 group">
+            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div className="space-y-3">
+                <div className="inline-flex items-center gap-2 bg-indigo-500/15 border-2 border-indigo-500/30 px-3 py-1 rounded-full text-indigo-500 text-[10px] font-bold uppercase tracking-widest">
+                  ✨ Learning Path Active
                 </div>
-                {/* Decorative */}
-                <div className="absolute -right-16 -bottom-16 opacity-10 group-hover:opacity-20 transition-opacity">
-                  <Globe className="w-64 h-64 text-primary" />
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Stats Cards */}
-            {stats.map(({ icon: Icon, label, value, trend, progress, note, color }) => (
-              <Card key={label} className="flex flex-col gap-3 hover:border-primary/50 transition-colors">
-                <CardContent className="p-5 flex flex-col h-full gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
-                    <Icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">{label}</p>
-                    <p className="text-xl font-semibold text-foreground">{value}</p>
-                  </div>
-                  {trend && (
-                    <div className="text-[10px] text-primary font-bold flex items-center gap-1 mt-auto">
-                      <TrendingUp className="w-3 h-3" />
-                      {trend}
-                    </div>
-                  )}
-                  {progress !== undefined && (
-                    <div className="mt-auto">
-                      <Progress value={progress} className="h-1 bg-muted" indicatorClassName="bg-primary" />
-                    </div>
-                  )}
-                  {note && (
-                    <p className="text-[10px] text-muted-foreground font-bold mt-auto italic">{note}</p>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          {/* Middle: Progress Chart + AI Recs */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Learning Progress Chart */}
-            <Card className="lg:col-span-2 flex flex-col">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <div className="space-y-1">
-                  <CardTitle className="text-lg">Learning Progress</CardTitle>
-                  <CardDescription>Weekly activity overview</CardDescription>
-                </div>
-                <div className="flex gap-2">
-                  <Button variant="secondary" size="sm" className="h-7 text-xs">Weekly</Button>
-                  <Button variant="ghost" size="sm" className="h-7 text-xs text-muted-foreground">Monthly</Button>
-                </div>
-              </CardHeader>
-              <CardContent className="flex-grow flex items-end justify-between h-48 pt-6 gap-4">
-                {weeklyData.map(({ day, pct }) => (
-                  <div key={day} className="flex flex-col items-center gap-2 w-full group">
-                    <div
-                      className="w-full bg-primary/20 rounded-t-lg group-hover:bg-primary/40 transition-colors relative"
-                      style={{ height: `${pct}%` }}
-                    >
-                      {pct === 95 && (
-                        <div className="absolute inset-x-0 bottom-0 bg-primary h-1.5 shadow-[0_0_10px_rgba(168,240,106,0.5)]" />
-                      )}
-                      {pct !== 95 && (
-                        <div className="absolute inset-x-0 bottom-0 bg-primary h-0.5" />
-                      )}
-                    </div>
-                    <span className="text-[10px] font-bold text-muted-foreground">{day}</span>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            {/* AI Recommendations */}
-            <Card className="relative overflow-hidden border-primary/30 ai-glow">
-              <CardHeader className="pb-2">
-                <div className="flex items-center gap-2 text-primary">
-                  <Sparkles className="w-4 h-4" />
-                  <CardTitle className="text-xs font-bold uppercase tracking-wider">AI Recommendations</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {aiRecs.map(({ type, title, desc }) => (
-                  <div key={title} className="cursor-pointer p-3 rounded-lg hover:bg-muted transition-colors">
-                    <p className="text-[10px] text-primary font-bold uppercase mb-1">{type}</p>
-                    <p className="text-sm text-foreground font-bold">{title}</p>
-                    <p className="text-xs text-muted-foreground mt-1 line-clamp-1">{desc}</p>
-                  </div>
-                ))}
-                <Button variant="outline" className="w-full mt-4 border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground">
-                  Refresh Recommendations
+                <h1 className="text-3xl md:text-4xl font-black text-foreground tracking-tight">
+                  Welcome back, <span className="text-indigo-500">Hoang</span>!
+                </h1>
+                <p className="text-muted-foreground text-sm max-w-xl leading-relaxed">
+                  Ora has optimized your modules for today. You are <span className="text-indigo-500 font-bold">85%</span> of the way to completing your daily milestone. Continue now to secure your streak!
+                </p>
+              </div>
+              <Link href="/learn/lesson/3">
+                <Button className="btn-edu text-indigo-600 hover:text-indigo-700 bg-white hover:bg-white/95 border-2 shadow-[0_4px_0_currentColor] active:translate-y-0.5 active:shadow-[0_0px_0_currentColor] text-sm font-bold">
+                  🎯 Continue Journey
                 </Button>
-              </CardContent>
-            </Card>
+              </Link>
+            </div>
+            {/* Background Mascot Illustration */}
+            <div className="absolute right-10 bottom-[-20px] opacity-10 group-hover:opacity-15 transition-opacity duration-300 pointer-events-none">
+              <span className="text-[120px] select-none">🐲</span>
+            </div>
           </div>
 
-          {/* Bottom: Grammar Focus + Daily Progress */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pb-6">
-            {/* Grammar Focus Areas */}
-            <Card className="lg:col-span-2">
-              <CardHeader>
-                <CardTitle className="text-lg">Grammar Focus Areas</CardTitle>
-              </CardHeader>
-              <CardContent className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {grammarAreas.map(({ name, pct, note, color }) => (
-                  <div key={name} className="p-4 rounded-lg bg-muted/50 border border-border hover:border-primary/50 transition-colors">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-bold text-foreground">{name}</span>
-                      <span className="text-xs text-muted-foreground">{pct}%</span>
+          {/* Core Stats Bar */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {stats.map((st) => {
+              const Icon = st.icon;
+              return (
+                <div key={st.label} className="card-edu p-6 flex flex-col gap-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[10px] text-muted-foreground font-black uppercase tracking-wider">{st.label}</span>
+                    <Icon className={`w-4 h-4 ${st.color}`} />
+                  </div>
+                  <span className="text-2xl font-black text-foreground tracking-tight">{st.value}</span>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Two-Column Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            {/* Left Side: Missions, learning path, review, writing */}
+            <div className="lg:col-span-2 space-y-8">
+              
+              {/* 2. Daily Mission */}
+              <div className="card-edu p-6 space-y-4">
+                <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
+                  ⚡ Daily Missions
+                </h3>
+                <div className="space-y-3">
+                  {[
+                    { text: "Learn 5 new Business Idioms", done: true },
+                    { text: "Complete 1 Scenario Writing practice", done: false },
+                    { text: "Take the Daily AI speaking drill with Ora", done: false },
+                  ].map((task, i) => (
+                    <div key={i} className="flex items-center gap-3 p-4 bg-muted/30 border-2 border-border/40 rounded-2xl">
+                      {task.done ? (
+                        <CheckCircle className="w-5 h-5 text-indigo-500 flex-shrink-0" />
+                      ) : (
+                        <div className="w-5 h-5 rounded-full border-2 border-border flex-shrink-0" />
+                      )}
+                      <span className={`text-xs md:text-sm font-bold ${task.done ? "text-muted-foreground line-through" : "text-foreground"}`}>
+                        {task.text}
+                      </span>
                     </div>
-                    <Progress value={pct} className="h-1 mb-3 bg-background" indicatorClassName={color} />
-                    <p className="text-[10px] text-muted-foreground leading-tight">{note}</p>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
+                  ))}
+                </div>
+              </div>
 
-            {/* Daily Goal Progress */}
-            <Card className="flex flex-col items-center text-center">
-              <CardHeader className="w-full pb-0 text-left">
-                <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Daily Progress</CardTitle>
-              </CardHeader>
-              <CardContent className="flex flex-col items-center pt-6 w-full">
-                {/* Progress Ring */}
-                <div className="relative w-40 h-40 mb-6">
-                  <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                    <circle
-                      className="text-muted stroke-current"
-                      cx="50" cy="50" fill="transparent" r="40" strokeWidth="8"
-                    />
-                    <circle
-                      cx="50" cy="50" fill="transparent" r="40"
-                      stroke="hsl(var(--primary))"
-                      strokeWidth="8"
-                      strokeDasharray="251.2"
-                      strokeDashoffset="37.68"
-                      strokeLinecap="round"
-                      style={{ transition: "stroke-dashoffset 0.35s", stroke: "var(--color-primary)" }}
-                    />
-                  </svg>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-2xl font-semibold text-foreground">85%</span>
-                    <span className="text-[10px] text-muted-foreground font-bold uppercase">Complete</span>
+              {/* 3. Continue Learning Path */}
+              <div className="card-edu p-6 space-y-4">
+                <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
+                  📚 Continue Learning
+                </h3>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 bg-indigo-500/5 border-2 border-indigo-500/20 rounded-2xl">
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-bold text-indigo-500 uppercase">Current Lesson • Level B2</span>
+                    <h4 className="font-black text-base text-foreground">Advanced Conditionals Inversions</h4>
+                    <p className="text-xs text-muted-foreground">Master "Hardly had I..." and negative adverbials.</p>
+                  </div>
+                  <Link href="/learn/lesson/3">
+                    <Button size="sm" className="btn-edu text-xs font-bold text-indigo-500 hover:text-indigo-600 bg-white border-2">
+                      🚀 Start Lesson
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+
+              {/* 4. Vocabulary Review */}
+              <div className="card-edu p-6 space-y-4">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
+                    🔄 Vocabulary Review
+                  </h3>
+                  <Link href="/vocabulary/review" className="text-xs text-indigo-500 font-bold hover:underline">
+                    View list
+                  </Link>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[
+                    { word: "Synergy", count: "Review due now", status: "Overdue" },
+                    { word: "Ubiquitous", count: "Review due in 1 hour", status: "Active" },
+                  ].map((v, i) => (
+                    <div key={i} className="p-4 border-2 border-border rounded-xl flex justify-between items-center bg-card">
+                      <div>
+                        <span className="font-bold text-sm text-foreground block">{v.word}</span>
+                        <span className="text-[10px] text-muted-foreground font-semibold">{v.count}</span>
+                      </div>
+                      <Link href="/vocabulary/flashcard">
+                        <Button size="sm" variant="outline" className="btn-edu h-8 px-3 text-[10px] font-black border-2">
+                          Practice
+                        </Button>
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 5. Writing Practice */}
+              <div className="card-edu p-6 space-y-4">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
+                    ✍️ Writing Practice
+                  </h3>
+                  <Link href="/writing/practice" className="text-xs text-indigo-500 font-bold hover:underline">
+                    Explore Prompts
+                  </Link>
+                </div>
+                <div className="p-5 border-2 border-border/60 rounded-2xl space-y-3 bg-card">
+                  <div className="flex justify-between items-start flex-wrap gap-2">
+                    <h4 className="font-black text-sm text-foreground">Write a formal feedback email to a colleague</h4>
+                    <span className="text-[9px] font-bold text-indigo-500 bg-indigo-500/10 border-2 border-indigo-500/20 px-2 py-0.5 rounded">IELTS Task 1</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">Draft a concise 80-word email using appropriate conditional forms and vocabulary.</p>
+                  <div className="flex justify-end pt-2">
+                    <Link href="/writing/scenario/1">
+                      <Button size="sm" className="btn-edu text-[10px] font-black">
+                        ✍️ Start Essay
+                      </Button>
+                    </Link>
                   </div>
                 </div>
+              </div>
 
-                <div className="w-full space-y-2">
-                  <div className="flex justify-between text-xs font-bold">
-                    <span className="text-foreground">Experience Points</span>
-                    <span className="text-primary">850 / 1000 XP</span>
+            </div>
+
+            {/* Right Side: AI Coach, Weekly progress, achievements */}
+            <div className="space-y-8">
+              
+              {/* 6. AI Coach Insights (Ora Companion Card) */}
+              <div className="card-edu p-6 border-indigo-500/30 bg-gradient-to-b from-indigo-500/5 to-transparent space-y-4">
+                <div className="flex items-center gap-2 text-indigo-500">
+                  <OraMascot className="w-8 h-8" />
+                  <div>
+                    <h3 className="text-xs font-black uppercase tracking-wider">AI Coach Insights</h3>
+                    <p className="text-[9px] text-muted-foreground font-bold">Ora Companion feedback</p>
                   </div>
-                  <Progress value={85} className="h-3 p-0.5" indicatorClassName="bg-primary shadow-[0_0_8px_rgba(168,240,106,0.3)] rounded-full" />
-                  <p className="text-[10px] text-muted-foreground italic mt-2">Just 150 XP more to reach Level 12!</p>
                 </div>
-              </CardContent>
-            </Card>
+                <div className="p-4 bg-muted/40 border-2 border-border/40 rounded-xl space-y-2 text-xs text-muted-foreground leading-relaxed">
+                  <p className="text-foreground font-bold">"Hey Hoang! 🐲"</p>
+                  <p>I noticed you are very consistent in vocabulary lessons, but your written essays shows occasional errors in past participles.</p>
+                  <p className="font-bold text-indigo-500">Let's practice a custom grammar quiz today to resolve this.</p>
+                </div>
+                <Link href="/grammar/personalized" className="block w-full">
+                  <Button className="w-full btn-edu text-xs font-bold bg-indigo-500 text-white hover:bg-indigo-600 border-2 shadow-[0_4px_0_#312e81]">
+                    ✨ Start Custom Quiz
+                  </Button>
+                </Link>
+              </div>
+
+              {/* 7. Weekly Progress (Linear vibe chart/dots) */}
+              <div className="card-edu p-6 space-y-4">
+                <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
+                  📈 Weekly Activity
+                </h3>
+                <div className="h-32 flex items-end justify-between gap-2 pt-4">
+                  {[
+                    { day: "M", pct: 40 },
+                    { day: "T", pct: 60 },
+                    { day: "W", pct: 35 },
+                    { day: "T", pct: 85 },
+                    { day: "F", pct: 70 },
+                    { day: "S", pct: 95 },
+                    { day: "S", pct: 50 },
+                  ].map((d, i) => (
+                    <div key={`${d.day}-${i}`} className="flex flex-col items-center gap-2 w-full group">
+                      <div className="w-full bg-indigo-500/10 border-2 border-border/40 rounded-t-xl relative flex items-end" style={{ height: "80px" }}>
+                        <div 
+                          className="w-full bg-gradient-to-t from-indigo-600 to-indigo-400 rounded-t-lg transition-all group-hover:from-indigo-500" 
+                          style={{ height: `${d.pct}%` }}
+                        />
+                      </div>
+                      <span className="text-[9px] font-bold text-muted-foreground">{d.day}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 8. Achievements */}
+              <div className="card-edu p-6 space-y-4">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
+                    🏆 Achievements
+                  </h3>
+                  <Link href="/progress/achievements" className="text-xs text-indigo-500 font-bold hover:underline">
+                    View all
+                  </Link>
+                </div>
+                <div className="space-y-3">
+                  {[
+                    { name: "First Steps", desc: "Completed onboarding tests", unlocked: true },
+                    { name: "Grammar Titan", desc: "Scored 100% in Conditional Quiz", unlocked: false },
+                  ].map((ach, i) => (
+                    <div key={i} className={`p-3 border-2 border-border rounded-xl flex items-center gap-3 bg-card ${ach.unlocked ? "border-indigo-500/20 bg-indigo-500/5" : ""}`}>
+                      <span className="text-lg">{ach.unlocked ? "🏆" : "🔒"}</span>
+                      <div>
+                        <span className="font-bold text-xs text-foreground block">{ach.name}</span>
+                        <span className="text-[9px] text-muted-foreground">{ach.desc}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 9. Learning Analytics (Mini Card) */}
+              <div className="card-edu p-6 space-y-4">
+                <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
+                  📊 Analytics Digest
+                </h3>
+                <div className="space-y-3 text-xs">
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>Average Accuracy</span>
+                    <span className="font-bold text-foreground">82%</span>
+                  </div>
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>Vocabulary diversity</span>
+                    <span className="font-bold text-foreground">High Range</span>
+                  </div>
+                  <Link href="/progress" className="block w-full pt-2">
+                    <Button variant="outline" className="w-full btn-edu h-10 text-xs border-2 font-bold">
+                      View Detailed Reports
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+
+            </div>
+
           </div>
-        </div>
-      </div>
 
-      {/* Floating AI Button */}
-      <div className="fixed bottom-20 right-6 md:bottom-10 md:right-10 z-40">
-        <Button size="icon" className="w-14 h-14 rounded-full shadow-lg shadow-primary/20 hover:scale-110 active:scale-95 transition-all group">
-          <Bot className="w-6 h-6 group-hover:hidden" />
-          <Sparkles className="w-6 h-6 hidden group-hover:block animate-pulse" />
-        </Button>
+        </div>
       </div>
     </div>
   );
