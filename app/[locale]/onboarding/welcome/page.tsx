@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useTranslations } from "next-intl";
 import { LanguageSelector } from "@/components/language-selector";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function OnboardingWelcomePage() {
   const t = useTranslations("onboarding");
@@ -21,7 +22,7 @@ export default function OnboardingWelcomePage() {
 
       <div className="w-full max-w-[500px] card-edu bg-card p-8 md:p-10 shadow-sm relative z-10 text-center">
         <header className="mb-8 flex flex-col items-center">
-          <div className="text-4xl animate-bounce flex-shrink-0 mb-4">🐲</div>
+          <ImageLogoWeb variant="mascot" className="animate-bounce flex-shrink-0 mb-4 w-12 h-12" />
           <div className="inline-flex items-center gap-2 bg-primary/10 border-2 border-primary/20 px-4 py-1.5 rounded-full mb-6 mx-auto">
             <Sparkles className="w-3.5 h-3.5 text-primary" />
             <span className="text-xs font-black uppercase tracking-widest text-primary text-heading">{t("welcome.step")}</span>

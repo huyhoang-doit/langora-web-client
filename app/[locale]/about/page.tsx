@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { PublicNavbar } from "@/components/public-navbar";
 import { PublicFooter } from "@/components/public-footer";
 import { useTranslations } from "next-intl";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function AboutPage() {
   const t = useTranslations();
@@ -99,7 +100,7 @@ export default function AboutPage() {
       {/* Ora Banner */}
       <section className="pb-20 px-6 md:px-12 max-w-5xl mx-auto relative z-10">
         <div className="card-edu p-8 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent border-primary/20 flex gap-5 items-start">
-          <span className="text-4xl animate-bounce flex-shrink-0">🐲</span>
+          <ImageLogoWeb variant="mascot" className="animate-bounce flex-shrink-0 w-12 h-12" />
           <div className="space-y-2">
             <h2 className="text-xl font-black text-primary text-heading">
               {t("about.ora_title")}

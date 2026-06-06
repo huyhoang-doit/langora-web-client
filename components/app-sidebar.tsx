@@ -105,7 +105,7 @@ export function AppSidebar() {
         onConfirm={() => {
           // TODO: gọi logout API / clear session
           toast.error("Logged out successfully", {
-            description: "See you next time! 🐲",
+            description: "See you next time!",
           });
           setLogoutOpen(false);
         }}
@@ -131,7 +131,7 @@ export function MobileBottomNav() {
       case "Home": return "🏠";
       case "Learn": return "🗺️";
       case "Vocab": return "📚";
-      case "Ora": return "🐲";
+      case "Ora": return "🤖";
       case "Profile": return "👤";
       default: return "🎯";
     }

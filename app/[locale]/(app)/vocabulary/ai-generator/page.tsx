@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, Sparkles, Wand2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function AIVocabularyGeneratorPage() {
   return (
@@ -26,7 +27,7 @@ export default function AIVocabularyGeneratorPage() {
         <div className="max-w-2xl mx-auto space-y-6 pt-6">
           {/* AI Banner with Mascot */}
           <div className="card-edu p-6 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent border-primary/20 flex gap-4 items-start">
-            <span className="text-3xl animate-bounce flex-shrink-0">🐲</span>
+            <ImageLogoWeb variant="mascot" className="animate-bounce flex-shrink-0 w-10 h-10" />
             <div>
               <h3 className="text-sm font-black text-primary uppercase tracking-widest text-heading flex items-center gap-1.5">
                 <Sparkles className="w-4 h-4 animate-pulse" /> Generate Custom Lexicons

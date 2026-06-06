@@ -28,15 +28,7 @@ import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-
-// Ora Mascot Icon component
-function OraMascot({ className = "w-8 h-8" }) {
-  return (
-    <div className={`rounded-full bg-indigo-500/10 border-2 border-indigo-500/20 flex items-center justify-center text-lg ${className}`}>
-      🐲
-    </div>
-  );
-}
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function DashboardPage() {
   const t = useTranslations();
@@ -53,7 +45,6 @@ export default function DashboardPage() {
       <header className="flex justify-between items-center w-full px-8 h-20 bg-background/80 backdrop-blur-xl border-b-2 border-border sticky top-0 z-30 flex-shrink-0">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-3">
-            <OraMascot className="w-10 h-10 text-xl" />
             <div>
               <h2 className="text-xl font-black text-foreground tracking-tight">Langora Workspace</h2>
               <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">Target: English B2</p>
@@ -106,8 +97,10 @@ export default function DashboardPage() {
               </Link>
             </div>
             {/* Background Mascot Illustration */}
-            <div className="absolute right-10 bottom-[-20px] opacity-10 group-hover:opacity-15 transition-opacity duration-300 pointer-events-none">
-              <span className="text-[120px] select-none">🐲</span>
+            <div className="absolute right-50 bottom-[-100px] opacity-30 group-hover:opacity-15 transition-opacity duration-300 pointer-events-none">
+              <span className="text-[120px] select-none">
+                <ImageLogoWeb variant="mascot" className="w-80 h-80" />
+              </span>
             </div>
           </div>
 
@@ -241,14 +234,14 @@ export default function DashboardPage() {
               {/* 6. AI Coach Insights (Ora Companion Card) */}
               <div className="card-edu p-6 border-indigo-500/30 bg-gradient-to-b from-indigo-500/5 to-transparent space-y-4">
                 <div className="flex items-center gap-2 text-indigo-500">
-                  <OraMascot className="w-8 h-8" />
+                  <ImageLogoWeb variant="mascot" className="w-12 h-12" />
                   <div>
                     <h3 className="text-xs font-black uppercase tracking-wider">AI Coach Insights</h3>
                     <p className="text-[9px] text-muted-foreground font-bold">Ora Companion feedback</p>
                   </div>
                 </div>
                 <div className="p-4 bg-muted/40 border-2 border-border/40 rounded-xl space-y-2 text-xs text-muted-foreground leading-relaxed">
-                  <p className="text-foreground font-bold">"Hey Hoang! 🐲"</p>
+                  <p className="text-foreground font-bold">"Hey Hoang!"</p>
                   <p>I noticed you are very consistent in vocabulary lessons, but your written essays shows occasional errors in past participles.</p>
                   <p className="font-bold text-indigo-500">Let's practice a custom grammar quiz today to resolve this.</p>
                 </div>

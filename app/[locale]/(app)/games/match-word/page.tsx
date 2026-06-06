@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft, Timer, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function MatchWordPage() {
   const leftColumn = ["Synergy", "Komorebi", "Petrichor", "Ubiquitous"];
@@ -79,7 +80,7 @@ export default function MatchWordPage() {
 
         {/* AI Ora Companion Hint */}
         <div className="w-full max-w-2xl card-edu p-4 bg-primary/5 border-primary/20 flex gap-3 items-center">
-          <span className="text-2xl flex-shrink-0 animate-bounce">🐲</span>
+          <ImageLogoWeb variant="mascot" className="flex-shrink-0 animate-bounce w-8 h-8" />
           <div className="text-xs">
             <span className="font-black text-primary text-heading block">Ora's Companion Tip</span>
             <span className="text-muted-foreground font-semibold">"Select a word card, then click its corresponding definition card to match them up!"</span>

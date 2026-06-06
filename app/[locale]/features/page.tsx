@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { PublicNavbar } from "@/components/public-navbar";
 import { PublicFooter } from "@/components/public-footer";
 import { useTranslations } from "next-intl";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function FeaturesPage() {
   const t = useTranslations();
@@ -79,7 +80,7 @@ export default function FeaturesPage() {
           {/* CTA Card */}
           <div className="card-edu p-8 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent border-primary/20 flex flex-col justify-between">
             <div>
-              <span className="text-3xl mb-4 block">🐲</span>
+              <ImageLogoWeb variant="mascot" className="mb-4 block w-10 h-10" />
               <h3 className="font-black text-xl text-heading mb-3">{t("features.cta_title")}</h3>
               <p className="text-sm text-muted-foreground font-semibold text-learning">
                 {t("features.cta_desc")}

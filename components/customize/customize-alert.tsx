@@ -13,6 +13,7 @@ import {
   AlertDialogPortal,
 } from "@/components/ui/alert-dialog";
 import { cn } from "@/lib/utils";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 // ─── Variant Config ───────────────────────────────────────────────────────────
 
@@ -82,7 +83,7 @@ export interface CustomizeAlertProps {
   cancelLabel?: string;
   onConfirm?: () => void;
   onCancel?: () => void;
-  /** Hiển thị mascot Ora 🐲 bên cạnh icon */
+  /** Hiển thị mascot Ora bên cạnh icon */
   showOra?: boolean;
   /** Custom icon ghi đè icon mặc định của variant */
   icon?: React.ReactNode;
@@ -152,9 +153,7 @@ export function CustomizeAlert({
                   {icon ?? <Icon className={cn("w-5 h-5", config.iconColor)} />}
                 </div>
                 {showOra && (
-                  <span className="text-xl animate-bounce" style={{ animationDuration: "2s" }}>
-                    🐲
-                  </span>
+                  <ImageLogoWeb variant="mascot" className="animate-bounce w-6 h-6" />
                 )}
               </div>
 

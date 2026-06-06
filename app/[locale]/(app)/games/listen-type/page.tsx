@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, Timer, Volume2, RotateCcw, Keyboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function ListenTypePage() {
   return (
@@ -53,7 +54,7 @@ export default function ListenTypePage() {
 
           {/* AI Ora Companion Hint */}
           <div className="card-edu p-4 bg-primary/5 border-primary/20 flex gap-3 items-center text-left">
-            <span className="text-2xl flex-shrink-0 animate-bounce">🐲</span>
+            <ImageLogoWeb variant="mascot" className="flex-shrink-0 animate-bounce w-8 h-8" />
             <div className="text-xs">
               <span className="font-black text-primary text-heading block">Ora's Companion Tip</span>
               <span className="text-muted-foreground font-semibold">"Need help? Press the play button. You can replay the audio sample as many times as you need!"</span>

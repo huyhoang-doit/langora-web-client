@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function GameResultPage() {
   const stats = [
@@ -30,7 +31,7 @@ export default function GameResultPage() {
       <div className="flex-grow overflow-y-auto p-6 flex flex-col items-center justify-center gap-8 scrollbar-thin">
         <div className="w-full max-w-xl text-center space-y-8">
           <div className="space-y-3">
-            <div className="text-6xl animate-bounce mb-2">🐲</div>
+            <ImageLogoWeb variant="mascot" className="animate-bounce mb-2 w-20 h-20" />
             <h2 className="text-2xl font-black text-foreground text-heading">Congratulations!</h2>
             <p className="text-sm text-muted-foreground max-w-md mx-auto font-semibold">
               Ora is super proud of you! You performed exceptionally in matching words and earned bonus XP for completing the test quickly.

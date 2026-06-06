@@ -3,6 +3,7 @@
 import { Shield, Sparkles } from "lucide-react";
 import { PublicNavbar } from "@/components/public-navbar";
 import { PublicFooter } from "@/components/public-footer";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 const sections = [
   {
@@ -65,7 +66,7 @@ export default function PrivacyPolicyPage() {
         ))}
 
         <div className="card-edu p-6 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent border-primary/20 flex gap-3 items-start">
-          <span className="text-2xl flex-shrink-0">🐲</span>
+          <ImageLogoWeb variant="mascot" className="flex-shrink-0 w-8 h-8" />
           <p className="text-sm text-muted-foreground font-semibold text-learning">
             Questions about your privacy?{" "}
             <a href="/contact" className="text-primary font-black hover:underline text-heading">

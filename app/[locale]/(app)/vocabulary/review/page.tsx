@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft, Clock, Star, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function VocabularyReviewPage() {
   const dueReview = [
@@ -34,7 +35,7 @@ export default function VocabularyReviewPage() {
           {/* SRS Banner with Mascot */}
           <div className="card-edu p-6 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent border-primary/20 flex gap-4 items-start md:items-center justify-between flex-col md:flex-row">
             <div className="flex gap-4 items-start">
-              <span className="text-3xl animate-bounce flex-shrink-0">🐲</span>
+              <ImageLogoWeb variant="mascot" className="animate-bounce flex-shrink-0 w-10 h-10" />
               <div>
                 <h3 className="text-sm font-black text-primary uppercase tracking-widest text-heading flex items-center gap-1.5 mb-1">
                   <Star className="w-4 h-4 animate-pulse" /> SRS Review Ready

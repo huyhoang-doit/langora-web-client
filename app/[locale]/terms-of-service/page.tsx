@@ -4,6 +4,7 @@ import { FileText } from "lucide-react";
 import { PublicNavbar } from "@/components/public-navbar";
 import { PublicFooter } from "@/components/public-footer";
 import { useTranslations } from "next-intl";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function TermsOfServicePage() {
   const t = useTranslations("terms");
@@ -52,7 +53,7 @@ export default function TermsOfServicePage() {
         ))}
 
         <div className="card-edu p-6 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent border-primary/20 flex gap-3 items-start">
-          <span className="text-2xl flex-shrink-0">🐲</span>
+          <ImageLogoWeb variant="mascot" className="flex-shrink-0 w-8 h-8" />
           <p className="text-sm text-muted-foreground font-semibold text-learning">
             {t("contact_prompt")}{" "}
             <a href="/contact" className="text-primary font-black hover:underline text-heading">

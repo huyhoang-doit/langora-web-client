@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function WritingProgressPage() {
   const stats = [
@@ -41,7 +42,7 @@ export default function WritingProgressPage() {
 
           {/* Diagnostic Banner with Ora */}
           <div className="card-edu p-6 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent border-primary/20 flex gap-4 items-start">
-            <span className="text-3xl animate-bounce flex-shrink-0">🐲</span>
+            <ImageLogoWeb variant="mascot" className="animate-bounce flex-shrink-0 w-10 h-10" />
             <div className="flex-1 space-y-2">
               <h3 className="text-sm font-black text-primary uppercase tracking-widest text-heading flex items-center gap-1.5">
                 <Sparkles className="w-4 h-4 animate-pulse" /> Coherence Diagnostics

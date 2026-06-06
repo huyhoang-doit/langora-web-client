@@ -5,6 +5,7 @@ import React, { use } from "react";
 import { ArrowLeft, Sparkles, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 interface ScenarioPageProps {
   params: Promise<{ id: string }>;
@@ -42,7 +43,7 @@ export default function ScenarioDetailPage({ params }: ScenarioPageProps) {
         <div className="max-w-3xl mx-auto space-y-6">
           {/* Writing Prompt Card with Mascot */}
           <div className="card-edu p-6 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent border-primary/20 flex gap-4 items-start">
-            <span className="text-3xl animate-bounce flex-shrink-0">🐲</span>
+            <ImageLogoWeb variant="mascot" className="animate-bounce flex-shrink-0 w-10 h-10" />
             <div className="flex-1 space-y-1">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-black text-primary uppercase tracking-widest text-heading flex items-center gap-1.5">

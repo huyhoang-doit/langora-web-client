@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft, Flame, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function StreakCalendarPage() {
   const days = [
@@ -40,7 +41,7 @@ export default function StreakCalendarPage() {
         <div className="max-w-xl mx-auto space-y-6 pt-6">
           {/* Milestone Banner with Ora */}
           <div className="card-edu p-6 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent border-primary/20 flex gap-4 items-center">
-            <span className="text-4xl animate-bounce flex-shrink-0">🐲</span>
+            <ImageLogoWeb variant="mascot" className="animate-bounce flex-shrink-0 w-12 h-12" />
             <div className="text-center flex-1">
               <h3 className="text-base font-black text-primary text-heading mb-1">15-Day Milestone Reached!</h3>
               <p className="text-xs text-muted-foreground leading-relaxed text-learning font-semibold">

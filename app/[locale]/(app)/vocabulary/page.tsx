@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CustomizePagination } from "@/components/customize/customize-pagination";
 import { CustomizeAlert } from "@/components/customize/customize-alert";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 const ALL_WORDS = [
   {
@@ -282,7 +283,7 @@ export default function VocabularyPage() {
 
               {/* Mascot decoration */}
               <div className="absolute right-6 bottom-[-20px] opacity-10 group-hover:opacity-15 transition-opacity duration-300 pointer-events-none">
-                <span className="text-7xl select-none">🐲</span>
+                <ImageLogoWeb variant="mascot" className="select-none w-24 h-24" />
               </div>
             </div>
           </div>

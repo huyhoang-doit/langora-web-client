@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { PublicNavbar } from "@/components/public-navbar";
 import { PublicFooter } from "@/components/public-footer";
 import { useTranslations } from "next-intl";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function PricingPage() {
   const t = useTranslations("pricing");
@@ -142,7 +143,7 @@ export default function PricingPage() {
 
         {/* Guarantee */}
         <div className="mt-12 card-edu p-6 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent border-primary/20 flex gap-4 items-center max-w-2xl mx-auto">
-          <span className="text-3xl flex-shrink-0">🐲</span>
+          <ImageLogoWeb variant="mascot" className="flex-shrink-0 w-10 h-10" />
           <p className="text-sm text-muted-foreground font-semibold text-learning">
             {t("guarantee")}
           </p>

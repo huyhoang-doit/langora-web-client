@@ -4,10 +4,11 @@ import Link from "next/link";
 import { Bot, Send, Mic, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function AIChatPage() {
   const messages = [
-    { sender: "ora", text: "Hello! I am Ora, your AI companion. Would you like to practice speaking, review vocabulary, or examine your writing today? 🐲" },
+    { sender: "ora", text: "Hello! I am Ora, your AI companion. Would you like to practice speaking, review vocabulary, or examine your writing today?" },
     { sender: "user", text: "I want to review conditional grammar structures." },
     { sender: "ora", text: "Perfect! Let's start with a quick inversion question: 'Hardly had I arrived...' What auxiliary verb comes next?" },
   ];
@@ -17,9 +18,7 @@ export default function AIChatPage() {
       {/* Header */}
       <header className="flex justify-between items-center px-6 h-16 bg-background/80 backdrop-blur-xl border-b-2 border-border/60 sticky top-0 z-30 flex-shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-primary font-black">
-            🐲
-          </div>
+          <ImageLogoWeb variant="mascot" className="w-10 h-10 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-primary font-black w-8 h-8" />
           <div>
             <h2 className="text-base font-black text-foreground flex items-center gap-1.5 text-heading">
               Ora AI Companion <span className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
@@ -47,9 +46,7 @@ export default function AIChatPage() {
             return (
               <div key={idx} className={`flex gap-3 max-w-[85%] ${isOra ? "mr-auto" : "ml-auto flex-row-reverse"}`}>
                 {isOra && (
-                  <div className="w-9 h-9 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-sm flex-shrink-0 self-end">
-                    🐲
-                  </div>
+                  <ImageLogoWeb variant="mascot" className="w-9 h-9 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-sm flex-shrink-0 self-end w-8 h-8" />
                 )}
                 <div className={`p-4 rounded-2xl text-xs md:text-sm leading-relaxed ${
                   isOra 

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft, AlertCircle, Volume2, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function DifficultWordsPage() {
   const difficultWords = [
@@ -30,7 +31,7 @@ export default function DifficultWordsPage() {
         <div className="max-w-3xl mx-auto space-y-6">
           {/* Warning Card with Mascot */}
           <div className="card-edu p-6 bg-destructive/5 border-destructive/20 flex gap-4 items-start">
-            <span className="text-3xl animate-bounce flex-shrink-0">🐲</span>
+            <ImageLogoWeb variant="mascot" className="animate-bounce flex-shrink-0 w-10 h-10" />
             <div>
               <h3 className="text-sm font-black text-destructive uppercase tracking-widest text-heading flex items-center gap-1.5">
                 <AlertCircle className="w-4 h-4" /> Weakness Analysis

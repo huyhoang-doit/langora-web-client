@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft, Sparkles, Wand2, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function PersonalizedQuizPage() {
   return (
@@ -24,7 +25,7 @@ export default function PersonalizedQuizPage() {
       <div className="flex-grow overflow-y-auto p-6 flex flex-col items-center justify-center gap-8 scrollbar-thin">
         <div className="w-full max-w-md space-y-6 text-center">
           <div className="w-20 h-20 bg-primary/10 rounded-2xl border-2 border-primary/20 flex items-center justify-center mx-auto text-primary relative">
-            <span className="text-4xl animate-bounce">🐲</span>
+            <ImageLogoWeb variant="mascot" className="animate-bounce w-12 h-12" />
             <Sparkles className="w-5 h-5 absolute -top-1 -right-1 text-yellow-500 animate-pulse" />
           </div>
 

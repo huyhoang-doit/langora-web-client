@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { PublicNavbar } from "@/components/public-navbar";
 import { PublicFooter } from "@/components/public-footer";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -91,9 +92,7 @@ export default function BlogPostPage({ params }: PageProps) {
           <div className="flex items-center justify-between py-4 border-y-2 border-border/60 text-xs text-muted-foreground font-bold">
             <div className="flex items-center gap-5 flex-wrap">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-sm">
-                  🐲
-                </div>
+                <ImageLogoWeb variant="mascot" className="w-7 h-7 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-sm w-8 h-8" />
                 <span className="font-black text-foreground text-heading">
                   {postInfo.author}
                 </span>
@@ -172,7 +171,7 @@ export default function BlogPostPage({ params }: PageProps) {
 
           {/* Ora tip box */}
           <div className="card-edu p-6 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent border-primary/20 flex gap-4 items-start">
-            <span className="text-3xl animate-bounce flex-shrink-0">🐲</span>
+            <ImageLogoWeb variant="mascot" className="animate-bounce flex-shrink-0 w-10 h-10" />
             <div>
               <h3 className="text-sm font-black text-primary uppercase tracking-widest mb-1 text-heading flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 animate-pulse" /> Ora&apos;s Tip
@@ -223,7 +222,7 @@ export default function BlogPostPage({ params }: PageProps) {
               Ready to apply what you&apos;ve learned?
             </h3>
             <p className="text-sm text-muted-foreground font-semibold text-learning mb-5">
-              Start your personalized language journey with Langora and Ora 🐲.
+              Start your personalized language journey with Langora and Ora.
             </p>
             <Link href="/register">
               <Button className="btn-edu h-11 px-8 text-xs border-2 bg-primary text-primary-foreground hover:bg-primary/90 font-black uppercase tracking-wide">

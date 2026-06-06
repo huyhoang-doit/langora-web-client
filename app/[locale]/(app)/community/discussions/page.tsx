@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft, MessageSquare, Plus, ChevronRight, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function DiscussionsPage() {
   const discussions = [
@@ -35,7 +36,7 @@ export default function DiscussionsPage() {
         <div className="max-w-3xl mx-auto space-y-4 pt-4">
           {/* Welcome Banner with Mascot */}
           <div className="card-edu p-4 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent border-primary/20 flex gap-4 items-center">
-            <span className="text-3xl animate-bounce">🐲</span>
+            <ImageLogoWeb variant="mascot" className="animate-bounce w-10 h-10" />
             <div>
               <span className="font-black text-primary text-heading block">Ora's Community Guideline</span>
               <span className="text-xs text-muted-foreground font-semibold">"Share your learning hacks or ask grammar questions here. Helping others is a great way to reinforce your own knowledge!"</span>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft, Flame, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function VocabularyChallengePage() {
   return (
@@ -61,7 +62,7 @@ export default function VocabularyChallengePage() {
 
           {/* AI Ora Companion Hint */}
           <div className="card-edu p-4 bg-primary/5 border-primary/20 flex gap-3 items-center">
-            <span className="text-2xl flex-shrink-0 animate-bounce">🐲</span>
+            <ImageLogoWeb variant="mascot" className="flex-shrink-0 animate-bounce w-8 h-8" />
             <div className="text-xs">
               <span className="font-black text-primary text-heading block">Ora's Companion Tip</span>
               <span className="text-muted-foreground font-semibold">"This word has Japanese origins and describes a beautiful forest light effect!"</span>

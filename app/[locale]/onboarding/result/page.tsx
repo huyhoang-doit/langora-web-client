@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useTranslations } from "next-intl";
 import { LanguageSelector } from "@/components/language-selector";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function OnboardingResultPage() {
   const t = useTranslations("onboarding");
@@ -24,7 +25,7 @@ export default function OnboardingResultPage() {
         {/* Ora Celebrate */}
         <div className="flex justify-center items-end gap-2 mb-4">
           <span className="text-3xl animate-bounce" style={{ animationDelay: "0.1s" }}>🎉</span>
-          <span className="text-5xl">🐲</span>
+          <ImageLogoWeb variant="mascot" className="w-16 h-16" />
           <span className="text-3xl animate-bounce" style={{ animationDelay: "0.2s" }}>🎉</span>
         </div>
 

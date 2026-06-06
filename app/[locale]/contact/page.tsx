@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { PublicNavbar } from "@/components/public-navbar";
 import { PublicFooter } from "@/components/public-footer";
 import { useTranslations } from "next-intl";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function ContactPage() {
   const t = useTranslations();
@@ -70,7 +71,7 @@ export default function ContactPage() {
 
             {/* Status */}
             <div className="card-edu p-6 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent border-primary/20 flex gap-3 items-start">
-              <span className="text-2xl flex-shrink-0">🐲</span>
+              <ImageLogoWeb variant="mascot" className="flex-shrink-0 w-8 h-8" />
               <div>
                 <h3 className="font-black text-sm text-heading mb-1">Technical Status</h3>
                 <p className="text-muted-foreground text-xs leading-relaxed font-semibold text-learning">

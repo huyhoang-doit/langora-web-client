@@ -152,7 +152,7 @@ export default function LoginPage() {
             <form className="space-y-4" onSubmit={(e) => {
               e.preventDefault();
               toast.success("Login Successful", {
-                description: "Welcome back to Langora! 🐲",
+                description: "Welcome back to Langora!",
               });
               router.push("/dashboard");
             }}>

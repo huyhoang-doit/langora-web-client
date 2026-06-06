@@ -7,6 +7,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { Progress } from "@/components/ui/progress";
 import { useTranslations } from "next-intl";
 import { LanguageSelector } from "@/components/language-selector";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function OnboardingPlacementTestPage() {
   const t = useTranslations("onboarding");
@@ -46,7 +47,7 @@ export default function OnboardingPlacementTestPage() {
 
         {/* Ora Companion */}
         <div className="mb-6 p-4 bg-primary/5 border-2 border-primary/15 rounded-2xl flex items-center gap-3">
-          <span className="text-2xl flex-shrink-0">🐲</span>
+          <ImageLogoWeb variant="mascot" className="flex-shrink-0 w-8 h-8" />
           <p className="text-xs text-muted-foreground font-semibold text-learning leading-relaxed">
             {t("placement.instruction")}
           </p>

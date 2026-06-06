@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export default function CommunityPage() {
   const posts = [
-    { author: "Minh Tri", role: "IELTS Learner", text: "Just achieved my daily streak goal! Studying conditional type 3 structures today. The AI remarks really helped with tense consistency. 🐲", likes: 12, comments: 4 },
+    { author: "Minh Tri", role: "IELTS Learner", text: "Just achieved my daily streak goal! Studying conditional type 3 structures today. The AI remarks really helped with tense consistency.", likes: 12, comments: 4 },
     { author: "Phuong Anh", role: "Business English", text: "Does anyone have a good flashcard list for corporate negotiations? Would love to match deck templates.", likes: 8, comments: 7 },
   ];
 

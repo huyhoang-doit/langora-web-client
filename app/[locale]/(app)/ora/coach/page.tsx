@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft, Sparkles, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ImageLogoWeb from "@/components/image-logo-web";
 
 export default function AICoachPage() {
   const objectives = [
@@ -30,9 +31,7 @@ export default function AICoachPage() {
       <div className="flex-grow overflow-y-auto p-6 scrollbar-thin">
         <div className="max-w-3xl mx-auto space-y-6">
           <div className="card-edu p-6 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent border-primary/20 flex flex-col sm:flex-row gap-4 items-start">
-            <span className="w-12 h-12 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-xl flex-shrink-0">
-              🐲
-            </span>
+            <ImageLogoWeb variant="mascot" className="w-12 h-12 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center flex-shrink-0 w-6 h-6" />
             <div>
               <h3 className="text-sm font-black text-primary uppercase tracking-widest flex items-center gap-1.5 text-heading">
                 <Sparkles className="w-4 h-4 animate-pulse" /> Coach Diagnostic
