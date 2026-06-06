@@ -1,37 +1,42 @@
-import Link from "next/link";
+"use client";
 
-const footerCols = [
-  {
-    heading: "Product",
-    links: [
-      { label: "Features", href: "/features" },
-      { label: "Pricing", href: "/pricing" },
-    ],
-  },
-  {
-    heading: "Resources",
-    links: [
-      { label: "Blog", href: "/blog" },
-      { label: "Documentation", href: "#" },
-    ],
-  },
-  {
-    heading: "Company",
-    links: [
-      { label: "About Us", href: "/about" },
-      { label: "Contact", href: "/contact" },
-    ],
-  },
-  {
-    heading: "Legal",
-    links: [
-      { label: "Privacy Policy", href: "/privacy-policy" },
-      { label: "Terms of Service", href: "/terms-of-service" },
-    ],
-  },
-];
+import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export function PublicFooter() {
+  const t = useTranslations();
+
+  const footerCols = [
+    {
+      heading: t("footer.product"),
+      links: [
+        { label: t("footer.features"), href: "/features" },
+        { label: t("footer.pricing"), href: "/pricing" },
+      ],
+    },
+    {
+      heading: t("footer.resources"),
+      links: [
+        { label: t("footer.blog"), href: "/blog" },
+        { label: t("footer.docs"), href: "#" },
+      ],
+    },
+    {
+      heading: t("footer.company"),
+      links: [
+        { label: t("footer.about"), href: "/about" },
+        { label: t("footer.contact"), href: "/contact" },
+      ],
+    },
+    {
+      heading: t("footer.legal"),
+      links: [
+        { label: t("footer.privacy"), href: "/privacy-policy" },
+        { label: t("footer.terms"), href: "/terms-of-service" },
+      ],
+    },
+  ];
+
   return (
     <footer className="bg-card/40 border-t-2 border-border/80 mt-0">
       <div className="grid grid-cols-2 md:grid-cols-5 gap-10 px-6 md:px-12 py-16 max-w-7xl mx-auto">
@@ -49,11 +54,10 @@ export function PublicFooter() {
             </span>
           </Link>
           <p className="text-sm text-muted-foreground max-w-xs mb-4 leading-relaxed font-medium">
-            Engineered for cognitive clarity. Nền tảng học ngôn ngữ thế hệ mới
-            được hỗ trợ bởi trí tuệ nhân tạo.
+            {t("footer.tagline")}
           </p>
           <div className="text-xs text-muted-foreground font-semibold">
-            © 2024 Langora. All rights reserved.
+            {t("footer.copyright")}
           </div>
         </div>
 

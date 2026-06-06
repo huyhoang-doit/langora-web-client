@@ -4,17 +4,22 @@ import Link from "next/link";
 import { Sparkles, ArrowRight, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { useTranslations } from "next-intl";
+import { LanguageSelector } from "@/components/language-selector";
 
 export default function OnboardingSelectLanguagePage() {
+  const t = useTranslations("onboarding");
+
   const languages = [
-    { code: "english", label: "English", native: "Tiếng Anh", desc: "Learn grammar, professional vocab, or prep for IELTS/TOEIC." },
-    { code: "japanese", label: "Japanese", native: "日本語", desc: "Master kanji, JLPT vocabulary, and natural speaking." },
-    { code: "chinese", label: "Chinese", native: "中文", desc: "Practice tones, HSK vocab, and characters (Coming Soon)." },
+    { code: "english", label: t("language.en_label"), native: t("language.en_native"), desc: t("language.en_desc"), flag: "🇬🇧" },
+    { code: "japanese", label: t("language.ja_label"), native: t("language.ja_native"), desc: t("language.ja_desc"), flag: "🇯🇵" },
+    { code: "chinese", label: t("language.zh_label"), native: t("language.zh_native"), desc: t("language.zh_desc"), flag: "🇨🇳", soon: true },
   ];
 
   return (
     <main className="flex min-h-screen text-foreground bg-background relative items-center justify-center px-6 md:px-12" id="onboarding-select-language-page">
-      <div className="absolute top-6 right-6 z-50">
+      <div className="flex items-center gap-2 absolute top-6 right-6 z-50">
+        <LanguageSelector variant="compact" />
         <ThemeToggle />
       </div>
 
@@ -24,36 +29,47 @@ export default function OnboardingSelectLanguagePage() {
         <header className="mb-8 text-center flex flex-col items-center">
           <div className="inline-flex items-center gap-2 bg-primary/10 border-2 border-primary/20 px-4 py-1.5 rounded-full mb-6 mx-auto">
             <Sparkles className="w-3.5 h-3.5 text-primary" />
-            <span className="text-xs font-black uppercase tracking-widest text-primary text-heading">Onboarding Step 2 of 6</span>
+            <span className="text-xs font-black uppercase tracking-widest text-primary text-heading">{t("language.step")}</span>
           </div>
-          <h1 className="text-2xl font-black text-foreground mb-2 text-heading">What language do you want to learn?</h1>
-          <p className="text-muted-foreground text-sm font-medium">Select your target language. You can change this later.</p>
+          <h1 className="text-2xl font-black text-foreground mb-2 text-heading leading-tight">{t("language.title")}</h1>
+          <p className="text-muted-foreground text-sm font-semibold text-learning">{t("language.desc")}</p>
         </header>
 
-        <div className="space-y-4 mb-8">
-          {languages.map(({ code, label, native, desc }) => (
+        <div className="space-y-3 mb-8">
+          {languages.map(({ code, label, native, desc, flag, soon }) => (
             <button
               key={code}
-              className="w-full text-left p-4 card-edu card-edu-interactive bg-card/45 hover:bg-muted/10 flex justify-between items-center group cursor-pointer"
+              className="card-edu card-edu-interactive w-full text-left p-4 bg-card/45 flex justify-between items-center group cursor-pointer relative"
             >
-              <div>
-                <span className="font-black text-sm block text-heading text-foreground">{label} <span className="text-xs text-muted-foreground font-normal">({native})</span></span>
-                <span className="text-xs text-muted-foreground mt-1 block font-medium leading-relaxed">{desc}</span>
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">{flag}</span>
+                <div>
+                  <span className="font-black text-sm block text-heading text-foreground">
+                    {label}{" "}
+                    <span className="text-xs text-muted-foreground font-semibold">({native})</span>
+                    {soon && (
+                      <span className="ml-2 text-[9px] uppercase font-black tracking-widest bg-primary/10 text-primary border border-primary/20 px-1.5 py-0.5 rounded-full">
+                        Soon
+                      </span>
+                    )}
+                  </span>
+                  <span className="text-xs text-muted-foreground mt-0.5 block font-medium leading-relaxed text-learning">{desc}</span>
+                </div>
               </div>
               <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0 ml-2" />
             </button>
           ))}
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex gap-3">
           <Link href="/onboarding/welcome" className="flex-1">
-            <Button variant="outline" className="btn-edu w-full py-6 text-sm border-2 bg-transparent text-foreground hover:bg-muted">
-              <ArrowLeft className="w-4 h-4 mr-1.5" /> Back
+            <Button variant="outline" className="btn-edu w-full py-6 border-2 bg-transparent text-foreground hover:bg-muted">
+              <ArrowLeft className="w-4 h-4 mr-1.5" /> {t("language.back")}
             </Button>
           </Link>
           <Link href="/onboarding/learning-goal" className="flex-1">
-            <Button className="btn-edu w-full py-6 text-sm border-2 bg-primary text-primary-foreground hover:bg-primary/90">
-              Continue
+            <Button className="btn-edu w-full py-6 border-2 bg-primary text-primary-foreground hover:bg-primary/90">
+              {t("language.continue")}
             </Button>
           </Link>
         </div>

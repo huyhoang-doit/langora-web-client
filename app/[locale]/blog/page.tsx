@@ -1,35 +1,38 @@
 "use client";
 
 import Link from "next/link";
-import { BookOpen, Clock, ChevronRight, Sparkles } from "lucide-react";
+import { Clock, ChevronRight, Sparkles } from "lucide-react";
 import { PublicNavbar } from "@/components/public-navbar";
 import { PublicFooter } from "@/components/public-footer";
+import { useTranslations } from "next-intl";
 
 export default function BlogPage() {
+  const t = useTranslations("blog");
+
   const posts = [
     {
       slug: "cognitive-science-spaced-repetition",
-      title: "How Cognitive Science and Spaced Repetition Supercharges Vocabulary Learning",
-      desc: "An in-depth look at how the forgetting curve governs language retention and how SRS algorithms optimize flashcard study intervals.",
+      title: t("post1_title"),
+      desc: t("post1_desc"),
       date: "June 1, 2026",
       readTime: "5 min read",
-      category: "Methodology",
+      category: t("post1_cat"),
     },
     {
       slug: "ai-writing-coaching-techniques",
-      title: "Beyond Autocorrect: How AI Can Teach You to Write Like a Native Speaker",
-      desc: "Traditional grammar checkers only fix typos. Discover how LLMs provide context-specific style suggestions to enhance your written expression.",
+      title: t("post2_title"),
+      desc: t("post2_desc"),
       date: "May 25, 2026",
       readTime: "7 min read",
-      category: "AI Technology",
+      category: t("post2_cat"),
     },
     {
       slug: "ielts-writing-band-8-guide",
-      title: "Step-by-Step Writing Plan for Reaching IELTS Band 8.0+",
-      desc: "Actionable tips, templates, and vocabulary lists tailored for advanced candidates preparing for academic writing tasks.",
+      title: t("post3_title"),
+      desc: t("post3_desc"),
       date: "May 18, 2026",
       readTime: "10 min read",
-      category: "IELTS Prep",
+      category: t("post3_cat"),
     },
   ];
 
@@ -45,16 +48,16 @@ export default function BlogPage() {
       <section className="pt-40 pb-16 px-6 md:px-12 max-w-5xl mx-auto relative z-10">
         <div className="inline-flex items-center gap-2 bg-primary/10 border-2 border-primary/20 px-4 py-1.5 rounded-full mb-6">
           <Sparkles className="w-3.5 h-3.5 text-primary" />
-          <span className="text-xs font-black uppercase tracking-widest text-primary">Langora Insights</span>
+          <span className="text-xs font-black uppercase tracking-widest text-primary">{t("badge")}</span>
         </div>
         <h1 className="text-4xl md:text-5xl font-black mb-4 tracking-tight text-heading leading-[1.1]">
-          Language &{" "}
+          {t("title")}{" "}
           <span className="bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-400 bg-clip-text text-transparent">
-            AI Research
+            {t("title_highlight")}
           </span>
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed font-medium">
-          Linguistic insights, AI research, and actionable learning strategies from our engineering team.
+          {t("desc")}
         </p>
       </section>
 

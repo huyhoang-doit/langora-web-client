@@ -4,8 +4,11 @@ import Link from "next/link";
 import { Sparkles, Mail, CheckCircle2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { useTranslations } from "next-intl";
 
 export default function VerifyEmailPage() {
+  const t = useTranslations();
+
   return (
     <main className="flex min-h-screen text-foreground bg-background relative items-center justify-center px-6 md:px-12" id="verify-email-page">
       {/* Theme Toggle Absolute */}
@@ -23,24 +26,24 @@ export default function VerifyEmailPage() {
           <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-primary/20">
             <Mail className="w-8 h-8 text-primary" />
           </div>
-          <h2 className="text-2xl font-bold text-foreground mb-2 tracking-tight">Verify Email</h2>
-          <p className="text-muted-foreground text-sm">We've sent a verification link to your email address. Please click the link to verify your account.</p>
+          <h2 className="text-2xl font-bold text-foreground mb-2 tracking-tight">{t("auth.verify_title")}</h2>
+          <p className="text-muted-foreground text-sm">{t("auth.verify_subtitle")}</p>
         </header>
 
         <div className="space-y-4">
-          <p className="text-xs text-muted-foreground">Didn't receive the email? Check your spam folder or request a new link.</p>
+          <p className="text-xs text-muted-foreground">{t("auth.verify_didnt_receive")}</p>
           <Button
             variant="outline"
             className="w-full py-6 rounded-xl font-bold border-primary/20 text-primary hover:bg-primary/10 transition-all"
           >
-            Resend Verification Link
+            {t("auth.verify_resend")}
           </Button>
 
           <Link href="/login" className="block w-full">
             <Button
               className="w-full py-6 rounded-xl font-bold hover:shadow-[0_0_20px_rgba(168,240,106,0.3)] transition-all flex items-center justify-center gap-2"
             >
-              Continue to Login
+              {t("auth.verify_continue")}
               <ArrowRight className="w-4 h-4" />
             </Button>
           </Link>
@@ -48,7 +51,7 @@ export default function VerifyEmailPage() {
       </div>
 
       <div className="absolute bottom-6 text-center">
-        <p className="text-xs text-muted-foreground/60">© 2024 Langora. Engineered for cognitive clarity.</p>
+        <p className="text-xs text-muted-foreground/60">{t("auth.copyright")}</p>
       </div>
     </main>
   );

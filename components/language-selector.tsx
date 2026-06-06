@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { ChevronDown, Globe } from "lucide-react";
-import { useRouter } from "@/i18n/navigation";
-import { usePathname } from "next/navigation";
+import { useRouter, usePathname } from "@/i18n/navigation";
+import { useLocale } from "next-intl";
 import { useLanguageStore } from "@/stores/ui-language.store";
 
 export const languages = [
@@ -28,16 +28,15 @@ export function LanguageSelector({
 }: LanguageSelectorProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const { locale, setLocale } = useLanguageStore();
+  const currentLocale = useLocale();
+  const { setLocale } = useLanguageStore();
   const [open, setOpen] = useState(false);
 
-  const selected = languages.find((l) => l.code === locale) || languages[0];
+  const selected = languages.find((l) => l.code === currentLocale) || languages[0];
 
   const handleLanguageChange = (newLocale: string) => {
     setLocale(newLocale);
-    const segments = pathname.split("/");
-    segments[1] = newLocale;
-    router.push(segments.join("/"));
+    router.push(pathname, { locale: newLocale });
   };
 
   /* ---------- FULL variant: inline stacked list (sidebar use) ---------- */

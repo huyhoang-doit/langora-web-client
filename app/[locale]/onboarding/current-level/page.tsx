@@ -1,60 +1,99 @@
 "use client";
 
 import Link from "next/link";
-import { Sparkles, ArrowRight, ArrowLeft } from "lucide-react";
+import { Sparkles, ArrowRight, ArrowLeft, Zap, BookOpen, Trophy, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { useTranslations } from "next-intl";
+import { LanguageSelector } from "@/components/language-selector";
 
 export default function OnboardingCurrentLevelPage() {
+  const t = useTranslations("onboarding");
+
   const levels = [
-    { code: "beginner", label: "Absolute Beginner", desc: "I am starting from scratch. I don't know basic vocabulary or grammar yet." },
-    { code: "intermediate", label: "Intermediate Learner", desc: "I can construct basic paragraphs and comprehend slow conversations." },
-    { code: "advanced", label: "Advanced Speaker", desc: "I communicate fluently but need to master complex grammar and style structures." },
-    { code: "unsure", label: "I am not sure (Recommend Placement Test)", desc: "Take a 5-minute AI assessment to test your reading, vocab, and syntax." },
+    {
+      code: "beginner",
+      icon: BookOpen,
+      label: t("level.beginner_label"),
+      desc: t("level.beginner_desc"),
+      color: "text-blue-500",
+      bg: "bg-blue-500/10 border-blue-500/20",
+    },
+    {
+      code: "intermediate",
+      icon: Zap,
+      label: t("level.intermediate_label"),
+      desc: t("level.intermediate_desc"),
+      color: "text-amber-500",
+      bg: "bg-amber-500/10 border-amber-500/20",
+    },
+    {
+      code: "advanced",
+      icon: Trophy,
+      label: t("level.advanced_label"),
+      desc: t("level.advanced_desc"),
+      color: "text-primary",
+      bg: "bg-primary/10 border-primary/20",
+    },
+    {
+      code: "unsure",
+      icon: HelpCircle,
+      label: t("level.unsure_label"),
+      desc: t("level.unsure_desc"),
+      color: "text-muted-foreground",
+      bg: "bg-muted/40 border-border",
+      special: true,
+    },
   ];
 
   return (
     <main className="flex min-h-screen text-foreground bg-background relative items-center justify-center px-6 md:px-12" id="onboarding-current-level-page">
-      <div className="absolute top-6 right-6 z-50">
+      <div className="flex items-center gap-2 absolute top-6 right-6 z-50">
+        <LanguageSelector variant="compact" />
         <ThemeToggle />
       </div>
 
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(147,217,86,0.06),transparent_50%)] pointer-events-none" />
 
-      <div className="w-full max-w-[500px] glass rounded-xl p-8 md:p-10 shadow-sm relative z-10">
-        <header className="mb-8 text-center">
-          <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-full mb-6 mx-auto">
+      <div className="w-full max-w-[520px] card-edu bg-card p-8 md:p-10 shadow-sm relative z-10">
+        <header className="mb-8 text-center flex flex-col items-center">
+          <div className="inline-flex items-center gap-2 bg-primary/10 border-2 border-primary/20 px-4 py-1.5 rounded-full mb-6 mx-auto">
             <Sparkles className="w-3.5 h-3.5 text-primary" />
-            <span className="text-xs font-bold uppercase tracking-widest text-primary">Onboarding Step 4 of 6</span>
+            <span className="text-xs font-black uppercase tracking-widest text-primary text-heading">{t("level.step")}</span>
           </div>
-          <h1 className="text-2xl font-bold text-foreground mb-2">Estimate your current level</h1>
-          <p className="text-muted-foreground text-sm">This helps us feed the right content to your AI recommendations.</p>
+          <h1 className="text-2xl font-black text-foreground mb-2 text-heading leading-tight">{t("level.title")}</h1>
+          <p className="text-muted-foreground text-sm font-semibold text-learning">{t("level.desc")}</p>
         </header>
 
-        <div className="space-y-4 mb-8">
-          {levels.map(({ code, label, desc }) => (
+        <div className="space-y-3 mb-8">
+          {levels.map(({ code, icon: Icon, label, desc, color, bg, special }) => (
             <button
               key={code}
-              className="w-full text-left p-4 rounded-xl border border-border bg-card/45 hover:border-primary/50 hover:bg-muted/30 transition-all flex justify-between items-center group cursor-pointer"
+              className={`card-edu card-edu-interactive w-full text-left p-4 flex justify-between items-center group cursor-pointer ${special ? "border-dashed" : ""}`}
             >
-              <div>
-                <span className="font-bold text-sm block">{label}</span>
-                <span className="text-xs text-muted-foreground mt-0.5 block">{desc}</span>
+              <div className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-xl border-2 flex items-center justify-center flex-shrink-0 transition-colors ${bg}`}>
+                  <Icon className={`w-5 h-5 ${color}`} />
+                </div>
+                <div>
+                  <span className="font-black text-sm block text-heading text-foreground">{label}</span>
+                  <span className="text-xs text-muted-foreground mt-0.5 block leading-relaxed text-learning">{desc}</span>
+                </div>
               </div>
-              <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+              <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0 ml-2" />
             </button>
           ))}
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex gap-3">
           <Link href="/onboarding/learning-goal" className="flex-1">
-            <Button variant="outline" className="w-full py-6 rounded-xl font-bold border-border">
-              <ArrowLeft className="w-4 h-4 mr-2" /> Back
+            <Button variant="outline" className="btn-edu w-full py-6 border-2 bg-transparent text-foreground hover:bg-muted">
+              <ArrowLeft className="w-4 h-4 mr-1.5" /> {t("level.back")}
             </Button>
           </Link>
           <Link href="/onboarding/placement-test" className="flex-1">
-            <Button className="w-full py-6 rounded-xl font-bold hover:shadow-[0_0_20px_rgba(168,240,106,0.25)] transition-all">
-              Continue
+            <Button className="btn-edu w-full py-6 border-2 bg-primary text-primary-foreground hover:bg-primary/90">
+              {t("level.continue")}
             </Button>
           </Link>
         </div>

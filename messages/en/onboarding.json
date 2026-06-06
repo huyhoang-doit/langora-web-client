@@ -1,16 +1,79 @@
 {
-  "onboarding": {
-    "welcome": "Welcome to Langora",
-    "step_1_title": "Choose Your Learning Goal",
-    "step_1_description": "What language do you want to learn?",
-    "step_2_title": "Set Your Level",
-    "step_2_description": "Select your current proficiency level",
-    "step_3_title": "Personalize Your Journey",
-    "step_3_description": "Tell us about your learning preferences",
-    "step_4_title": "Get Started",
-    "step_4_description": "You're all set! Let's begin your learning journey",
-    "next": "Next",
-    "skip": "Skip",
-    "finish": "Finish"
+  "welcome": {
+    "step": "Onboarding Step 1 of 6",
+    "title": "Welcome to Langora!",
+    "desc": "Let's customize your linguistic journey. We'll set up your target language, evaluate your goals, and estimate your initial proficiency level.",
+    "time_val": "2 min",
+    "time_lbl": "Estimated time",
+    "flow_val": "AI-guided",
+    "flow_lbl": "Flow style",
+    "start_btn": "Let's Start",
+    "copyright": "© 2024 Langora. Engineered for cognitive clarity."
+  },
+  "language": {
+    "step": "Onboarding Step 2 of 6",
+    "title": "What language do you want to learn?",
+    "desc": "Select your target language. You can change this later.",
+    "en_label": "English",
+    "en_native": "Tiếng Anh",
+    "en_desc": "Learn grammar, professional vocab, or prep for IELTS/TOEIC.",
+    "ja_label": "Japanese",
+    "ja_native": "日本語",
+    "ja_desc": "Master kanji, JLPT vocabulary, and natural speaking.",
+    "zh_label": "Chinese",
+    "zh_native": "中文",
+    "zh_desc": "Practice tones, HSK vocab, and characters (Coming Soon).",
+    "back": "Back",
+    "continue": "Continue"
+  },
+  "goal": {
+    "step": "Onboarding Step 3 of 6",
+    "title": "What is your learning goal?",
+    "desc": "We will personalize your roadmap to focus on these topics.",
+    "ielts_label": "IELTS Certification",
+    "ielts_desc": "Focus on formal vocabulary, academic essays, and coherence.",
+    "toeic_label": "TOEIC Certification",
+    "toeic_desc": "Focus on corporate vocabulary, emails, and active grammar.",
+    "business_label": "Business English / Communication",
+    "business_desc": "Prepare for negotiations, corporate presentations, and writing emails.",
+    "travel_label": "Travel & Everyday Speech",
+    "travel_desc": "Improve basic dialogues, vocab, and speaking fluency.",
+    "back": "Back",
+    "continue": "Continue"
+  },
+  "level": {
+    "step": "Onboarding Step 4 of 6",
+    "title": "Estimate your current level",
+    "desc": "This helps us feed the right content to your AI recommendations.",
+    "beginner_label": "Absolute Beginner",
+    "beginner_desc": "I am starting from scratch. I don't know basic vocabulary or grammar yet.",
+    "intermediate_label": "Intermediate Learner",
+    "intermediate_desc": "I can construct basic paragraphs and comprehend slow conversations.",
+    "advanced_label": "Advanced Speaker",
+    "advanced_desc": "I communicate fluently but need to master complex grammar and style structures.",
+    "unsure_label": "I am not sure (Recommend Placement Test)",
+    "unsure_desc": "Take a 5-minute AI assessment to test your reading, vocab, and syntax.",
+    "back": "Back",
+    "continue": "Continue"
+  },
+  "placement": {
+    "title": "AI Placement Test",
+    "question_progress": "Question {current} of {total}",
+    "instruction": "Choose the word that best fits the sentence below:",
+    "quit": "Quit Test",
+    "next": "Next Question",
+    "loading": "Ora is analyzing your level..."
+  },
+  "result": {
+    "complete": "AI Assessment Complete",
+    "level": "Your Level: {level}",
+    "proficiency": "Upper-Intermediate proficiency in English",
+    "vocab_mastery": "Vocabulary mastery: {percent}%",
+    "vocab_desc": "Strong in general business, moderate in science.",
+    "writing_coherence": "Writing coherence: {percent}%",
+    "writing_desc": "Clear logical flow. Minor errors in complex tenses.",
+    "ai_recommendation": "AI Recommendation",
+    "ai_desc": "We've created a custom roadmap for you. We suggest focusing on 'Conditional Structures' in grammar and 'Negotiation Idioms' in vocabulary.",
+    "enter_dashboard": "Enter My Dashboard"
   }
 }

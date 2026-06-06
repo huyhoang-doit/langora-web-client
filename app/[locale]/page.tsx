@@ -37,29 +37,36 @@ export default function LandingPage() {
             <div className="inline-flex items-center gap-2 bg-primary/10 border-2 border-primary/20 px-4 py-1.5 rounded-full mb-6">
               <Sparkles className="w-3.5 h-3.5 text-primary" />
               <span className="text-xs font-bold uppercase tracking-widest text-primary">
-                Next-Gen Language OS
+                {t("landing.badge")}
               </span>
             </div>
             <h1 className="text-5xl md:text-6xl font-black leading-[1.1] mb-6 tracking-tight text-heading">
-              Master Languages{" "}
-              <span className="bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-400 bg-clip-text text-transparent">Smarter with AI</span>
+              {t("landing.hero_title")}{" "}
+              <span className="bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-400 bg-clip-text text-transparent">
+                {t("landing.hero_highlight")}
+              </span>
             </h1>
             <p className="text-lg text-muted-foreground mb-10 max-w-lg leading-relaxed">
-              Build vocabulary, improve writing, and learn faster with personalized AI. Hệ thống học tập
-              thông minh dựa trên khoa học nhận thức.
+              {t("landing.hero_description")}
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link href="/register">
+              <Link href="/onboarding/welcome">
                 <Button size="lg" className="btn-edu h-14 px-8 text-base border-2 bg-primary text-primary-foreground hover:bg-primary/90">
-                  Bắt đầu học miễn phí
+                  {t("landing.cta_primary")}
                 </Button>
               </Link>
               <Link href="#demo-section">
                 <Button variant="outline" size="lg" className="btn-edu h-14 px-8 text-base border-2 bg-transparent hover:bg-muted text-foreground">
-                  Xem bản demo
+                  {t("landing.cta_secondary")}
                 </Button>
               </Link>
             </div>
+            <Link
+              href="/onboarding/welcome"
+              className="inline-flex items-center gap-1.5 mt-4 text-xs text-muted-foreground hover:text-primary transition-colors font-semibold group"
+            >
+              <span>{t("landing.try_onboarding")}</span>
+            </Link>
           </div>
 
           {/* Right: Dashboard Mockup */}
@@ -111,26 +118,26 @@ export default function LandingPage() {
                 <span className="text-xs font-bold uppercase tracking-wider text-foreground">AI Coach</span>
               </div>
               <div className="text-sm leading-relaxed text-foreground">
-                "I{" "}
+                &quot;I{" "}
                 <span className="bg-destructive/20 text-destructive px-1 rounded font-bold">gived</span>{" "}
-                <span className="text-primary font-bold">gave</span> her the book."
+                <span className="text-primary font-bold">gave</span> her the book.&quot;
               </div>
               <div className="mt-2 pt-2 border-t-2 border-border/60 text-xs text-muted-foreground italic">
-                "Use past tense for completed actions."
+                &quot;Use past tense for completed actions.&quot;
               </div>
             </div>
 
             <div className="absolute top-16 -right-2 glass card-edu px-4 py-3 flex items-center gap-2 shadow-md">
               <Flame className="w-5 h-5 text-primary" />
               <div>
-                <div className="text-xs text-muted-foreground">Daily Streak</div>
-                <div className="text-sm font-bold text-foreground">15 ngày</div>
+                <div className="text-xs text-muted-foreground">{t("landing.streak_label")}</div>
+                <div className="text-sm font-bold text-foreground">{t("landing.streak_value")}</div>
               </div>
             </div>
 
             <div className="absolute bottom-10 -left-6 glass card-edu p-4 w-52 shadow-md">
               <div className="flex justify-between mb-2">
-                <span className="text-xs font-bold text-foreground">XP Progress</span>
+                <span className="text-xs font-bold text-foreground">{t("landing.xp_label")}</span>
                 <span className="text-xs text-muted-foreground font-semibold">850/1000</span>
               </div>
               <div className="h-2.5 w-full bg-background rounded-full overflow-hidden border-2 border-border/80">
@@ -145,9 +152,9 @@ export default function LandingPage() {
       <section id="features" className="bg-card/50 py-16 border-y-2 border-border/80">
         <div className="max-w-7xl mx-auto px-12 grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
           {[
-            { num: "10.000+", label: "Học viên tích cực" },
-            { num: "500.000+", label: "Từ vựng đã học" },
-            { num: "98%", label: "Hài lòng với AI" },
+            { num: "10.000+", label: t("landing.stats_students") },
+            { num: "500.000+", label: t("landing.stats_vocab") },
+            { num: "98%", label: t("landing.stats_satisfaction") },
           ].map(({ num, label }) => (
             <div key={label}>
               <div className="text-5xl font-black text-primary mb-2 text-heading">{num}</div>
@@ -161,17 +168,16 @@ export default function LandingPage() {
       <section id="demo-section" className="py-16 px-6 md:px-12 max-w-7xl mx-auto scroll-mt-24">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-5xl font-black mb-6 tracking-tight text-heading">
-            Khám phá sức mạnh của <span className="text-primary">Langora</span>
+            {t("landing.demo_heading").split("Langora")[0]}
+            <span className="text-primary">Langora</span>
+            {t("landing.demo_heading").split("Langora")[1] ?? ""}
           </h2>
         </div>
 
         {/* Video Player in Premium Device Mockup */}
         <div className="relative max-w-5xl mx-auto">
-          {/* Ambient Glow behind the video */}
           <div className="absolute -inset-1 rounded-[2.5rem] bg-gradient-to-tr from-primary/20 to-indigo-500/20 opacity-30 blur-2xl group-hover:opacity-50 transition duration-1000 -z-10" />
-
           <div className="w-full bg-card rounded-2xl border-2 border-border shadow-2xl overflow-hidden relative group">
-            {/* Browser Header Mockup */}
             <div className="p-4 border-b-2 border-border bg-muted/40 flex justify-between items-center">
               <div className="flex gap-2">
                 <div className="w-3 h-3 rounded-full bg-destructive/60" />
@@ -179,10 +185,8 @@ export default function LandingPage() {
                 <div className="w-3 h-3 rounded-full bg-primary/50" />
               </div>
               <div className="text-xs text-muted-foreground font-mono select-none">langora-demo.mov</div>
-              <div className="w-14" /> {/* Spacer to align title center */}
+              <div className="w-14" />
             </div>
-
-            {/* Video container */}
             <div className="relative aspect-video bg-black flex items-center justify-center">
               <video
                 src="/demo.mov"
@@ -198,23 +202,25 @@ export default function LandingPage() {
 
       {/* Features Section */}
       <section className="py-16 px-6 md:px-12 max-w-7xl mx-auto">
-        <h2 className="text-3xl font-black text-center mb-16 tracking-tight text-heading">Tính năng nổi bật</h2>
+        <h2 className="text-3xl font-black text-center mb-16 tracking-tight text-heading">
+          {t("landing.features_heading")}
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
-            { icon: Sparkles, title: "AI Vocabulary Builder", desc: "AI tự động tạo danh sách từ vựng thông minh theo chủ đề bạn quan tâm." },
-            { icon: Layers, title: "Smart Flashcards", desc: "Hệ thống học lặp lại ngắt quãng (SRS) giúp ghi nhớ kiến thức vĩnh viễn." },
-            { icon: PenLine, title: "AI Writing Coach", desc: "Sửa lỗi ngữ pháp và gợi ý cách diễn đạt tự nhiên như người bản xứ." },
-            { icon: BarChart2, title: "Learning Path", desc: "Lộ trình học tập thích ứng cá nhân hóa hoàn toàn theo năng lực hiện tại." },
-          ].map(({ icon: Icon, title, desc }) => (
+            { icon: Sparkles, titleKey: "feature_vocab_title", descKey: "feature_vocab_desc" },
+            { icon: Layers, titleKey: "feature_flash_title", descKey: "feature_flash_desc" },
+            { icon: PenLine, titleKey: "feature_writing_title", descKey: "feature_writing_desc" },
+            { icon: BarChart2, titleKey: "feature_path_title", descKey: "feature_path_desc" },
+          ].map(({ icon: Icon, titleKey, descKey }) => (
             <div
-              key={title}
+              key={titleKey}
               className="card-edu card-edu-interactive p-6 transition-all duration-300 group cursor-pointer"
             >
               <div className="w-12 h-12 rounded-xl bg-primary/10 border-2 border-primary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <Icon className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="font-bold text-lg mb-3 text-heading">{title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+              <h3 className="font-bold text-lg mb-3 text-heading">{t(`landing.${titleKey}`)}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{t(`landing.${descKey}`)}</p>
             </div>
           ))}
         </div>
@@ -223,23 +229,21 @@ export default function LandingPage() {
       {/* How it Works */}
       <section id="how-it-works" className="py-24 bg-card/20 border-y-2 border-border/80">
         <div className="max-w-7xl mx-auto px-12">
-          <h2 className="text-3xl font-black text-center mb-16 tracking-tight text-heading">Quy trình học tập tối ưu</h2>
+          <h2 className="text-3xl font-black text-center mb-16 tracking-tight text-heading">
+            {t("landing.how_heading")}
+          </h2>
           <div className="relative">
             <div className="hidden lg:block absolute top-6 left-0 w-full h-0.5 bg-border" />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 relative z-10">
-              {[
-                { n: 1, title: "Chọn mục tiêu", desc: "IELTS, Giao tiếp, JLPT..." },
-                { n: 2, title: "Học từ vựng", desc: "Thông qua SRS thông minh" },
-                { n: 3, title: "Luyện viết", desc: "Thực hành với chủ đề thực tế" },
-                { n: 4, title: "Nhận phản hồi", desc: "AI sửa lỗi ngay lập tức" },
-                { n: 5, title: "Theo dõi tiến độ", desc: "Báo cáo học tập hàng tuần" },
-              ].map(({ n, title, desc }) => (
+              {[1, 2, 3, 4, 5].map((n) => (
                 <div key={n} className="flex flex-col items-center text-center">
                   <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground font-black flex items-center justify-center mb-4 shadow-lg shadow-primary/20 z-10 border-2 border-primary-foreground/20">
                     {n}
                   </div>
-                  <h4 className="font-bold mb-1 text-sm text-foreground text-heading">{title}</h4>
-                  <p className="text-xs text-muted-foreground">{desc}</p>
+                  <h4 className="font-bold mb-1 text-sm text-foreground text-heading">
+                    {t(`landing.step${n}_title`)}
+                  </h4>
+                  <p className="text-xs text-muted-foreground">{t(`landing.step${n}_desc`)}</p>
                 </div>
               ))}
             </div>
@@ -249,7 +253,9 @@ export default function LandingPage() {
 
       {/* Testimonials */}
       <section id="testimonials" className="py-16 px-6 md:px-12 max-w-7xl mx-auto">
-        <h2 className="text-3xl font-black text-center mb-16 tracking-tight text-heading">Được tin dùng bởi hàng ngàn học viên</h2>
+        <h2 className="text-3xl font-black text-center mb-16 tracking-tight text-heading">
+          {t("landing.testimonials_heading")}
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             { name: "Minh Trí", role: "IELTS Learner (8.0 Target)", quote: "Langora thực sự thay đổi cách mình học writing. Phản hồi từ AI cực kỳ chi tiết và giúp mình nhận ra những lỗi ngữ pháp trước đây luôn bỏ qua.", avatar: "/avatar/person-1.jpg" },
@@ -270,7 +276,7 @@ export default function LandingPage() {
                   <div className="text-xs text-primary font-bold">{role}</div>
                 </div>
               </div>
-              <p className="text-sm text-muted-foreground italic leading-relaxed">"{quote}"</p>
+              <p className="text-sm text-muted-foreground italic leading-relaxed">&quot;{quote}&quot;</p>
             </div>
           ))}
         </div>
@@ -278,73 +284,77 @@ export default function LandingPage() {
 
       {/* Pricing */}
       <section id="pricing" className="py-16 px-6 md:px-12 max-w-7xl mx-auto">
-        <h2 className="text-3xl font-black text-center mb-16 tracking-tight text-heading">Lựa chọn gói học tập của bạn</h2>
+        <h2 className="text-3xl font-black text-center mb-16 tracking-tight text-heading">
+          {t("landing.pricing_heading")}
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             {
-              name: "Miễn phí",
-              price: "0đ",
-              period: "/tháng",
+              nameKey: "free_name",
+              priceKey: "free_price",
+              periodKey: "free_period",
               features: [
-                { text: "Học 20 từ vựng mỗi ngày", ok: true },
-                { text: "AI Writing basic (3 bài/tuần)", ok: true },
-                { text: "Không có lộ trình cá nhân", ok: false },
+                { key: "free_feature1", ok: true },
+                { key: "free_feature2", ok: true },
+                { key: "free_feature3", ok: false },
               ],
-              cta: "Bắt đầu ngay",
+              ctaKey: "free_cta",
               featured: false,
             },
             {
-              name: "Pro",
-              price: "199k",
-              period: "/tháng",
+              nameKey: "pro_name",
+              priceKey: "pro_price",
+              periodKey: "pro_period",
+              badgeKey: "pro_badge",
               features: [
-                { text: "Từ vựng không giới hạn", ok: true },
-                { text: "AI Writing Coach không giới hạn", ok: true },
-                { text: "Lộ trình học tập thông minh", ok: true },
-                { text: "Hỗ trợ ưu tiên 24/7", ok: true },
+                { key: "pro_feature1", ok: true },
+                { key: "pro_feature2", ok: true },
+                { key: "pro_feature3", ok: true },
+                { key: "pro_feature4", ok: true },
               ],
-              cta: "Nâng cấp Pro",
+              ctaKey: "pro_cta",
               featured: true,
-              badge: "Phổ biến nhất",
             },
             {
-              name: "Premium AI",
-              price: "450k",
-              period: "/tháng",
+              nameKey: "premium_name",
+              priceKey: "premium_price",
+              periodKey: "premium_period",
               features: [
-                { text: "Mọi tính năng của bản Pro", ok: true },
-                { text: "Luyện nói trực tiếp với AI", ok: true },
-                { text: "Phân tích chuyên sâu IELTS/TOEIC", ok: true },
+                { key: "premium_feature1", ok: true },
+                { key: "premium_feature2", ok: true },
+                { key: "premium_feature3", ok: true },
               ],
-              cta: "Liên hệ tư vấn",
+              ctaKey: "premium_cta",
               featured: false,
             },
-          ].map(({ name, price, period, features, cta, featured, badge }) => (
+          ].map(({ nameKey, priceKey, periodKey, features, ctaKey, featured, badgeKey }) => (
             <div
-              key={name}
+              key={nameKey}
               className={`card-edu p-10 flex flex-col relative ${featured ? "border-primary bg-primary/5 shadow-md" : "border-border"}`}
             >
-              {badge && (
+              {badgeKey && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest border-2 border-primary-foreground/20 shadow-md">
-                  {badge}
+                  {t(`landing.${badgeKey}`)}
                 </div>
               )}
               <div className="mb-8">
-                <h3 className="text-xl font-bold mb-2 text-heading">{name}</h3>
+                <h3 className="text-xl font-bold mb-2 text-heading">{t(`landing.${nameKey}`)}</h3>
                 <div className="text-5xl font-black text-foreground text-heading">
-                  {price}
-                  <span className="text-sm text-muted-foreground font-normal">{period}</span>
+                  {t(`landing.${priceKey}`)}
+                  <span className="text-sm text-muted-foreground font-normal">{t(`landing.${periodKey}`)}</span>
                 </div>
               </div>
               <ul className="space-y-3 mb-10 flex-grow">
-                {features.map(({ text, ok }) => (
-                  <li key={text} className="flex items-center gap-2 text-sm">
+                {features.map(({ key, ok }) => (
+                  <li key={key} className="flex items-center gap-2 text-sm">
                     {ok ? (
                       <CheckCircle className="w-4 h-4 flex-shrink-0 text-primary" />
                     ) : (
                       <XCircle className="w-4 h-4 flex-shrink-0 text-muted-foreground opacity-30" />
                     )}
-                    <span className={ok && featured ? "text-primary font-bold" : "text-foreground"}>{text}</span>
+                    <span className={ok && featured ? "text-primary font-bold" : "text-foreground"}>
+                      {t(`landing.${key}`)}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -352,7 +362,7 @@ export default function LandingPage() {
                 variant={featured ? "default" : "outline"}
                 className={`btn-edu w-full py-6 text-sm border-2 ${featured ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-transparent text-foreground hover:bg-muted"}`}
               >
-                {cta}
+                {t(`landing.${ctaKey}`)}
               </Button>
             </div>
           ))}
@@ -364,14 +374,14 @@ export default function LandingPage() {
         <div className="max-w-3xl mx-auto text-center">
           <div className="card-edu p-12 ai-radial-glow overflow-hidden relative">
             <h2 className="text-3xl font-black mb-4 tracking-tight text-foreground relative z-10 text-heading">
-              Sẵn sàng nâng cấp kỹ năng ngôn ngữ?
+              {t("landing.cta_heading")}
             </h2>
             <p className="text-muted-foreground mb-8 leading-relaxed relative z-10 font-medium">
-              Tham gia cùng hàng nghìn học viên đang học thông minh hơn mỗi ngày với Langora và người bạn rồng Ora 🐲.
+              {t("landing.cta_description")}
             </p>
-            <Link href="/register" className="relative z-10 inline-block">
+            <Link href="/onboarding/welcome" className="relative z-10 inline-block">
               <Button size="lg" className="btn-edu px-10 h-14 text-base border-2 bg-primary text-primary-foreground hover:bg-primary/90">
-                Bắt đầu ngay — Miễn phí
+                {t("landing.cta_button")}
                 <ChevronRight className="w-4 h-4 ml-1.5" />
               </Button>
             </Link>

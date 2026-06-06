@@ -5,47 +5,50 @@ import { CheckCircle, XCircle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PublicNavbar } from "@/components/public-navbar";
 import { PublicFooter } from "@/components/public-footer";
+import { useTranslations } from "next-intl";
 
 export default function PricingPage() {
+  const t = useTranslations("pricing");
+
   const plans = [
     {
-      name: "Free",
+      name: t("plan_free_name"),
       price: "0đ",
-      period: "/month",
+      period: t("period"),
       features: [
-        { text: "Learn 20 words per day", ok: true },
-        { text: "AI Writing basic (3 lessons/week)", ok: true },
-        { text: "Personalized Roadmap", ok: false },
-        { text: "Real-time AI speaking coach", ok: false },
+        { text: t("plan_free_feat1"), ok: true },
+        { text: t("plan_free_feat2"), ok: true },
+        { text: t("plan_free_feat3"), ok: false },
+        { text: t("plan_free_feat4"), ok: false },
       ],
-      cta: "Start Learning",
+      cta: t("plan_free_cta"),
       featured: false,
     },
     {
-      name: "Pro",
+      name: t("plan_pro_name"),
       price: "199k",
-      period: "/month",
+      period: t("period"),
       features: [
-        { text: "Unlimited Vocabulary learning", ok: true },
-        { text: "Unlimited AI Writing Coach corrections", ok: true },
-        { text: "Personalized Adaptive Roadmap", ok: true },
-        { text: "Premium speaking simulations", ok: true },
+        { text: t("plan_pro_feat1"), ok: true },
+        { text: t("plan_pro_feat2"), ok: true },
+        { text: t("plan_pro_feat3"), ok: true },
+        { text: t("plan_pro_feat4"), ok: true },
       ],
-      cta: "Upgrade to Pro",
+      cta: t("plan_pro_cta"),
       featured: true,
-      badge: "Most Popular",
+      badge: t("plan_pro_badge"),
     },
     {
-      name: "Premium AI",
+      name: t("plan_premium_name"),
       price: "450k",
-      period: "/month",
+      period: t("period"),
       features: [
-        { text: "Everything in Pro plan", ok: true },
-        { text: "Voice Conversational Coaching with Ora", ok: true },
-        { text: "Deep IELTS / TOEIC speech & essay evaluation", ok: true },
-        { text: "Priority access to new AI models", ok: true },
+        { text: t("plan_premium_feat1"), ok: true },
+        { text: t("plan_premium_feat2"), ok: true },
+        { text: t("plan_premium_feat3"), ok: true },
+        { text: t("plan_premium_feat4"), ok: true },
       ],
-      cta: "Upgrade to Premium",
+      cta: t("plan_premium_cta"),
       featured: false,
     },
   ];
@@ -62,16 +65,16 @@ export default function PricingPage() {
       <section className="pt-40 pb-16 px-6 md:px-12 max-w-5xl mx-auto text-center relative z-10">
         <div className="inline-flex items-center gap-2 bg-primary/10 border-2 border-primary/20 px-4 py-1.5 rounded-full mb-6">
           <Sparkles className="w-3.5 h-3.5 text-primary" />
-          <span className="text-xs font-black uppercase tracking-widest text-primary">Transparent Pricing</span>
+          <span className="text-xs font-black uppercase tracking-widest text-primary">{t("badge")}</span>
         </div>
         <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight text-heading leading-[1.1]">
-          Invest in Your{" "}
+          {t("title")}{" "}
           <span className="bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-400 bg-clip-text text-transparent">
-            Language Skills
+            {t("title_highlight")}
           </span>
         </h1>
         <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed font-medium">
-          Choose a plan that matches your learning goals. No hidden fees.
+          {t("desc")}
         </p>
       </section>
 
@@ -141,9 +144,7 @@ export default function PricingPage() {
         <div className="mt-12 card-edu p-6 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent border-primary/20 flex gap-4 items-center max-w-2xl mx-auto">
           <span className="text-3xl flex-shrink-0">🐲</span>
           <p className="text-sm text-muted-foreground font-semibold text-learning">
-            All paid plans come with a{" "}
-            <span className="text-foreground font-black text-heading">7-day money-back guarantee</span>.
-            Try Langora risk-free and feel the difference.
+            {t("guarantee")}
           </p>
         </div>
       </section>

@@ -6,8 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSelector } from "@/components/language-selector";
+import { useTranslations } from "next-intl";
 
 export default function RegisterPage() {
+  const t = useTranslations();
+
   return (
     <main className="flex min-h-screen text-foreground bg-background">
       {/* Theme Toggle Absolute */}
@@ -28,7 +31,7 @@ export default function RegisterPage() {
               </div>
             </Link>
             <h1 className="text-5xl font-black text-foreground leading-tight max-w-md text-heading mt-4">
-              Engineered for cognitive clarity.
+              {t("auth.register_hero_title")}
             </h1>
           </div>
 
@@ -66,7 +69,7 @@ export default function RegisterPage() {
           </div>
 
           <p className="mt-8 text-muted-foreground text-sm max-w-sm leading-relaxed font-semibold">
-            Join 10,000+ learners mastering languages through linguistic precision and AI-driven insights.
+            {t("auth.register_hero_desc")}
           </p>
         </div>
       </section>
@@ -83,20 +86,20 @@ export default function RegisterPage() {
 
         <div className="w-full max-w-[480px] card-edu bg-card p-8 md:p-10 shadow-sm my-10">
           <header className="mb-8">
-            <h2 className="text-3xl font-black text-foreground mb-2 tracking-tight text-heading">Create Account</h2>
-            <p className="text-muted-foreground text-sm font-medium">Start your linguistic journey with precision.</p>
+            <h2 className="text-3xl font-black text-foreground mb-2 tracking-tight text-heading">{t("auth.register_title")}</h2>
+            <p className="text-muted-foreground text-sm font-medium">{t("auth.register_subtitle")}</p>
           </header>
 
           <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
             {/* Name */}
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-muted-foreground block uppercase tracking-wider ml-1" htmlFor="name">
-                Full Name
+                {t("auth.name_label")}
               </label>
               <Input
                 id="name"
                 type="text"
-                placeholder="John Doe"
+                placeholder={t("auth.name_placeholder")}
                 className="w-full bg-muted/30 border-2 border-border rounded-xl px-4 py-6 text-foreground focus-visible:ring-1 focus-visible:ring-primary placeholder:text-muted-foreground/60 font-medium"
               />
             </div>
@@ -104,12 +107,12 @@ export default function RegisterPage() {
             {/* Email */}
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-muted-foreground block uppercase tracking-wider ml-1" htmlFor="email">
-                Email Address
+                {t("auth.email_label")}
               </label>
               <Input
                 id="email"
                 type="email"
-                placeholder="name@company.com"
+                placeholder={t("auth.email_placeholder")}
                 className="w-full bg-muted/30 border-2 border-border rounded-xl px-4 py-6 text-foreground focus-visible:ring-1 focus-visible:ring-primary placeholder:text-muted-foreground/60 font-medium"
               />
             </div>
@@ -118,23 +121,23 @@ export default function RegisterPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="space-y-1.5">
                 <label className="text-xs font-bold text-muted-foreground block uppercase tracking-wider ml-1" htmlFor="password">
-                  Password
+                  {t("auth.password_label")}
                 </label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="••••••••"
+                  placeholder={t("auth.password_placeholder")}
                   className="w-full bg-muted/30 border-2 border-border rounded-xl px-4 py-6 text-foreground focus-visible:ring-1 focus-visible:ring-primary placeholder:text-muted-foreground/60 font-medium"
                 />
               </div>
               <div className="space-y-1.5">
                 <label className="text-xs font-bold text-muted-foreground block uppercase tracking-wider ml-1" htmlFor="confirm-password">
-                  Confirm
+                  {t("auth.confirm_label")}
                 </label>
                 <Input
                   id="confirm-password"
                   type="password"
-                  placeholder="••••••••"
+                  placeholder={t("auth.confirm_placeholder")}
                   className="w-full bg-muted/30 border-2 border-border rounded-xl px-4 py-6 text-foreground focus-visible:ring-1 focus-visible:ring-primary placeholder:text-muted-foreground/60 font-medium"
                 />
               </div>
@@ -144,14 +147,14 @@ export default function RegisterPage() {
               type="submit"
               className="btn-edu w-full py-6 text-sm border-2 bg-primary text-primary-foreground hover:bg-primary/90 mt-2"
             >
-              Create Account
+              {t("auth.register_button")}
             </Button>
           </form>
 
           {/* Divider */}
           <div className="my-6 flex items-center gap-4">
             <div className="h-px bg-border flex-grow" />
-            <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Or join with</span>
+            <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{t("auth.register_or")}</span>
             <div className="h-px bg-border flex-grow" />
           </div>
 
@@ -167,15 +170,15 @@ export default function RegisterPage() {
           </div>
 
           <p className="mt-6 text-center text-sm text-muted-foreground font-medium">
-            Already have an account?{" "}
+            {t("auth.register_have_account")}{" "}
             <Link href="/login" className="text-primary hover:underline font-bold">
-              Sign in
+              {t("auth.register_sign_in")}
             </Link>
           </p>
         </div>
 
         <div className="absolute bottom-6 text-center px-4 space-y-3">
-          <p className="text-xs text-muted-foreground/60 font-semibold">© 2024 Langora. Engineered for cognitive clarity.</p>
+          <p className="text-xs text-muted-foreground/60 font-semibold">{t("auth.copyright")}</p>
         </div>
       </section>
     </main>

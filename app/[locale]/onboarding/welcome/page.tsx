@@ -4,11 +4,16 @@ import Link from "next/link";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { useTranslations } from "next-intl";
+import { LanguageSelector } from "@/components/language-selector";
 
 export default function OnboardingWelcomePage() {
+  const t = useTranslations("onboarding");
+
   return (
     <main className="flex min-h-screen text-foreground bg-background relative items-center justify-center px-6 md:px-12" id="onboarding-welcome-page">
-      <div className="absolute top-6 right-6 z-50">
+      <div className="flex items-center gap-2 absolute top-6 right-6 z-50">
+        <LanguageSelector variant="compact" />
         <ThemeToggle />
       </div>
 
@@ -16,38 +21,41 @@ export default function OnboardingWelcomePage() {
 
       <div className="w-full max-w-[500px] card-edu bg-card p-8 md:p-10 shadow-sm relative z-10 text-center">
         <header className="mb-8 flex flex-col items-center">
+          <div className="text-4xl animate-bounce flex-shrink-0 mb-4">🐲</div>
           <div className="inline-flex items-center gap-2 bg-primary/10 border-2 border-primary/20 px-4 py-1.5 rounded-full mb-6 mx-auto">
             <Sparkles className="w-3.5 h-3.5 text-primary" />
-            <span className="text-xs font-black uppercase tracking-widest text-primary text-heading">Onboarding Step 1 of 6</span>
+            <span className="text-xs font-black uppercase tracking-widest text-primary text-heading">{t("welcome.step")}</span>
           </div>
-          <h1 className="text-3xl font-black text-foreground mb-4 text-heading">Welcome to Langora!</h1>
-          <p className="text-muted-foreground text-sm leading-relaxed font-medium">
-            Let's customize your linguistic journey. We'll set up your target language, evaluate your goals, and estimate your initial proficiency level.
+          <h1 className="text-3xl font-black text-foreground mb-4 text-heading leading-[1.1]">
+            <span className="bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-400 bg-clip-text text-transparent">{t("welcome.title")}</span>
+          </h1>
+          <p className="text-muted-foreground text-sm leading-relaxed font-semibold text-learning">
+            {t("welcome.desc")}
           </p>
         </header>
 
         <div className="my-8 py-6 border-y-2 border-border/80 flex justify-around items-center">
           <div className="text-center">
-            <div className="text-2xl font-black text-primary text-heading">2 min</div>
-            <div className="text-[10px] text-muted-foreground uppercase font-black tracking-wider mt-0.5">Estimated time</div>
+            <div className="text-2xl font-black text-primary text-heading">{t("welcome.time_val")}</div>
+            <div className="text-[10px] text-muted-foreground uppercase font-black tracking-wider mt-0.5">{t("welcome.time_lbl")}</div>
           </div>
           <div className="w-[2px] h-10 bg-border/80" />
           <div className="text-center">
-            <div className="text-2xl font-black text-primary text-heading">AI-guided</div>
-            <div className="text-[10px] text-muted-foreground uppercase font-black tracking-wider mt-0.5">Flow style</div>
+            <div className="text-2xl font-black text-primary text-heading">{t("welcome.flow_val")}</div>
+            <div className="text-[10px] text-muted-foreground uppercase font-black tracking-wider mt-0.5">{t("welcome.flow_lbl")}</div>
           </div>
         </div>
 
         <Link href="/onboarding/select-language" className="block w-full">
-          <Button className="btn-edu w-full py-6 text-sm border-2 bg-primary text-primary-foreground hover:bg-primary/90 flex items-center justify-center gap-2">
-            Let's Start
+          <Button className="btn-edu rounded-full w-full py-6 text-sm border-2 bg-primary text-primary-foreground hover:bg-primary/90 flex items-center justify-center gap-2">
+            {t("welcome.start_btn")}
             <ArrowRight className="w-4 h-4" />
           </Button>
         </Link>
       </div>
 
       <div className="absolute bottom-6 text-center">
-        <p className="text-xs text-muted-foreground/60 font-semibold">© 2024 Langora. Engineered for cognitive clarity.</p>
+        <p className="text-xs text-muted-foreground/60 font-semibold">{t("welcome.copyright")}</p>
       </div>
     </main>
   );

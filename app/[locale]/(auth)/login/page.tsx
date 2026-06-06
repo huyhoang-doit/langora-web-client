@@ -7,9 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSelector } from "@/components/language-selector";
+import { useTranslations } from "next-intl";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+
+  const t = useTranslations();
 
   return (
     <main className="flex min-h-screen text-foreground bg-background">
@@ -33,12 +36,11 @@ export default function LoginPage() {
             </Link>
 
             <h1 className="text-5xl font-black text-foreground mb-6 leading-tight text-heading">
-              Unlock Clarity with{" "}
+              {t("auth.login_hero_title")}{" "}
               <span className="bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-400 bg-clip-text text-transparent">Langora</span>.
             </h1>
             <p className="text-lg text-muted-foreground max-w-md leading-relaxed">
-              Experience a technical approach to language mastery. Engineered for deep focus
-              and AI-powered cognitive mapping.
+              {t("auth.login_hero_desc")}
             </p>
           </div>
 
@@ -96,8 +98,8 @@ export default function LoginPage() {
                   <BarChart2 className="w-4 h-4 text-primary" />
                 </div>
                 <div>
-                  <div className="text-[10px] font-black text-primary uppercase tracking-tight text-heading">AI Pulse</div>
-                  <div className="text-xs font-semibold text-foreground">Optimizing Vocab...</div>
+                  <div className="text-[10px] font-black text-primary uppercase tracking-tight text-heading">{t("auth.login_ai_pulse")}</div>
+                  <div className="text-xs font-semibold text-foreground">{t("auth.login_optimizing_vocab")}</div>
                 </div>
               </div>
             </div>
@@ -122,9 +124,9 @@ export default function LoginPage() {
 
           <header className="mb-8">
             <h2 className="text-3xl font-black text-foreground mb-2 tracking-tight text-heading">
-              Chào mừng trở lại
+              {t("auth.login_title")}
             </h2>
-            <p className="text-muted-foreground text-sm font-medium">Sign in to continue your linguistic journey.</p>
+            <p className="text-muted-foreground text-sm font-medium">{t("auth.login_subtitle")}</p>
           </header>
 
           <div className="space-y-6">
@@ -142,7 +144,7 @@ export default function LoginPage() {
 
             <div className="relative flex items-center py-2">
               <div className="flex-grow border-t-2 border-border/60" />
-              <span className="flex-shrink mx-4 text-xs text-muted-foreground uppercase tracking-widest font-bold">hoặc</span>
+              <span className="flex-shrink mx-4 text-xs text-muted-foreground uppercase tracking-widest font-bold">{t("auth.login_or")}</span>
               <div className="flex-grow border-t-2 border-border/60" />
             </div>
 
@@ -150,12 +152,12 @@ export default function LoginPage() {
             <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
               <div>
                 <label className="block text-xs font-bold text-muted-foreground mb-1.5 ml-1 uppercase tracking-wider" htmlFor="email">
-                  Email Address
+                  {t("auth.email_label")}
                 </label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="name@company.com"
+                  placeholder={t("auth.email_placeholder")}
                   className="w-full bg-muted/30 border-2 border-border rounded-xl px-4 py-6 text-foreground placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-primary font-medium"
                 />
               </div>
@@ -163,17 +165,17 @@ export default function LoginPage() {
               <div>
                 <div className="flex justify-between items-center mb-1.5 ml-1">
                   <label className="block text-xs font-bold text-muted-foreground uppercase tracking-wider" htmlFor="password">
-                    Mật khẩu
+                    {t("auth.password_label")}
                   </label>
                   <Link href="/forgot-password" className="text-xs text-primary hover:underline font-bold">
-                    Quên mật khẩu?
+                    {t("auth.login_forgot_password")}
                   </Link>
                 </div>
                 <div className="relative">
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="••••••••"
+                    placeholder={t("auth.password_placeholder")}
                     className="w-full bg-muted/30 border-2 border-border rounded-xl px-4 py-6 text-foreground placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-primary pr-12 font-medium"
                   />
                   <Button
@@ -195,7 +197,7 @@ export default function LoginPage() {
                   className="w-4 h-4 rounded border-2 border-border bg-muted accent-primary cursor-pointer"
                 />
                 <label htmlFor="remember" className="text-xs text-muted-foreground cursor-pointer select-none font-semibold">
-                  Remember me for 30 days
+                  {t("auth.login_remember_me")}
                 </label>
               </div>
 
@@ -204,16 +206,16 @@ export default function LoginPage() {
                   type="submit"
                   className="btn-edu w-full py-6 text-sm border-2 bg-primary text-primary-foreground hover:bg-primary/90 mt-2"
                 >
-                  Đăng nhập vào Langora
+                  {t("auth.login_button")}
                 </Button>
               </Link>
 
             </form>
 
             <p className="text-center text-sm text-muted-foreground mt-4 font-medium">
-              Bạn chưa có tài khoản?{" "}
+              {t("auth.login_no_account")}{" "}
               <Link href="/register" className="text-primary font-bold hover:underline">
-                Sign up now
+                {t("auth.login_sign_up")}
               </Link>
             </p>
           </div>
@@ -223,7 +225,7 @@ export default function LoginPage() {
 
             </div>
             <p className="text-xs text-muted-foreground/60 font-semibold">
-              © 2024 Langora. Engineered for cognitive clarity.
+              {t("auth.copyright")}
             </p>
           </footer>
         </div>

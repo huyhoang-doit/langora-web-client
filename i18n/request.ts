@@ -1,8 +1,10 @@
-import { getRequestConfig } from "next-intl/server";
+import { getRequestConfig } from 'next-intl/server';
 
-export default getRequestConfig(async ({ locale }) => {
+export default getRequestConfig(async ({ requestLocale }) => {
+  const locale = await requestLocale;
+
   return {
-    locale,
-    messages: {},
+    locale: locale || 'en',
+    messages: {}, // Messages are loaded in app/[locale]/layout.tsx
   };
 });

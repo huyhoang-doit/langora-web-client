@@ -27,23 +27,18 @@ type Props = {
 };
 
 async function loadMessages(locale: string) {
-  try {
-    const [common, auth, dashboard, onboarding] = await Promise.all([
-      import(`@/messages/${locale}/common.json`),
-      import(`@/messages/${locale}/auth.json`),
-      import(`@/messages/${locale}/dashboard.json`),
-      import(`@/messages/${locale}/onboarding.json`),
-    ]);
-    return {
-      ...common.default,
-      ...auth.default,
-      ...dashboard.default,
-      ...onboarding.default,
-    };
-  } catch (error) {
-    console.error(`Failed to load messages for locale: ${locale}`, error);
-    throw error;
-  }
+  const [common, auth, dashboard, onboarding] = await Promise.all([
+    import(`@/messages/${locale}/common.json`),
+    import(`@/messages/${locale}/auth.json`),
+    import(`@/messages/${locale}/dashboard.json`),
+    import(`@/messages/${locale}/onboarding.json`),
+  ]);
+  return {
+    ...common.default,
+    ...auth.default,
+    ...dashboard.default,
+    onboarding: onboarding.default,
+  };
 }
 
 export default async function LocaleLayout({ children, params }: Props) {
@@ -53,7 +48,8 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <html
       lang={locale}
-      className={`${inter.variable} ${beVietnamPro.variable} ${nunito.variable} scroll-smooth`}
+      className={`${inter.variable} ${beVietnamPro.variable} ${nunito.variable}`}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-background text-foreground antialiased">

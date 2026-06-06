@@ -1,16 +1,79 @@
 {
-  "onboarding": {
-    "welcome": "Langoraへようこそ",
-    "step_1_title": "学習目標を選択",
-    "step_1_description": "どの言語を学びたいですか？",
-    "step_2_title": "レベルを設定",
-    "step_2_description": "現在の熟練度を選択してください",
-    "step_3_title": "旅をカスタマイズ",
-    "step_3_description": "学習の好みについて教えてください",
-    "step_4_title": "始める",
-    "step_4_description": "準備完了です！学習の旅を始めましょう",
-    "next": "次へ",
-    "skip": "スキップ",
-    "finish": "完了"
+  "welcome": {
+    "step": "ステップ 1 / 6",
+    "title": "Langoraへようこそ！",
+    "desc": "語学学習の旅をカスタマイズしましょう。学習言語を設定し、目標を評価し、初期の熟練度を推定します。",
+    "time_val": "2分",
+    "time_lbl": "予想所要時間",
+    "flow_val": "AIガイド",
+    "flow_lbl": "フロースタイル",
+    "start_btn": "始めましょう",
+    "copyright": "© 2024 Langora. 認知の明確さのために設計されました。"
+  },
+  "language": {
+    "step": "ステップ 2 / 6",
+    "title": "どの言語を学びたいですか？",
+    "desc": "学習言語を選択してください。後で変更できます。",
+    "en_label": "英語",
+    "en_native": "English",
+    "en_desc": "文法、専門用語を学ぶか、IELTS/TOEICの準備をします。",
+    "ja_label": "日本語",
+    "ja_native": "日本語",
+    "ja_desc": "漢字、JLPTの語彙、自然な会話をマスターします。",
+    "zh_label": "中国語",
+    "zh_native": "中文",
+    "zh_desc": "声調、HSKの語彙、漢字を練習します（近日公開）。",
+    "back": "戻る",
+    "continue": "続ける"
+  },
+  "goal": {
+    "step": "ステップ 3 / 6",
+    "title": "学習の目標は何ですか？",
+    "desc": "これらのトピックに焦点を当てるようにロードマップをパーソナライズします。",
+    "ielts_label": "IELTS 資格",
+    "ielts_desc": "フォーマルな語彙、アカデミック・エッセイ、一貫性に焦点を当てます。",
+    "toeic_label": "TOEIC 資格",
+    "toeic_desc": "企業の語彙、電子メール、アクティブな文法に焦点を当てます。",
+    "business_label": "ビジネス英語 / コミュニケーション",
+    "business_desc": "交渉、企業プレゼンテーション、電子メールの作成の準備をします。",
+    "travel_label": "旅行と日常会話",
+    "travel_desc": "基本的な対話、語彙、会話の流暢さを向上させます。",
+    "back": "戻る",
+    "continue": "続ける"
+  },
+  "level": {
+    "step": "ステップ 4 / 6",
+    "title": "現在のレベルを推定する",
+    "desc": "これは、AIの推奨事項に適切なコンテンツを提供するのに役立ちます。",
+    "beginner_label": "完全な初心者",
+    "beginner_desc": "ゼロから始めています。基本的な語彙や文法はまだわかりません。",
+    "intermediate_label": "中級学習者",
+    "intermediate_desc": "基本的な段落を構成し、ゆっくりとした会話を理解できます。",
+    "advanced_label": "上級話者",
+    "advanced_desc": "流暢にコミュニケーションできますが、複雑な文法や文体構造を習得する必要があります。",
+    "unsure_label": "わからない（レベルチェックテストを推奨）",
+    "unsure_desc": "5分間のAI評価を受けて、読解力、語彙力、構文をテストします。",
+    "back": "戻る",
+    "continue": "続ける"
+  },
+  "placement": {
+    "title": "AI レベルチェックテスト",
+    "question_progress": "質問 {current} / {total}",
+    "instruction": "以下の文に最も適した単語を選択してください：",
+    "quit": "テストを終了",
+    "next": "次の質問",
+    "loading": "Oraがあなたのレベルを分析しています..."
+  },
+  "result": {
+    "complete": "AI 評価完了",
+    "level": "あなたのレベル: {level}",
+    "proficiency": "英語の上中級レベル",
+    "vocab_mastery": "語彙の習熟度: {percent}%",
+    "vocab_desc": "一般的なビジネスに強く、科学は中程度。",
+    "writing_coherence": "ライティングの一貫性: {percent}%",
+    "writing_desc": "明確で論理的な流れ。複雑な時制に軽微なエラーあり。",
+    "ai_recommendation": "AI のおすすめ",
+    "ai_desc": "カスタムロードマップを作成しました。文法では「条件文」、語彙では「交渉のイディオム」に焦点を当てることをお勧めします。",
+    "enter_dashboard": "ダッシュボードに入る"
   }
 }
