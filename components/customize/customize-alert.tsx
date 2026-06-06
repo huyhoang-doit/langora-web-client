@@ -173,7 +173,7 @@ export function CustomizeAlert({
           </div>
 
           {/* Footer */}
-          <AlertDialogFooter className="flex flex-row justify-end gap-2 px-6 py-4 border-t-2 border-border/50 bg-muted/20 rounded-b-[18px]">
+          <AlertDialogFooter className="!m-0 flex flex-row justify-end gap-2 px-6 py-4 border-t-2 border-border/50 bg-muted/20 rounded-b-[18px]">
             {/* Cancel */}
             <button
               onClick={handleCancel}

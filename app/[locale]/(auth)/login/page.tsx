@@ -8,9 +8,12 @@ import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSelector } from "@/components/language-selector";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
+import { useRouter } from "@/i18n/navigation";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const t = useTranslations();
 
@@ -149,7 +152,13 @@ export default function LoginPage() {
             </div>
 
             {/* Login Form */}
-            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-4" onSubmit={(e) => {
+              e.preventDefault();
+              toast.success("Login Successful", {
+                description: "Welcome back to Langora! 🐲",
+              });
+              router.push("/dashboard");
+            }}>
               <div>
                 <label className="block text-xs font-bold text-muted-foreground mb-1.5 ml-1 uppercase tracking-wider" htmlFor="email">
                   {t("auth.email_label")}
@@ -201,14 +210,14 @@ export default function LoginPage() {
                 </label>
               </div>
 
-              <Link href="/dashboard" className="hidden sm:block">
+              <div className="hidden sm:block">
                 <Button
                   type="submit"
                   className="btn-edu w-full py-6 text-sm border-2 bg-primary text-primary-foreground hover:bg-primary/90 mt-2"
                 >
                   {t("auth.login_button")}
                 </Button>
-              </Link>
+              </div>
 
             </form>
 
