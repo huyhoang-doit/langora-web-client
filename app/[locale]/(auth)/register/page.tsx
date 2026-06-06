@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,54 +22,35 @@ export default function RegisterPage() {
       </div>
 
       {/* Left Side: Illustration */}
-      <section className="hidden lg:flex lg:w-1/2 bg-card/20 relative items-center justify-center p-16 overflow-hidden border-r-2 border-border">
+      <section className="hidden lg:flex lg:w-1/2 relative bg-card/20 overflow-hidden flex-col justify-center items-center border-r-2 border-border">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(147,217,86,0.08),transparent_50%)] pointer-events-none" />
-        <div className="relative z-10 w-full max-w-xl flex flex-col items-start">
+
+        <div className="z-10 w-full max-w-xl px-12">
           <div className="mb-10">
             <Link href="/" className="inline-block mb-4 hover:opacity-80 transition-opacity">
               <ImageLogoWeb variant="big" textClassName="text-xl" />
             </Link>
-            <h1 className="text-5xl font-black text-foreground leading-tight max-w-md text-heading mt-4">
+            <h1 className="text-5xl font-black text-foreground leading-tight max-w-md text-heading">
               {t("auth.register_hero_title")}
+              <span className="bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-400 bg-clip-text text-transparent">Langora</span>.
+
             </h1>
           </div>
 
-          {/* Dashboard Illustration */}
-          <div className="w-full card-edu p-6 bg-card relative overflow-hidden">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex gap-2">
-                <div className="w-3 h-3 rounded-full bg-destructive/40" />
-                <div className="w-3 h-3 rounded-full bg-primary/40" />
-                <div className="w-3 h-3 rounded-full bg-muted-foreground/40" />
-              </div>
-              <div className="h-2 w-32 bg-border/40 rounded-full" />
-            </div>
-
-            <div className="grid grid-cols-3 gap-6">
-              <div className="col-span-2 h-36 bg-muted/50 rounded-xl border-2 border-border/40 animate-pulse" />
-              <div className="space-y-4">
-                {[0.2, 0.15, 0.1].map((opacity, i) => (
-                  <div
-                    key={i}
-                    className="h-10 rounded-xl bg-primary border-2 border-primary-foreground/10"
-                    style={{ opacity }}
-                  />
-                ))}
-              </div>
-            </div>
-            <div className="mt-6 h-16 bg-muted/30 rounded-xl border-2 border-border/40 flex items-center px-4">
-              <div className="flex -space-x-2">
-                {["#bcc7dd", "#a8f06a", "#e7ffee"].map((c, i) => (
-                  <div key={i} className="w-8 h-8 rounded-full border-2 border-background" style={{ background: c }} />
-                ))}
-              </div>
-              <div className="ml-4 h-2 w-48 bg-border/40 rounded-full" />
+          {/* Hero Image */}
+          <div className="relative group flex justify-center mt-8">
+            <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-transparent rounded-[3rem] blur-xl opacity-30 group-hover:opacity-50 transition duration-1000" />
+            <div className="relative w-full max-w-[450px] flex justify-center items-center">
+              <Image
+                src="/ora/ora-register.png"
+                alt="Ora Registration"
+                width={700}
+                height={700}
+                className="w-full h-auto object-contain drop-shadow-2xl hover:-translate-y-4 transition-transform duration-500 z-10"
+                priority
+              />
             </div>
           </div>
-
-          <p className="mt-8 text-muted-foreground text-sm max-w-sm leading-relaxed font-semibold">
-            {t("auth.register_hero_desc")}
-          </p>
         </div>
       </section>
 

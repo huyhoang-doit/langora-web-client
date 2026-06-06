@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import {
   Sparkles,
@@ -71,36 +72,15 @@ export default function LandingPage() {
 
           {/* Right: Dashboard Mockup */}
           <div className="relative min-h-[450px] flex items-center justify-center">
-            <div className="w-full min-h-[380px] card-edu p-6 relative overflow-hidden bg-card">
-              <div className="pb-4 border-b-2 border-border/80 flex gap-2">
-                <div className="w-3 h-3 rounded-full bg-destructive/40" />
-                <div className="w-3 h-3 rounded-full bg-muted-foreground/40" />
-                <div className="w-3 h-3 rounded-full bg-primary/40" />
-              </div>
-              <div className="pt-6">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="h-6 w-28 bg-muted rounded-lg border-2 border-border/20" />
-                  <div className="flex gap-3">
-                    <div className="h-8 w-8 bg-muted rounded-full border-2 border-border/20" />
-                    <div className="h-8 w-8 bg-muted rounded-full border-2 border-border/20" />
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <div className="h-4 w-3/4 bg-muted rounded-full border-2 border-border/10" />
-                  <div className="h-4 w-1/2 bg-muted rounded-full border-2 border-border/10" />
-                  <div className="h-4 w-5/6 bg-muted rounded-full border-2 border-border/10" />
-                </div>
-                <div className="mt-6 grid grid-cols-3 gap-3">
-                  {[65, 85, 40].map((w, i) => (
-                    <div key={i} className="bg-muted/50 rounded-xl p-3 border-2 border-border/40">
-                      <div className="h-3 w-full bg-background rounded-full overflow-hidden mb-2 border-2 border-border/40">
-                        <div className="h-full bg-gradient-to-r from-indigo-500 to-blue-500" style={{ width: `${w}%` }} />
-                      </div>
-                      <div className="h-2 w-8 bg-background rounded-full border border-border" />
-                    </div>
-                  ))}
-                </div>
-              </div>
+            <div className="w-full relative overflow-hidden rounded-[32px] p-2 flex justify-center">
+              <Image
+                src="/ora/2-ora.png"
+                alt="Langora AI Companion"
+                width={800}
+                height={600}
+                className="w-[120%] md:w-[130%] lg:w-[140%] max-w-none h-auto object-contain drop-shadow-2xl transition-transform duration-500 z-10"
+                priority
+              />
             </div>
 
             {/* Floating Cards */}
@@ -112,7 +92,7 @@ export default function LandingPage() {
               <p className="text-xs text-muted-foreground">Japanese • N2</p>
             </div>
 
-            <div className="absolute -bottom-6 right-0 md:right-6 glass card-edu p-5 w-60 shadow-xl">
+            <div className="absolute -bottom-28 right-5 md:right-0 glass card-edu p-5 w-60 shadow-xl">
               <div className="flex items-center gap-2 mb-3">
                 <PenLine className="w-4 h-4 text-primary" />
                 <span className="text-xs font-bold uppercase tracking-wider text-foreground">AI Coach</span>
@@ -127,7 +107,7 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="absolute top-16 -right-2 glass card-edu px-4 py-3 flex items-center gap-2 shadow-md">
+            <div className="absolute top-2 -right-30 glass card-edu px-4 py-3 flex items-center gap-2 shadow-md">
               <Flame className="w-5 h-5 text-primary" />
               <div>
                 <div className="text-xs text-muted-foreground">{t("landing.streak_label")}</div>
@@ -135,7 +115,7 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="absolute bottom-10 -left-6 glass card-edu p-4 w-52 shadow-md">
+            <div className="absolute -bottom-15 -left-6 glass card-edu p-4 w-52 shadow-md">
               <div className="flex justify-between mb-2">
                 <span className="text-xs font-bold text-foreground">{t("landing.xp_label")}</span>
                 <span className="text-xs text-muted-foreground font-semibold">850/1000</span>

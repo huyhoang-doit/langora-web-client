@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { Eye, EyeOff, Globe, BarChart2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -40,70 +41,35 @@ export default function LoginPage() {
               {t("auth.login_hero_title")}{" "}
               <span className="bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-400 bg-clip-text text-transparent">Langora</span>.
             </h1>
-            <p className="text-lg text-muted-foreground max-w-md leading-relaxed">
-              {t("auth.login_hero_desc")}
-            </p>
+
           </div>
 
-          {/* Abstract Dashboard Mockup */}
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-transparent rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000" />
-            <div className="relative card-edu p-6 overflow-hidden bg-card">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex space-x-2">
-                  <div className="w-3 h-3 rounded-full bg-destructive/40" />
-                  <div className="w-3 h-3 rounded-full bg-primary/40" />
-                  <div className="w-3 h-3 rounded-full bg-muted-foreground/40" />
-                </div>
-                <div className="h-2 w-32 bg-border/40 rounded-full" />
-              </div>
-              <div className="grid grid-cols-2 gap-6">
-                {/* Bar chart mockup */}
-                <div className="space-y-3">
-                  <div className="h-28 w-full bg-muted/50 rounded-xl flex items-end p-3 border-2 border-border/40">
-                    <div className="flex items-end space-x-1.5 w-full justify-around h-full">
-                      {[20, 45, 70, 90, 30].map((h, i) => (
-                        <div
-                          key={i}
-                          className="w-2.5 rounded-t bg-gradient-to-t from-indigo-500 to-blue-500"
-                          style={{
-                            height: `${h}%`,
-                            opacity: 0.3 + (h / 100) * 0.7,
-                          }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                  <div className="h-3 w-3/4 bg-border/40 rounded-full" />
-                  <div className="h-3 w-1/2 bg-border/40 rounded-full" />
-                </div>
-                {/* Progress ring mockup */}
-                <div className="space-y-3">
-                  <div className="h-28 w-full bg-muted/50 rounded-xl relative flex items-center justify-center border-2 border-border/40">
-                    <div className="w-16 h-16 rounded-full border-[6px] border-border/40" />
-                    <div
-                      className="absolute w-16 h-16 rounded-full border-[6px] border-primary border-t-transparent border-r-transparent"
-                      style={{ transform: "rotate(-45deg)" }}
-                    />
-                    <span className="absolute text-sm font-black text-primary text-heading">84%</span>
-                  </div>
-                  <div className="h-3 w-full bg-border/40 rounded-full" />
-                </div>
-              </div>
+          {/* Hero Image */}
+          <div className="relative group flex justify-center">
+            <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-transparent rounded-[3rem] blur-xl opacity-30 group-hover:opacity-50 transition duration-1000" />
+            <div className="relative w-full max-w-[450px] flex justify-center items-center">
+              <Image
+                src="/ora/ora-login.png"
+                alt="Ora Writing"
+                width={700}
+                height={700}
+                className="w-full h-auto object-contain drop-shadow-2xl hover:-translate-y-4 transition-transform duration-500 z-10"
+                priority
+              />
             </div>
 
             {/* Floating AI badge */}
-            <div className="absolute -top-10 -right-6 glass card-edu p-3 shadow-xl animate-bounce" style={{ animationDuration: "3s" }}>
-              <div className="flex items-center space-x-2">
-                <div className="p-1.5 bg-primary/10 rounded-lg">
-                  <BarChart2 className="w-4 h-4 text-primary" />
+            {/* <div className="absolute -bottom-4 -right-4 lg:-right-10 glass card-edu p-4 shadow-xl animate-bounce z-20" style={{ animationDuration: "3s" }}>
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-primary/10 rounded-xl">
+                  <BarChart2 className="w-5 h-5 text-primary" />
                 </div>
                 <div>
                   <div className="text-[10px] font-black text-primary uppercase tracking-tight text-heading">{t("auth.login_ai_pulse")}</div>
-                  <div className="text-xs font-semibold text-foreground">{t("auth.login_optimizing_vocab")}</div>
+                  <div className="text-sm font-bold text-foreground">{t("auth.login_optimizing_vocab")}</div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
