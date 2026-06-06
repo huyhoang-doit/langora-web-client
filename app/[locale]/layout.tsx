@@ -1,5 +1,4 @@
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, getLocale } from "next-intl/server";
 import { Inter, Be_Vietnam_Pro, Nunito } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import "@/app/globals.css";
@@ -22,13 +21,34 @@ const nunito = Nunito({
   weight: ["400", "500", "600", "700", "800", "900"],
 });
 
-export default async function LocaleLayout({
-  children,
-}: {
+type Props = {
   children: React.ReactNode;
-}) {
-  const locale = await getLocale();
-  const messages = await getMessages();
+  params: Promise<{ locale: string }>;
+};
+
+async function loadMessages(locale: string) {
+  try {
+    const [common, auth, dashboard, onboarding] = await Promise.all([
+      import(`@/messages/${locale}/common.json`),
+      import(`@/messages/${locale}/auth.json`),
+      import(`@/messages/${locale}/dashboard.json`),
+      import(`@/messages/${locale}/onboarding.json`),
+    ]);
+    return {
+      ...common.default,
+      ...auth.default,
+      ...dashboard.default,
+      ...onboarding.default,
+    };
+  } catch (error) {
+    console.error(`Failed to load messages for locale: ${locale}`, error);
+    throw error;
+  }
+}
+
+export default async function LocaleLayout({ children, params }: Props) {
+  const { locale } = await params;
+  const messages = await loadMessages(locale);
 
   return (
     <html
