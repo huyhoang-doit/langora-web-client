@@ -11,6 +11,7 @@ import { CustomizeAlert } from "@/components/customize/customize-alert";
 import { useState } from "react";
 import { toast } from "sonner";
 import { ImageLogoWeb } from "@/components/image-logo-web";
+import { Home, Map, BookOpen, Bot, User, Target } from 'lucide-react';
 
 export function AppSidebar() {
   const pathname = usePathname();
@@ -128,12 +129,12 @@ export function MobileBottomNav() {
 
   const getEmoji = (label: string) => {
     switch (label) {
-      case "Home": return "🏠";
-      case "Learn": return "🗺️";
-      case "Vocab": return "📚";
-      case "Ora": return "🤖";
-      case "Profile": return "👤";
-      default: return "🎯";
+      case "Home": return <Home />;
+      case "Learn": return <Map />;
+      case "Vocab": return <BookOpen />;
+      case "Ora": return <Bot />;
+      case "Profile": return <User />;
+      default: return <Target />;
     }
   };
 

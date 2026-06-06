@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Crown, Medal, User } from 'lucide-react';
 
 export default function LeaderboardPage() {
   const users = [
@@ -36,10 +37,10 @@ export default function LeaderboardPage() {
           <div className="grid grid-cols-3 gap-4 items-end pt-4 pb-2">
             {/* Rank 2 (Left) */}
             <div className="flex flex-col items-center space-y-2">
-              <div className="text-3xl">🥈</div>
+              <Medal className="text-gray-400 w-8 h-8 mx-auto" />
               <div className="card-edu p-4 bg-slate-300/5 border-slate-300 text-center w-full relative">
                 <Avatar className="h-10 w-10 mx-auto border-2 border-slate-300 mb-2">
-                  <AvatarFallback className="bg-muted text-xs">👤</AvatarFallback>
+                  <AvatarFallback className="bg-muted text-xs"><User className="w-4 h-4 text-muted-foreground mx-auto" /></AvatarFallback>
                 </Avatar>
                 <span className="font-black text-xs block truncate text-heading">Minh Tri</span>
                 <span className="text-[10px] font-black text-slate-400 block text-heading">2,120 XP</span>
@@ -48,23 +49,23 @@ export default function LeaderboardPage() {
 
             {/* Rank 1 (Middle - Higher) */}
             <div className="flex flex-col items-center space-y-2">
-              <div className="text-4xl animate-bounce">👑</div>
+              <Crown className="text-amber-500 w-10 h-10 animate-bounce mx-auto" />
               <div className="card-edu p-5 bg-amber-500/5 border-amber-500 text-center w-full relative shadow-lg">
                 <Avatar className="h-12 w-12 mx-auto border-2 border-amber-500 mb-2">
-                  <AvatarFallback className="bg-muted text-xs">👤</AvatarFallback>
+                  <AvatarFallback className="bg-muted text-xs"><User className="w-4 h-4 text-muted-foreground mx-auto" /></AvatarFallback>
                 </Avatar>
                 <span className="font-black text-sm block truncate text-heading">Hoang</span>
                 <span className="text-xs font-black text-amber-500 block text-heading">2,450 XP</span>
-                <span className="absolute -top-3 -right-3 text-lg">🔥</span>
+                <span className="absolute -top-3 -right-3"><Flame className="text-orange-500 w-5 h-5 fill-orange-500" /></span>
               </div>
             </div>
 
             {/* Rank 3 (Right) */}
             <div className="flex flex-col items-center space-y-2">
-              <div className="text-3xl">🥉</div>
+              <Medal className="text-amber-700 w-8 h-8 mx-auto" />
               <div className="card-edu p-4 bg-orange-500/5 border-orange-500 text-center w-full relative">
                 <Avatar className="h-10 w-10 mx-auto border-2 border-orange-500 mb-2">
-                  <AvatarFallback className="bg-muted text-xs">👤</AvatarFallback>
+                  <AvatarFallback className="bg-muted text-xs"><User className="w-4 h-4 text-muted-foreground mx-auto" /></AvatarFallback>
                 </Avatar>
                 <span className="font-black text-xs block truncate text-heading">Phuong Anh</span>
                 <span className="text-[10px] font-black text-orange-400 block text-heading">1,980 XP</span>
@@ -83,26 +84,24 @@ export default function LeaderboardPage() {
               const isThird = usr.rank === 3;
 
               return (
-                <div 
-                  key={usr.rank} 
-                  className={`flex items-center justify-between p-3 rounded-xl border-2 transition-all ${
-                    usr.active 
-                      ? "border-primary bg-primary/5 shadow-[0_3px_0_0_rgba(99,102,241,0.15)]" 
+                <div
+                  key={usr.rank}
+                  className={`flex items-center justify-between p-3 rounded-xl border-2 transition-all ${usr.active
+                      ? "border-primary bg-primary/5 shadow-[0_3px_0_0_rgba(99,102,241,0.15)]"
                       : "border-transparent hover:bg-muted/40"
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center gap-3">
-                    <span className={`w-7 h-7 rounded-full flex items-center justify-center font-black text-xs border flex-shrink-0 ${
-                      isFirst ? "bg-amber-500/10 border-amber-500/20 text-amber-600" :
-                      isSecond ? "bg-slate-400/10 border-slate-400/20 text-slate-500" :
-                      isThird ? "bg-orange-500/10 border-orange-500/20 text-orange-600" :
-                      "bg-muted border-border text-muted-foreground"
-                    }`}>
+                    <span className={`w-7 h-7 rounded-full flex items-center justify-center font-black text-xs border flex-shrink-0 ${isFirst ? "bg-amber-500/10 border-amber-500/20 text-amber-600" :
+                        isSecond ? "bg-slate-400/10 border-slate-400/20 text-slate-500" :
+                          isThird ? "bg-orange-500/10 border-orange-500/20 text-orange-600" :
+                            "bg-muted border-border text-muted-foreground"
+                      }`}>
                       {usr.rank}
                     </span>
 
                     <Avatar className="h-8 w-8 flex-shrink-0">
-                      <AvatarFallback className="bg-muted text-[10px]">👤</AvatarFallback>
+                      <AvatarFallback className="bg-muted text-[10px]"><User className="w-4 h-4 text-muted-foreground mx-auto" /></AvatarFallback>
                     </Avatar>
 
                     <div>

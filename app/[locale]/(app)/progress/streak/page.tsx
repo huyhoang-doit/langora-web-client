@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, Flame, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ImageLogoWeb from "@/components/image-logo-web";
+import { Check } from 'lucide-react';
 
 export default function StreakCalendarPage() {
   const days = [
@@ -62,7 +63,7 @@ export default function StreakCalendarPage() {
                       ? "bg-primary border-primary text-primary-foreground shadow-[0_4px_0_0_rgba(99,102,241,0.25)] translate-y-[-2px]"
                       : "bg-card border-border/60 text-muted-foreground"
                   }`}>
-                    {day.completed ? "✓" : ""}
+                    {day.completed ? <Check className="w-4 h-4 text-emerald-500 mx-auto" /> : null}
                   </div>
                   <span className="text-[10px] text-muted-foreground font-bold text-heading">{day.date.split(" ")[1]}</span>
                 </div>

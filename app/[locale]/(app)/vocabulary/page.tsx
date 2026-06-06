@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { CustomizePagination } from "@/components/customize/customize-pagination";
 import { CustomizeAlert } from "@/components/customize/customize-alert";
 import ImageLogoWeb from "@/components/image-logo-web";
+import { Sparkles } from 'lucide-react';
 
 const ALL_WORDS = [
   {
@@ -187,7 +188,7 @@ export default function VocabularyPage() {
           </Link>
           <Link href="/vocabulary/ai-generator">
             <Button size="sm" className="btn-edu h-8 text-[10px] font-black border-2 bg-primary text-primary-foreground hover:bg-primary/95">
-              ✨ AI Generator
+              <Sparkles className="w-4 h-4 mr-2 inline-block text-indigo-500" /> AI Generator
             </Button>
           </Link>
         </div>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ImageLogoWeb from "@/components/image-logo-web";
+import { Target } from 'lucide-react';
 
 export default function VocabularyProgressPage() {
   const stats = [
@@ -50,7 +51,7 @@ export default function VocabularyProgressPage() {
               <div className="space-y-2 text-xs text-muted-foreground leading-relaxed text-learning font-semibold">
                 <p>Your long-term lexical stability score is currently calculated at 82%. Memory decay patterns show vocabulary items related to "Finance" are forgotten 1.5x faster than items related to "Tech".</p>
                 <div className="p-3 bg-primary/10 border-2 border-primary/20 rounded-xl font-bold text-foreground text-learning">
-                  🎯 Next target: Practice reviews at scheduled times to stabilize the decay curves.
+                  <Target className="w-4 h-4 text-indigo-500 inline-block mr-1" /> Next target: Practice reviews at scheduled times to stabilize the decay curves.
                 </div>
               </div>
             </div>

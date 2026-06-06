@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Award, Trophy } from "lucide-react";
+import { ArrowLeft, Award, Trophy, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function AchievementsPage() {
@@ -34,15 +34,13 @@ export default function AchievementsPage() {
             {achievements.map((ach) => (
               <div
                 key={ach.name}
-                className={`card-edu card-edu-interactive p-5 bg-card flex gap-4 items-start transition-all ${
-                  ach.unlocked ? "border-primary/40 bg-primary/5" : ""
-                }`}
+                className={`card-edu card-edu-interactive p-5 bg-card flex gap-4 items-start transition-all ${ach.unlocked ? "border-primary/40 bg-primary/5" : ""
+                  }`}
               >
-                <span className={`w-12 h-12 rounded-xl border-2 flex items-center justify-center flex-shrink-0 ${
-                  ach.unlocked
+                <span className={`w-12 h-12 rounded-xl border-2 flex items-center justify-center flex-shrink-0 ${ach.unlocked
                     ? "text-primary bg-primary/10 border-primary/20"
                     : "text-muted-foreground bg-muted/40 border-border/60"
-                }`}>
+                  }`}>
                   {ach.unlocked
                     ? <Trophy className="w-6 h-6 animate-pulse" />
                     : <Award className="w-6 h-6" />

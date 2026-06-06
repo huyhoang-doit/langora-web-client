@@ -4,6 +4,7 @@ import Link from "next/link";
 import { MessageSquare, Trophy, ThumbsUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { User } from 'lucide-react';
 
 export default function CommunityPage() {
   const posts = [
@@ -40,7 +41,7 @@ export default function CommunityPage() {
             <div key={i} className="card-edu p-5 bg-card space-y-4">
               <div className="flex items-center gap-3">
                 <Avatar className="h-9 w-9 border-2 border-border/60">
-                  <AvatarFallback className="bg-muted text-xs font-black">👤</AvatarFallback>
+                  <AvatarFallback className="bg-muted text-xs font-black"><User className="w-4 h-4 text-muted-foreground mx-auto" /></AvatarFallback>
                 </Avatar>
                 <div>
                   <span className="font-black text-xs block text-foreground text-heading">{post.author}</span>

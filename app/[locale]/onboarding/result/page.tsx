@@ -7,6 +7,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { useTranslations } from "next-intl";
 import { LanguageSelector } from "@/components/language-selector";
 import ImageLogoWeb from "@/components/image-logo-web";
+import { PartyPopper } from 'lucide-react';
 
 export default function OnboardingResultPage() {
   const t = useTranslations("onboarding");
@@ -24,9 +25,9 @@ export default function OnboardingResultPage() {
 
         {/* Ora Celebrate */}
         <div className="flex justify-center items-end gap-2 mb-4">
-          <span className="text-3xl animate-bounce" style={{ animationDelay: "0.1s" }}>🎉</span>
+          <PartyPopper className="w-8 h-8 text-amber-500 animate-bounce" style={{ animationDelay: "0.1s" }} />
           <ImageLogoWeb variant="mascot" className="w-16 h-16" />
-          <span className="text-3xl animate-bounce" style={{ animationDelay: "0.2s" }}>🎉</span>
+          <PartyPopper className="w-8 h-8 text-amber-500 animate-bounce" style={{ animationDelay: "0.2s" }} />
         </div>
 
         <header className="mb-6">

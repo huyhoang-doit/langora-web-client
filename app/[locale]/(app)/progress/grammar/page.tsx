@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, SpellCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ImageLogoWeb from "@/components/image-logo-web";
+import { Target } from 'lucide-react';
 
 export default function GrammarProgressPage() {
   const stats = [
@@ -50,7 +51,7 @@ export default function GrammarProgressPage() {
               <div className="space-y-2 text-xs text-muted-foreground leading-relaxed text-learning font-semibold">
                 <p>You have achieved 100% completion in A1 & A2 modules. Your B1 conditional structure quiz answers show a 68% accuracy rate, triggering a personalized diagnostic recommendation.</p>
                 <div className="p-3 bg-primary/10 border-2 border-primary/20 rounded-xl font-bold text-foreground text-learning">
-                  🎯 Next target: Practice Conditional Sentences Type 3 quiz modules.
+                  <Target className="w-4 h-4 text-indigo-500 inline-block mr-1" /> Next target: Practice Conditional Sentences Type 3 quiz modules.
                 </div>
               </div>
             </div>

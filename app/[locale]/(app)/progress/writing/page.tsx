@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ImageLogoWeb from "@/components/image-logo-web";
+import { Target } from 'lucide-react';
 
 export default function WritingProgressPage() {
   const stats = [
@@ -50,7 +51,7 @@ export default function WritingProgressPage() {
               <div className="space-y-2 text-xs text-muted-foreground leading-relaxed text-learning font-semibold">
                 <p>Your spelling and typo rates are very low (less than 1 error per 200 words). Your main areas for structural improvement remain "Conditional Inversions" and using varied transitional adverbs (e.g. "consequently", "subsequently").</p>
                 <div className="p-3 bg-primary/10 border-2 border-primary/20 rounded-xl font-bold text-foreground text-learning">
-                  🎯 Next target: Incorporate complex grammar structures in your next essay draft.
+                  <Target className="w-4 h-4 text-indigo-500 inline-block mr-1" /> Next target: Incorporate complex grammar structures in your next essay draft.
                 </div>
               </div>
             </div>

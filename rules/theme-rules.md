@@ -142,3 +142,10 @@ Rồng con **Ora** là linh vật và là người bạn đồng hành AI xuyên
 - **Điều hướng Mobile (Mobile Bottom Nav)**:
   - Sử dụng class `.glass` làm nền kính mờ mượt mà và viền trên dày 2px (`border-t-2 border-border/80`).
   - Active item trên mobile có bóng đổ nhẹ và nền nổi bật `bg-primary/10 border border-primary/20`.
+
+---
+
+## 9. Quy chuẩn Icon (Icon Rules)
+
+- **Tuyệt đối không sử dụng Emoji cho các Icon (như 🚀, ✨, 📚, v.v...)**. Emoji hiển thị không nhất quán trên các hệ điều hành và thiết bị khác nhau, làm giảm đi tính chuyên nghiệp của giao diện.
+- **Luôn sử dụng thư viện `lucide-react`**: Mọi icon dùng để trang trí button, tiêu đề, trạng thái... đều phải import từ thư viện `lucide-react` và thiết lập màu sắc nhất quán qua class Tailwind (ví dụ `text-indigo-500`, `text-muted-foreground`).

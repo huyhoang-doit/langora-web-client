@@ -19,7 +19,11 @@ import {
   Award,
   Zap,
   Heart,
-  ChevronRight
+  ChevronRight,
+  Rocket,
+  RefreshCw,
+  Lock,
+  BarChart2
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -81,7 +85,7 @@ export default function DashboardPage() {
             <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="space-y-3">
                 <div className="inline-flex items-center gap-2 bg-indigo-500/15 border-2 border-indigo-500/30 px-3 py-1 rounded-full text-indigo-500 text-[10px] font-bold uppercase tracking-widest">
-                  ✨ Learning Path Active
+                  <Sparkles className="w-3 h-3" /> Learning Path Active
                 </div>
                 <h1 className="text-3xl md:text-4xl font-black text-foreground tracking-tight">
                   Welcome back, <span className="text-indigo-500">Hoang</span>!
@@ -91,8 +95,8 @@ export default function DashboardPage() {
                 </p>
               </div>
               <Link href="/learn/lesson/3">
-                <Button className="btn-edu text-indigo-600 hover:text-indigo-700 bg-white hover:bg-white/95 border-2 shadow-[0_4px_0_currentColor] active:translate-y-0.5 active:shadow-[0_0px_0_currentColor] text-sm font-bold">
-                  🎯 Continue Journey
+                <Button className="btn-edu text-indigo-600 hover:text-indigo-700 bg-white hover:bg-white/95 border-2 shadow-[0_4px_0_currentColor] active:translate-y-0.5 active:shadow-[0_0px_0_currentColor] text-sm font-bold flex items-center gap-2">
+                  <ArrowRight className="w-4 h-4" /> Continue Journey
                 </Button>
               </Link>
             </div>
@@ -129,7 +133,7 @@ export default function DashboardPage() {
               {/* 2. Daily Mission */}
               <div className="card-edu p-6 space-y-4">
                 <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
-                  ⚡ Daily Missions
+                  <Zap className="w-4 h-4 text-amber-500" /> Daily Missions
                 </h3>
                 <div className="space-y-3">
                   {[
@@ -154,7 +158,10 @@ export default function DashboardPage() {
               {/* 3. Continue Learning Path */}
               <div className="card-edu p-6 space-y-4">
                 <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
-                  📚 Continue Learning
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="w-4 h-4 text-indigo-500" />
+                    <span className="">Continue Learning</span>
+                  </div>
                 </h3>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 bg-indigo-500/5 border-2 border-indigo-500/20 rounded-2xl">
                   <div className="space-y-1">
@@ -163,8 +170,8 @@ export default function DashboardPage() {
                     <p className="text-xs text-muted-foreground">Master "Hardly had I..." and negative adverbials.</p>
                   </div>
                   <Link href="/learn/lesson/3">
-                    <Button size="sm" className="btn-edu text-xs font-bold text-indigo-500 hover:text-indigo-600 bg-white border-2">
-                      🚀 Start Lesson
+                    <Button size="sm" className="btn-edu text-xs font-bold text-indigo-500 hover:text-indigo-600 bg-white border-2 flex items-center gap-1.5">
+                      <Rocket className="w-3 h-3" /> Start Lesson
                     </Button>
                   </Link>
                 </div>
@@ -174,7 +181,10 @@ export default function DashboardPage() {
               <div className="card-edu p-6 space-y-4">
                 <div className="flex justify-between items-center">
                   <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
-                    🔄 Vocabulary Review
+                    <div className="flex items-center gap-2">
+                      <RefreshCw className="w-4 h-4 text-emerald-500" />
+                      <span className="">Vocabulary Review</span>
+                    </div>
                   </h3>
                   <Link href="/vocabulary/review" className="text-xs text-indigo-500 font-bold hover:underline">
                     View list
@@ -204,7 +214,10 @@ export default function DashboardPage() {
               <div className="card-edu p-6 space-y-4">
                 <div className="flex justify-between items-center">
                   <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
-                    ✍️ Writing Practice
+                    <div className="flex items-center gap-2">
+                      <PenLine className="w-4 h-4 text-pink-500" />
+                      <span className="">Writing Practice</span>
+                    </div>
                   </h3>
                   <Link href="/writing/practice" className="text-xs text-indigo-500 font-bold hover:underline">
                     Explore Prompts
@@ -218,8 +231,8 @@ export default function DashboardPage() {
                   <p className="text-xs text-muted-foreground leading-relaxed">Draft a concise 80-word email using appropriate conditional forms and vocabulary.</p>
                   <div className="flex justify-end pt-2">
                     <Link href="/writing/scenario/1">
-                      <Button size="sm" className="btn-edu text-[10px] font-black">
-                        ✍️ Start Essay
+                      <Button size="sm" className="btn-edu text-[10px] font-black flex items-center gap-1.5">
+                        <PenLine className="w-3 h-3" /> Start Essay
                       </Button>
                     </Link>
                   </div>
@@ -246,8 +259,8 @@ export default function DashboardPage() {
                   <p className="font-bold text-indigo-500">Let's practice a custom grammar quiz today to resolve this.</p>
                 </div>
                 <Link href="/grammar/personalized" className="block w-full">
-                  <Button className="w-full btn-edu text-xs font-bold bg-indigo-500 text-white hover:bg-indigo-600 border-2 shadow-[0_4px_0_#312e81]">
-                    ✨ Start Custom Quiz
+                  <Button className="w-full btn-edu text-xs font-bold bg-indigo-500 text-white hover:bg-indigo-600 border-2 shadow-[0_4px_0_#312e81] flex items-center justify-center gap-2">
+                    <Sparkles className="w-4 h-4" /> Start Custom Quiz
                   </Button>
                 </Link>
               </div>
@@ -255,7 +268,7 @@ export default function DashboardPage() {
               {/* 7. Weekly Progress (Linear vibe chart/dots) */}
               <div className="card-edu p-6 space-y-4">
                 <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
-                  📈 Weekly Activity
+                  <TrendingUp className="w-4 h-4 text-cyan-500" /> Weekly Activity
                 </h3>
                 <div className="h-32 flex items-end justify-between gap-2 pt-4">
                   {[
@@ -284,7 +297,10 @@ export default function DashboardPage() {
               <div className="card-edu p-6 space-y-4">
                 <div className="flex justify-between items-center">
                   <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
-                    🏆 Achievements
+                    <div className="flex items-center gap-2">
+                      <Trophy className="w-4 h-4 text-amber-500" />
+                      <span className="">Achievements</span>
+                    </div>
                   </h3>
                   <Link href="/progress/achievements" className="text-xs text-indigo-500 font-bold hover:underline">
                     View all
@@ -296,7 +312,7 @@ export default function DashboardPage() {
                     { name: "Grammar Titan", desc: "Scored 100% in Conditional Quiz", unlocked: false },
                   ].map((ach, i) => (
                     <div key={i} className={`p-3 border-2 border-border rounded-xl flex items-center gap-3 bg-card ${ach.unlocked ? "border-indigo-500/20 bg-indigo-500/5" : ""}`}>
-                      <span className="text-lg">{ach.unlocked ? "🏆" : "🔒"}</span>
+                      <div className="flex-shrink-0">{ach.unlocked ? <Trophy className="w-5 h-5 text-amber-500" /> : <Lock className="w-5 h-5 text-muted-foreground/50" />}</div>
                       <div>
                         <span className="font-bold text-xs text-foreground block">{ach.name}</span>
                         <span className="text-[9px] text-muted-foreground">{ach.desc}</span>
@@ -309,7 +325,7 @@ export default function DashboardPage() {
               {/* 9. Learning Analytics (Mini Card) */}
               <div className="card-edu p-6 space-y-4">
                 <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
-                  📊 Analytics Digest
+                  <BarChart2 className="w-4 h-4 text-blue-500" /> Analytics Digest
                 </h3>
                 <div className="space-y-3 text-xs">
                   <div className="flex justify-between text-muted-foreground">
