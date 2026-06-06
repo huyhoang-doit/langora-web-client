@@ -98,7 +98,10 @@
     "dark": "Tối",
     "light": "Sáng",
     "system": "Hệ thống",
-    "logout": "Đăng xuất"
+    "logout": "Đăng xuất",
+    "logout_confirm_title": "Đăng xuất khỏi Langora?",
+    "logout_confirm_desc": "Tiến trình học của bạn đã được lưu. Bạn có thể đăng nhập lại bất cứ lúc nào để tiếp tục.",
+    "cancel": "Hủy"
   },
   "about": {
     "mission": "Sứ mệnh của chúng tôi",
@@ -215,5 +218,14 @@
     "post3_title": "Kế hoạch viết từng bước để đạt điểm IELTS 8.0+",
     "post3_desc": "Các mẹo hữu ích, mẫu và danh sách từ vựng được thiết kế riêng cho thí sinh nâng cao chuẩn bị cho các bài viết học thuật.",
     "post3_cat": "Luyện thi IELTS"
+  },
+  "pagination": {
+    "prev": "Trước",
+    "next": "Tiếp",
+    "go_to_prev": "Đến trang trước",
+    "go_to_next": "Đến trang sau",
+    "go_to_first": "Đến trang đầu",
+    "go_to_last": "Đến trang cuối",
+    "go_to_page": "Đến trang {page}"
   }
 }

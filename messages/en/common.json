@@ -98,7 +98,10 @@
     "dark": "Dark",
     "light": "Light",
     "system": "System",
-    "logout": "Log Out"
+    "logout": "Log Out",
+    "logout_confirm_title": "Log out of Langora?",
+    "logout_confirm_desc": "Your learning progress is saved. You can log back in anytime to continue your journey.",
+    "cancel": "Cancel"
   },
   "about": {
     "mission": "Our Mission",
@@ -215,5 +218,14 @@
     "post3_title": "Step-by-Step Writing Plan for Reaching IELTS Band 8.0+",
     "post3_desc": "Actionable tips, templates, and vocabulary lists tailored for advanced candidates preparing for academic writing tasks.",
     "post3_cat": "IELTS Prep"
+  },
+  "pagination": {
+    "prev": "Prev",
+    "next": "Next",
+    "go_to_prev": "Go to previous page",
+    "go_to_next": "Go to next page",
+    "go_to_first": "Go to first page",
+    "go_to_last": "Go to last page",
+    "go_to_page": "Go to page {page}"
   }
 }

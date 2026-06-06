@@ -98,7 +98,10 @@
     "dark": "ダーク",
     "light": "ライト",
     "system": "システム",
-    "logout": "ログアウト"
+    "logout": "ログアウト",
+    "logout_confirm_title": "Langoraからログアウトしますか？",
+    "logout_confirm_desc": "学習の進捗は保存されています。いつでもログインして続きから始められます。",
+    "cancel": "キャンセル"
   },
   "about": {
     "mission": "私たちの使命",
@@ -215,5 +218,14 @@
     "post3_title": "IELTSバンド8.0+を達成するためのステップバイステップのライティングプラン",
     "post3_desc": "アカデミックライティングタスクの準備をしている上級候補者向けに調整された、実行可能なヒント、テンプレート、語彙リスト。",
     "post3_cat": "IELTS準備"
+  },
+  "pagination": {
+    "prev": "前へ",
+    "next": "次へ",
+    "go_to_prev": "前のページへ",
+    "go_to_next": "次のページへ",
+    "go_to_first": "最初のページへ",
+    "go_to_last": "最後のページへ",
+    "go_to_page": "{page}ページへ"
   }
 }
