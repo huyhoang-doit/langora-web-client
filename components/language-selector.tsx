@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { ChevronDown, Globe } from "lucide-react";
+import { useRouter } from "@/i18n/navigation";
+import { usePathname } from "next/navigation";
+import { useLanguageStore } from "@/stores/ui-language.store";
 
 export const languages = [
   { code: "en", label: "English", flag: "🇺🇸", short: "EN" },
@@ -23,8 +26,19 @@ export function LanguageSelector({
   variant = "compact",
   className = "",
 }: LanguageSelectorProps) {
-  const [selected, setSelected] = useState<Language>(languages[0]);
+  const router = useRouter();
+  const pathname = usePathname();
+  const { locale, setLocale } = useLanguageStore();
   const [open, setOpen] = useState(false);
+
+  const selected = languages.find((l) => l.code === locale) || languages[0];
+
+  const handleLanguageChange = (newLocale: string) => {
+    setLocale(newLocale);
+    const segments = pathname.split("/");
+    segments[1] = newLocale;
+    router.push(segments.join("/"));
+  };
 
   /* ---------- FULL variant: inline stacked list (sidebar use) ---------- */
   if (variant === "full") {
@@ -33,7 +47,7 @@ export function LanguageSelector({
         {languages.map((lang) => (
           <button
             key={lang.code}
-            onClick={() => setSelected(lang)}
+            onClick={() => handleLanguageChange(lang.code)}
             className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold transition-all border-2 ${
               selected.code === lang.code
                 ? "bg-primary/10 text-primary border-primary/20 shadow-[0_2px_0_0_rgba(99,102,241,0.1)]"
@@ -85,7 +99,7 @@ export function LanguageSelector({
               role="option"
               aria-selected={selected.code === lang.code}
               onClick={() => {
-                setSelected(lang);
+                handleLanguageChange(lang.code);
                 setOpen(false);
               }}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-bold transition-all text-left border-2 ${

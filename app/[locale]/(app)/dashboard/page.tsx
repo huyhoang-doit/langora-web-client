@@ -21,6 +21,7 @@ import {
   Heart,
   ChevronRight
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -38,11 +39,12 @@ function OraMascot({ className = "w-8 h-8" }) {
 }
 
 export default function DashboardPage() {
+  const t = useTranslations();
   const stats = [
-    { label: "Words Mastered", value: "1,250", icon: BookOpen, color: "text-indigo-500" },
-    { label: "Daily Streak", value: "15 Days", icon: Flame, color: "text-amber-500" },
-    { label: "Writing Band", value: "8.5", icon: PenLine, color: "text-pink-500" },
-    { label: "Study Time", value: "12h 30m", icon: Timer, color: "text-cyan-500" },
+    { label: t("stats.words_mastered"), value: "1,250", icon: BookOpen, color: "text-indigo-500" },
+    { label: t("stats.daily_streak"), value: "15 Days", icon: Flame, color: "text-amber-500" },
+    { label: t("stats.writing_band"), value: "8.5", icon: PenLine, color: "text-pink-500" },
+    { label: t("stats.study_time"), value: "12h 30m", icon: Timer, color: "text-cyan-500" },
   ];
 
   return (

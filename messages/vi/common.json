@@ -1,0 +1,40 @@
+{
+  "navbar": {
+    "product": "Sản phẩm",
+    "features": "Tính năng",
+    "pricing": "Giá",
+    "company": "Công ty",
+    "about": "Về chúng tôi",
+    "blog": "Blog",
+    "contact": "Liên hệ",
+    "how_it_works": "Cách hoạt động",
+    "testimonials": "Nhận xét",
+    "sign_in": "Đăng nhập",
+    "get_started": "Bắt đầu miễn phí"
+  },
+  "landing": {
+    "badge": "Nền tảng học ngôn ngữ thế hệ mới",
+    "hero_title": "Thành thạo ngôn ngữ",
+    "hero_highlight": "Thông minh hơn với AI",
+    "hero_description": "Xây dựng từ vựng, cải thiện kỹ năng viết, và học nhanh hơn với AI cá nhân hóa.",
+    "cta_primary": "Bắt đầu học miễn phí",
+    "cta_secondary": "Xem demo"
+  },
+  "footer": {
+    "company": "Công ty",
+    "product": "Sản phẩm",
+    "resources": "Tài nguyên",
+    "legal": "Pháp lý",
+    "copyright": "© 2024 Langora. Bảo lưu mọi quyền.",
+    "privacy": "Chính sách quyền riêng tư",
+    "terms": "Điều khoản dịch vụ"
+  },
+  "common": {
+    "language": "Ngôn ngữ",
+    "theme": "Giao diện",
+    "dark": "Tối",
+    "light": "Sáng",
+    "system": "Hệ thống",
+    "logout": "Đăng xuất"
+  }
+}

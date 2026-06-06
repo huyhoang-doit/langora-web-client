@@ -1,0 +1,16 @@
+{
+  "onboarding": {
+    "welcome": "Welcome to Langora",
+    "step_1_title": "Choose Your Learning Goal",
+    "step_1_description": "What language do you want to learn?",
+    "step_2_title": "Set Your Level",
+    "step_2_description": "Select your current proficiency level",
+    "step_3_title": "Personalize Your Journey",
+    "step_3_description": "Tell us about your learning preferences",
+    "step_4_title": "Get Started",
+    "step_4_description": "You're all set! Let's begin your learning journey",
+    "next": "Next",
+    "skip": "Skip",
+    "finish": "Finish"
+  }
+}

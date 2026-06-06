@@ -1,0 +1,40 @@
+{
+  "navbar": {
+    "product": "Product",
+    "features": "Features",
+    "pricing": "Pricing",
+    "company": "Company",
+    "about": "About Us",
+    "blog": "Blog",
+    "contact": "Contact",
+    "how_it_works": "How It Works",
+    "testimonials": "Testimonials",
+    "sign_in": "Sign In",
+    "get_started": "Get Started"
+  },
+  "landing": {
+    "badge": "Next-Gen Language OS",
+    "hero_title": "Master Languages",
+    "hero_highlight": "Smarter with AI",
+    "hero_description": "Build vocabulary, improve writing, and learn faster with personalized AI.",
+    "cta_primary": "Start Learning Free",
+    "cta_secondary": "Watch Demo"
+  },
+  "footer": {
+    "company": "Company",
+    "product": "Product",
+    "resources": "Resources",
+    "legal": "Legal",
+    "copyright": "© 2024 Langora. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "common": {
+    "language": "Language",
+    "theme": "Theme",
+    "dark": "Dark",
+    "light": "Light",
+    "system": "System",
+    "logout": "Log Out"
+  }
+}

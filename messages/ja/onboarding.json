@@ -1,0 +1,16 @@
+{
+  "onboarding": {
+    "welcome": "Langoraへようこそ",
+    "step_1_title": "学習目標を選択",
+    "step_1_description": "どの言語を学びたいですか？",
+    "step_2_title": "レベルを設定",
+    "step_2_description": "現在の熟練度を選択してください",
+    "step_3_title": "旅をカスタマイズ",
+    "step_3_description": "学習の好みについて教えてください",
+    "step_4_title": "始める",
+    "step_4_description": "準備完了です！学習の旅を始めましょう",
+    "next": "次へ",
+    "skip": "スキップ",
+    "finish": "完了"
+  }
+}

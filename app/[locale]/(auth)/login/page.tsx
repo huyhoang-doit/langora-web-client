@@ -199,12 +199,15 @@ export default function LoginPage() {
                 </label>
               </div>
 
-              <Button
-                type="submit"
-                className="btn-edu w-full py-6 text-sm border-2 bg-primary text-primary-foreground hover:bg-primary/90 mt-2"
-              >
-                Đăng nhập vào Langora
-              </Button>
+              <Link href="/dashboard" className="hidden sm:block">
+                <Button
+                  type="submit"
+                  className="btn-edu w-full py-6 text-sm border-2 bg-primary text-primary-foreground hover:bg-primary/90 mt-2"
+                >
+                  Đăng nhập vào Langora
+                </Button>
+              </Link>
+
             </form>
 
             <p className="text-center text-sm text-muted-foreground mt-4 font-medium">

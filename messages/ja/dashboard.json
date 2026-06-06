@@ -1,0 +1,26 @@
+{
+  "dashboard": {
+    "dashboard": "ダッシュボード",
+    "learning_path": "学習パス",
+    "vocabulary": "語彙",
+    "mini_games": "ミニゲーム",
+    "writing_coach": "ライティングコーチ",
+    "grammar_lab": "グラマーラボ",
+    "ora_companion": "Ora コンパニオン",
+    "progress_reports": "進捗レポート",
+    "community_feed": "コミュニティフィード",
+    "profile": "プロフィール"
+  },
+  "stats": {
+    "words_mastered": "習得した単語",
+    "daily_streak": "日連続記録",
+    "writing_band": "ライティングスコア",
+    "study_time": "勉強時間"
+  },
+  "sections": {
+    "continue_learning": "学習を続ける",
+    "recommended": "おすすめ",
+    "community_highlights": "コミュニティハイライト",
+    "your_progress": "あなたの進捗"
+  }
+}

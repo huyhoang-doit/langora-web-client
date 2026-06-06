@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   Sparkles,
   Layers,
@@ -15,6 +18,7 @@ import { PublicNavbar } from "@/components/public-navbar";
 import { PublicFooter } from "@/components/public-footer";
 
 export default function LandingPage() {
+  const t = useTranslations();
   return (
     <div className="bg-background text-foreground min-h-screen overflow-x-hidden font-sans">
       {/* Radial background glow */}

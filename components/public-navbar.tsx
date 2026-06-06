@@ -3,36 +3,38 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSelector } from "@/components/language-selector";
 
-const navGroups = [
-  {
-    label: "Product",
-    items: [
-      { label: "Features", href: "/features" },
-      { label: "Pricing", href: "/pricing" },
-    ],
-  },
-  {
-    label: "Company",
-    items: [
-      { label: "About Us", href: "/about" },
-      { label: "Blog", href: "/blog" },
-      { label: "Contact", href: "/contact" },
-    ],
-  },
-];
-
-const flatLinks = [
-  { label: "How It Works", href: "/#how-it-works" },
-  { label: "Testimonials", href: "/#testimonials" },
-];
-
 export function PublicNavbar() {
+  const t = useTranslations();
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const navGroups = [
+    {
+      label: t("navbar.product"),
+      items: [
+        { label: t("navbar.features"), href: "/features" },
+        { label: t("navbar.pricing"), href: "/pricing" },
+      ],
+    },
+    {
+      label: t("navbar.company"),
+      items: [
+        { label: t("navbar.about"), href: "/about" },
+        { label: t("navbar.blog"), href: "/blog" },
+        { label: t("navbar.contact"), href: "/contact" },
+      ],
+    },
+  ];
+
+  const flatLinks = [
+    { label: t("navbar.how_it_works"), href: "/#how-it-works" },
+    { label: t("navbar.testimonials"), href: "/#testimonials" },
+  ];
 
   const toggleGroup = (label: string) =>
     setOpenGroup((prev) => (prev === label ? null : label));
@@ -113,12 +115,12 @@ export function PublicNavbar() {
               variant="outline"
               className="btn-edu h-9 px-4 text-xs border-2 bg-transparent text-foreground hover:bg-muted font-black uppercase tracking-wide"
             >
-              Đăng nhập
+              {t("navbar.sign_in")}
             </Button>
           </Link>
           <Link href="/register">
             <Button className="btn-edu h-9 px-4 text-xs border-2 bg-primary text-primary-foreground hover:bg-primary/90 font-black uppercase tracking-wide">
-              Bắt đầu miễn phí
+              {t("navbar.get_started")}
             </Button>
           </Link>
 

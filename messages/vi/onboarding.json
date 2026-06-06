@@ -1,0 +1,16 @@
+{
+  "onboarding": {
+    "welcome": "Chào mừng đến Langora",
+    "step_1_title": "Chọn mục tiêu học tập",
+    "step_1_description": "Bạn muốn học ngôn ngữ nào?",
+    "step_2_title": "Đặt cấp độ của bạn",
+    "step_2_description": "Chọn mức độ thành thạo hiện tại của bạn",
+    "step_3_title": "Cá nhân hóa hành trình",
+    "step_3_description": "Cho chúng tôi biết sở thích học tập của bạn",
+    "step_4_title": "Bắt đầu",
+    "step_4_description": "Sẵn sàng rồi! Hãy bắt đầu hành trình học tập của bạn",
+    "next": "Tiếp theo",
+    "skip": "Bỏ qua",
+    "finish": "Hoàn thành"
+  }
+}

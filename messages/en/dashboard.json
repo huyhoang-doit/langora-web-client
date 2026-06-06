@@ -1,0 +1,26 @@
+{
+  "dashboard": {
+    "dashboard": "Dashboard",
+    "learning_path": "Learning Path",
+    "vocabulary": "Vocabulary",
+    "mini_games": "Mini Games",
+    "writing_coach": "Writing Coach",
+    "grammar_lab": "Grammar Lab",
+    "ora_companion": "Ora Companion",
+    "progress_reports": "Progress Reports",
+    "community_feed": "Community Feed",
+    "profile": "Profile"
+  },
+  "stats": {
+    "words_mastered": "Words Mastered",
+    "daily_streak": "Daily Streak",
+    "writing_band": "Writing Band",
+    "study_time": "Study Time"
+  },
+  "sections": {
+    "continue_learning": "Continue Learning",
+    "recommended": "Recommended For You",
+    "community_highlights": "Community Highlights",
+    "your_progress": "Your Progress"
+  }
+}
