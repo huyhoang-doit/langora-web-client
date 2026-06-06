@@ -10,6 +10,7 @@ import { LanguageSelector } from "@/components/language-selector";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useRouter } from "@/i18n/navigation";
+import { ImageLogoWeb } from "@/components/image-logo-web";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -32,10 +33,7 @@ export default function LoginPage() {
         <div className="z-10 w-full max-w-xl px-12">
           <div className="mb-10">
             <Link href="/" className="inline-block mb-6 hover:opacity-80 transition-opacity">
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-lg">🐲</div>
-                <span className="text-xl font-black text-primary text-heading tracking-tight">Langora</span>
-              </div>
+              <ImageLogoWeb variant="big" textClassName="text-xl" />
             </Link>
 
             <h1 className="text-5xl font-black text-foreground mb-6 leading-tight text-heading">
@@ -119,9 +117,8 @@ export default function LoginPage() {
         <div className="w-full max-w-[440px] z-20">
           {/* Mobile Logo */}
           <div className="lg:hidden flex justify-center mb-10">
-            <Link href="/" className="hover:opacity-80 transition-opacity flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-lg">🐲</div>
-              <span className="text-xl font-black text-primary text-heading tracking-tight">Langora</span>
+            <Link href="/" className="hover:opacity-80 transition-opacity">
+              <ImageLogoWeb variant="big" textClassName="text-xl" />
             </Link>
           </div>
 

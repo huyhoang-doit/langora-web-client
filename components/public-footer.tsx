@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import ImageLogoWeb from "./image-logo-web";
 
 export function PublicFooter() {
   const t = useTranslations();
@@ -46,12 +47,7 @@ export function PublicFooter() {
             href="/"
             className="inline-flex items-center gap-2.5 mb-4 hover:opacity-80 transition-opacity"
           >
-            <div className="w-9 h-9 rounded-xl bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-lg">
-              🐲
-            </div>
-            <span className="text-lg font-black text-primary text-heading tracking-tight">
-              Langora
-            </span>
+            <ImageLogoWeb variant="big" />
           </Link>
           <p className="text-sm text-muted-foreground max-w-xs mb-4 leading-relaxed font-medium">
             {t("footer.tagline")}

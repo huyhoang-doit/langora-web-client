@@ -10,6 +10,7 @@ import { LanguageSelector } from "@/components/language-selector";
 import { CustomizeAlert } from "@/components/customize/customize-alert";
 import { useState } from "react";
 import { toast } from "sonner";
+import { ImageLogoWeb } from "@/components/image-logo-web";
 
 export function AppSidebar() {
   const pathname = usePathname();
@@ -21,12 +22,9 @@ export function AppSidebar() {
       <aside className="hidden md:flex h-screen w-72 flex-shrink-0 flex-col p-6 gap-2 bg-sidebar border-r-2 border-border/80 overflow-y-auto scrollbar-thin">
         {/* Logo */}
         <Link href="/" >
-          <div className="flex items-center gap-3 mb-8 px-1 flex-shrink-0">
-            <div className="w-10 h-10 rounded-xl bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-xl">
-              🐲
-            </div>
+          <div className="flex flex-col gap-1 mb-8 px-1 flex-shrink-0">
+            <ImageLogoWeb variant="big" />
             <div>
-              <h1 className="text-lg font-black text-primary leading-none tracking-tight text-heading">Langora</h1>
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1 font-bold">
                 AI Language Lab
               </p>

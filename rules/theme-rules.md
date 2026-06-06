@@ -109,10 +109,12 @@ Hãy tái sử dụng các utility class sau được định nghĩa sẵn trong
 
 ---
 
-## 6. Lồng ghép Mascot Rồng "Ora" (🐲)
+## 6. Lồng ghép Mascot Rồng "Ora"
 
 Rồng con **Ora** là linh vật và là người bạn đồng hành AI xuyên suốt nền tảng. Khi thiết kế trang hoặc component, hãy lồng ghép Ora để cá nhân hóa giao diện:
-- **Trạng thái Trống (Empty State)**: Thay vì ghi "No data available", hãy hiển thị Ora cùng lời thoại, ví dụ: *"Ora đang chuẩn bị bài học mới cho bạn..."*
+- **Tuyệt đối không sử dụng emoji `🐲` nữa**. Thay vào đó, hãy import và sử dụng component `<ImageLogoWeb variant="mascot" />` từ `components/image-logo-web.tsx`.
+- Prop `className` và `imageClassName` của component này cho phép bạn tuỳ chỉnh kích thước tuỳ ý (ví dụ: `w-16 h-16`, `w-32 h-32`).
+- **Trạng thái Trống (Empty State)**: Thay vì ghi "No data available", hãy hiển thị component Ora cùng lời thoại, ví dụ: *"Ora đang chuẩn bị bài học mới cho bạn..."*
 - **Trạng thái Tải (Loading)**: *"Ora đang suy nghĩ..."* hoặc *"Ora đang tìm kiếm từ vựng..."*
 - **Trạng thái Thành công (Success)**: *"Ora tự hào vì bạn đã duy trì chuỗi học 7 ngày qua! 🔥"*
 
@@ -129,7 +131,7 @@ Rồng con **Ora** là linh vật và là người bạn đồng hành AI xuyên
 ## 8. Quy chuẩn Sidebar & Điều hướng (Sidebar & Navigation Rules)
 
 Để đồng bộ phong cách điều hướng cao cấp:
-- **Logo của ứng dụng**: Luôn sử dụng icon rồng Ora `🐲` bọc trong khung viền 2px (`border-2 bg-primary/10 border-primary/20 rounded-xl`). Chữ tiêu đề "Langora" dùng font `Be Vietnam Pro` (`text-heading` / `font-black`).
+- **Logo của ứng dụng**: Luôn sử dụng `<ImageLogoWeb variant="big" />` cho các sidebar/header lớn, hoặc `<ImageLogoWeb variant="small" />` nếu chỉ cần hiện icon. Không sử dụng text chay hay emoji để hiển thị logo. Component đã được bo khung viền 2px (`border-2 bg-primary/10 border-primary/20 rounded-xl`) và có text chuẩn.
 - **Nút điều hướng đang hoạt động (Active Item)**:
   - Phải có viền `border-2 border-primary/20` và nền `bg-primary/5`.
   - Có bóng đổ phẳng tactile nhẹ dưới chân: `shadow-[0_4px_0_0_rgba(99,102,241,0.1)]`.

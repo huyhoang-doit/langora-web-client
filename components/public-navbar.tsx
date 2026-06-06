@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSelector } from "@/components/language-selector";
+import { ImageLogoWeb } from "@/components/image-logo-web";
 
 export function PublicNavbar() {
   const t = useTranslations();
@@ -48,14 +49,9 @@ export function PublicNavbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="hover:opacity-80 transition-opacity flex items-center gap-2.5 mr-8 flex-shrink-0"
+          className="hover:opacity-80 transition-opacity flex items-center mr-8 flex-shrink-0"
         >
-          <div className="w-9 h-9 rounded-xl bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-lg">
-            🐲
-          </div>
-          <span className="text-lg font-black text-primary text-heading tracking-tight">
-            Langora
-          </span>
+          <ImageLogoWeb variant="big" />
         </Link>
 
         {/* Desktop Nav */}

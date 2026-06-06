@@ -84,7 +84,7 @@ export default function DashboardPage() {
       {/* Main Grid Content */}
       <div className="flex-grow overflow-y-auto p-8 scrollbar-thin space-y-8">
         <div className="max-w-6xl mx-auto space-y-8">
-          
+
           {/* 1. Welcome Hero (Linear + Headspace vibe) */}
           <div className="relative overflow-hidden rounded-[24px] border-2 border-indigo-500/20 bg-gradient-to-r from-indigo-500/10 via-blue-500/5 to-transparent p-8 md:p-10 group">
             <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -129,10 +129,10 @@ export default function DashboardPage() {
 
           {/* Two-Column Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
+
             {/* Left Side: Missions, learning path, review, writing */}
             <div className="lg:col-span-2 space-y-8">
-              
+
               {/* 2. Daily Mission */}
               <div className="card-edu p-6 space-y-4">
                 <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
@@ -237,7 +237,7 @@ export default function DashboardPage() {
 
             {/* Right Side: AI Coach, Weekly progress, achievements */}
             <div className="space-y-8">
-              
+
               {/* 6. AI Coach Insights (Ora Companion Card) */}
               <div className="card-edu p-6 border-indigo-500/30 bg-gradient-to-b from-indigo-500/5 to-transparent space-y-4">
                 <div className="flex items-center gap-2 text-indigo-500">
@@ -276,8 +276,8 @@ export default function DashboardPage() {
                   ].map((d, i) => (
                     <div key={`${d.day}-${i}`} className="flex flex-col items-center gap-2 w-full group">
                       <div className="w-full bg-indigo-500/10 border-2 border-border/40 rounded-t-xl relative flex items-end" style={{ height: "80px" }}>
-                        <div 
-                          className="w-full bg-gradient-to-t from-indigo-600 to-indigo-400 rounded-t-lg transition-all group-hover:from-indigo-500" 
+                        <div
+                          className="w-full bg-gradient-to-t from-indigo-600 to-indigo-400 rounded-t-lg transition-all group-hover:from-indigo-500"
                           style={{ height: `${d.pct}%` }}
                         />
                       </div>

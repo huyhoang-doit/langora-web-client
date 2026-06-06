@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSelector } from "@/components/language-selector";
 import { useTranslations } from "next-intl";
+import { ImageLogoWeb } from "@/components/image-logo-web";
 
 export default function RegisterPage() {
   const t = useTranslations();
@@ -25,10 +26,7 @@ export default function RegisterPage() {
         <div className="relative z-10 w-full max-w-xl flex flex-col items-start">
           <div className="mb-10">
             <Link href="/" className="inline-block mb-4 hover:opacity-80 transition-opacity">
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-lg">🐲</div>
-                <span className="text-xl font-black text-primary text-heading tracking-tight">Langora</span>
-              </div>
+              <ImageLogoWeb variant="big" textClassName="text-xl" />
             </Link>
             <h1 className="text-5xl font-black text-foreground leading-tight max-w-md text-heading mt-4">
               {t("auth.register_hero_title")}
@@ -78,9 +76,8 @@ export default function RegisterPage() {
       <section className="w-full lg:w-1/2 flex flex-col items-center justify-center px-6 md:px-12 bg-background relative">
         {/* Mobile Logo */}
         <div className="lg:hidden absolute top-6 left-6">
-          <Link href="/" className="hover:opacity-80 transition-opacity flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-base">🐲</div>
-            <span className="text-base font-black text-primary text-heading tracking-tight">Langora</span>
+          <Link href="/" className="hover:opacity-80 transition-opacity">
+            <ImageLogoWeb variant="big" textClassName="text-base" />
           </Link>
         </div>
 
