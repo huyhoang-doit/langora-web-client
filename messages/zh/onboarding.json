@@ -1,0 +1,79 @@
+{
+  "welcome": {
+    "step": "第 1 步 / 共 6 步",
+    "title": "欢迎来到 Langora！",
+    "desc": "让我们定制您的语言之旅。我们将设置您的目标语言，评估您的目标，并估算您的初始熟练程度。",
+    "time_val": "2 分钟",
+    "time_lbl": "预计时间",
+    "flow_val": "AI 引导",
+    "flow_lbl": "流程样式",
+    "start_btn": "让我们开始吧",
+    "copyright": "© 2024 Langora. 为认知清晰而设计。"
+  },
+  "language": {
+    "step": "第 2 步 / 共 6 步",
+    "title": "您想学习什么语言？",
+    "desc": "选择您的目标语言。您可以稍后更改。",
+    "en_label": "英语",
+    "en_native": "English",
+    "en_desc": "学习语法、专业词汇或准备 IELTS/TOEIC。",
+    "ja_label": "日语",
+    "ja_native": "日本語",
+    "ja_desc": "掌握汉字、JLPT 词汇和自然口语。",
+    "zh_label": "中文",
+    "zh_native": "中文",
+    "zh_desc": "练习声调、HSK 词汇和汉字（即将推出）。",
+    "back": "返回",
+    "continue": "继续"
+  },
+  "goal": {
+    "step": "第 3 步 / 共 6 步",
+    "title": "您的学习目标是什么？",
+    "desc": "我们将个性化您的路线图以专注于这些主题。",
+    "ielts_label": "IELTS 认证",
+    "ielts_desc": "专注于正式词汇、学术论文和连贯性。",
+    "toeic_label": "TOEIC 认证",
+    "toeic_desc": "专注于企业词汇、电子邮件和主动语法。",
+    "business_label": "商务英语 / 沟通",
+    "business_desc": "准备谈判、企业演示和撰写电子邮件。",
+    "travel_label": "旅行和日常对话",
+    "travel_desc": "提高基本对话、词汇和口语流利度。",
+    "back": "返回",
+    "continue": "继续"
+  },
+  "level": {
+    "step": "第 4 步 / 共 6 步",
+    "title": "估算您当前的水平",
+    "desc": "这有助于我们为您的 AI 推荐提供合适的内容。",
+    "beginner_label": "绝对初学者",
+    "beginner_desc": "我从零开始。我还不知道基本的词汇或语法。",
+    "intermediate_label": "中级学习者",
+    "intermediate_desc": "我能构建基本的段落并理解缓慢的对话。",
+    "advanced_label": "高级讲者",
+    "advanced_desc": "我能流利地沟通，但需要掌握复杂的语法和文体结构。",
+    "unsure_label": "我不确定（推荐分级测试）",
+    "unsure_desc": "参加 5 分钟的 AI 评估以测试您的阅读、词汇和语法。",
+    "back": "返回",
+    "continue": "继续"
+  },
+  "placement": {
+    "title": "AI 分级测试",
+    "question_progress": "问题 {current} / {total}",
+    "instruction": "选择最适合以下句子的单词：",
+    "quit": "退出测试",
+    "next": "下一个问题",
+    "loading": "Ora正在分析你的水平..."
+  },
+  "result": {
+    "complete": "AI 评估完成",
+    "level": "您的水平：{level}",
+    "proficiency": "英语中高级水平",
+    "vocab_mastery": "词汇掌握度：{percent}%",
+    "vocab_desc": "通用商务方面较强，科学方面中等。",
+    "writing_coherence": "写作连贯性：{percent}%",
+    "writing_desc": "逻辑流程清晰。复杂时态有轻微错误。",
+    "ai_recommendation": "AI 推荐",
+    "ai_desc": "我们为您创建了自定义路线图。建议您重点关注语法中的“条件结构”和词汇中的“谈判成语”。",
+    "enter_dashboard": "进入我的仪表板"
+  }
+}
