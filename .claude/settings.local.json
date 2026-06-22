@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "mcp__Claude_in_Chrome__navigate",
-      "mcp__Claude_in_Chrome__javascript_tool"
+      "mcp__Claude_in_Chrome__javascript_tool",
+      "Bash(grep -n '\"E\\\\.' \"/Users/levanhuyhoang/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/b0904669-0d89-4cfc-8f50-52a7bc7f3103/25fb6c29-7c5b-49a9-b913-67186dd81637/skills/docx/gen_user_guide.js\" | head -30)",
+      "Bash(node gen_user_guide.js)"
     ]
   }
 }

@@ -74,7 +74,7 @@ export default function LandingPage() {
           <div className="relative min-h-[450px] flex items-center justify-center">
             <div className="w-full relative overflow-hidden rounded-[32px] p-2 flex justify-center">
               <Image
-                src="/ora/2-ora.png"
+                src="/ora/3-ora.png"
                 alt="Langora AI Companion"
                 width={800}
                 height={600}
@@ -107,7 +107,7 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="absolute top-2 -right-30 glass card-edu px-4 py-3 flex items-center gap-2 shadow-md">
+            <div className="absolute top-2 -right-20 glass card-edu px-4 py-3 flex items-center gap-2 shadow-md">
               <Flame className="w-5 h-5 text-primary" />
               <div>
                 <div className="text-xs text-muted-foreground">{t("landing.streak_label")}</div>
