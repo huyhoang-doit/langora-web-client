@@ -42,7 +42,7 @@ export function AppSidebar() {
 
         {/* Navigation */}
         <nav className="flex-grow flex flex-col gap-2">
-          {sidebarNavItems.map(({ href, icon: Icon, label, i18nKey }) => {
+          {sidebarNavItems.filter(item => !item.hide).map(({ href, icon: Icon, label, i18nKey }) => {
             const isActive = pathname === href || pathname.startsWith(href + "/");
             const displayLabel = i18nKey ? t(label) : label;
             return (
@@ -66,7 +66,7 @@ export function AppSidebar() {
 
         {/* Bottom section */}
         <div className="mt-auto flex flex-col gap-2 border-t-2 border-border/60 pt-4 flex-shrink-0">
-          {sidebarBottomItems.map(({ href, icon: Icon, label, i18nKey }) => {
+          {sidebarBottomItems.filter(item => !item.hide).map(({ href, icon: Icon, label, i18nKey }) => {
             const isActive = pathname === href || pathname.startsWith(href + "/");
             const displayLabel = i18nKey ? t(label) : label;
             return (
@@ -135,11 +135,11 @@ export function MobileBottomNav() {
   const pathname = usePathname();
 
   const mobileItems = [
-    { href: "/dashboard", label: "Home" },
-    { href: "/learn", label: "Learn" },
-    { href: "/vocabulary", label: "Vocab" },
-    { href: "/ora", label: "Ora" },
-    { href: "/profile", label: "Profile" },
+    { href: "/dashboard", label: "Home", hide: false },
+    { href: "/learn", label: "Learn", hide: true },
+    { href: "/vocabulary", label: "Vocab", hide: true },
+    { href: "/ora", label: "Ora", hide: true },
+    { href: "/profile", label: "Profile", hide: false },
   ];
 
   const getEmoji = (label: string) => {
@@ -155,7 +155,7 @@ export function MobileBottomNav() {
 
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 glass bg-background/85 border-t-2 border-border/80 h-16 flex items-center justify-around px-2">
-      {mobileItems.map(({ href, label }) => {
+      {mobileItems.filter(item => !item.hide).map(({ href, label }) => {
         const isActive = pathname === href || pathname.startsWith(href + "/");
         return (
           <Link
