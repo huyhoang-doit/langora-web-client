@@ -12,12 +12,47 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useRouter } from "@/i18n/navigation";
 import { ImageLogoWeb } from "@/components/image-logo-web";
+import { AuthService } from "@/services/auth.service";
+import { UserService } from "@/services/user.service";
+import { useAuthStore } from "@/stores/auth.store";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const router = useRouter();
+  const setAuth = useAuthStore((state) => state.setAuth);
 
   const t = useTranslations();
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const res = await AuthService.login({ email, password });
+      
+      // Theo cấu trúc API response chuẩn, res sẽ có field success (hoặc res.data)
+      // Tùy theo logic API thực tế, giả định Interceptor trả về data chuẩn
+      if (res.success && res.data?.accessToken) {
+        const profileRes = await UserService.getProfile();
+        if (profileRes.data) {
+          setAuth(profileRes.data);
+          toast.success(res.message || "Login Successful");
+          router.push("/dashboard");
+        } else {
+          toast.error("Failed to fetch profile");
+        }
+      } else {
+        toast.error("Login succeeded but no token was returned.");
+      }
+    } catch (error: any) {
+      toast.error(error?.message || "Invalid credentials. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <main className="flex min-h-screen text-foreground bg-background">
@@ -115,13 +150,7 @@ export default function LoginPage() {
             </div>
 
             {/* Login Form */}
-            <form className="space-y-4" onSubmit={(e) => {
-              e.preventDefault();
-              toast.success("Login Successful", {
-                description: "Welcome back to Langora!",
-              });
-              router.push("/dashboard");
-            }}>
+            <form className="space-y-4" onSubmit={handleLogin}>
               <div>
                 <label className="block text-xs font-bold text-muted-foreground mb-1.5 ml-1 uppercase tracking-wider" htmlFor="email">
                   {t("auth.email_label")}
@@ -129,8 +158,11 @@ export default function LoginPage() {
                 <Input
                   id="email"
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder={t("auth.email_placeholder")}
                   className="w-full bg-muted/30 border-2 border-border rounded-xl px-4 py-6 text-foreground placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-primary font-medium"
+                  required
                 />
               </div>
 
@@ -147,8 +179,11 @@ export default function LoginPage() {
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     placeholder={t("auth.password_placeholder")}
                     className="w-full bg-muted/30 border-2 border-border rounded-xl px-4 py-6 text-foreground placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-primary pr-12 font-medium"
+                    required
                   />
                   <Button
                     type="button"
@@ -176,9 +211,10 @@ export default function LoginPage() {
               <div className="hidden sm:block">
                 <Button
                   type="submit"
+                  disabled={loading}
                   className="btn-edu w-full py-6 text-sm border-2 bg-primary text-primary-foreground hover:bg-primary/90 mt-2"
                 >
-                  {t("auth.login_button")}
+                  {loading ? "..." : t("auth.login_button")}
                 </Button>
               </div>
 
