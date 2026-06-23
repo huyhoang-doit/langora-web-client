@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "@/i18n/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
+import { useAuthStore } from "@/stores/auth.store";
 import { ThemeToggle } from "./theme-toggle";
 import { LogOut } from "lucide-react";
 import { sidebarNavItems, sidebarBottomItems } from "@/config/sidebar-items";
@@ -17,6 +18,8 @@ export function AppSidebar() {
   const pathname = usePathname();
   const t = useTranslations();
   const [logoutOpen, setLogoutOpen] = useState(false);
+  const { clearAuth } = useAuthStore();
+  const router = useRouter();
 
   return (
     <>
@@ -103,12 +106,24 @@ export function AppSidebar() {
         description={t("common.logout_confirm_desc")}
         confirmLabel={t("common.logout")}
         cancelLabel={t("common.cancel")}
-        onConfirm={() => {
-          // TODO: gọi logout API / clear session
-          toast.error("Logged out successfully", {
-            description: "See you next time!",
-          });
-          setLogoutOpen(false);
+        onConfirm={async () => {
+          try {
+            // Call API if needed (optional since we rely on token)
+            // await AuthService.logout(); 
+          } catch (e) {
+            console.error(e);
+          } finally {
+            clearAuth();
+            if (typeof window !== "undefined") {
+              localStorage.removeItem("access_token");
+              localStorage.removeItem("refresh_token");
+            }
+            toast.success("Logged out successfully", {
+              description: "See you next time!",
+            });
+            setLogoutOpen(false);
+            router.push("/login");
+          }
         }}
         showOra={true}
       />
