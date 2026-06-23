@@ -8,10 +8,56 @@ import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSelector } from "@/components/language-selector";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { toast } from "sonner";
+import { useRouter } from "@/i18n/navigation";
 import { ImageLogoWeb } from "@/components/image-logo-web";
+import { AuthService } from "@/services/auth.service";
+import { UserService } from "@/services/user.service";
+import { useAuthStore } from "@/stores/auth.store";
 
 export default function RegisterPage() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
+  const setAuth = useAuthStore((state) => state.setAuth);
+
   const t = useTranslations();
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const res = await AuthService.register({ fullName: name, email, password });
+      console.log("res:-----", res)
+      if (res.success && res.data?.accessToken) {
+        const profileRes = await UserService.getProfile();
+        if (profileRes.data) {
+          setAuth(profileRes.data);
+          toast.success(res.message || "Registration Successful");
+          router.push("/dashboard");
+        } else {
+          toast.error("Failed to fetch profile");
+        }
+      } else {
+        toast.success(res.message || "Registration Successful. Please log in.");
+        router.push("/login");
+      }
+    } catch (error: any) {
+      toast.error(error?.message || "Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <main className="flex min-h-screen text-foreground bg-background">
@@ -69,7 +115,7 @@ export default function RegisterPage() {
             <p className="text-muted-foreground text-sm font-medium">{t("auth.register_subtitle")}</p>
           </header>
 
-          <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-5" onSubmit={handleRegister}>
             {/* Name */}
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-muted-foreground block uppercase tracking-wider ml-1" htmlFor="name">
@@ -78,8 +124,11 @@ export default function RegisterPage() {
               <Input
                 id="name"
                 type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 placeholder={t("auth.name_placeholder")}
                 className="w-full bg-muted/30 border-2 border-border rounded-xl px-4 py-6 text-foreground focus-visible:ring-1 focus-visible:ring-primary placeholder:text-muted-foreground/60 font-medium"
+                required
               />
             </div>
 
@@ -91,8 +140,11 @@ export default function RegisterPage() {
               <Input
                 id="email"
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder={t("auth.email_placeholder")}
                 className="w-full bg-muted/30 border-2 border-border rounded-xl px-4 py-6 text-foreground focus-visible:ring-1 focus-visible:ring-primary placeholder:text-muted-foreground/60 font-medium"
+                required
               />
             </div>
 
@@ -105,8 +157,11 @@ export default function RegisterPage() {
                 <Input
                   id="password"
                   type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder={t("auth.password_placeholder")}
                   className="w-full bg-muted/30 border-2 border-border rounded-xl px-4 py-6 text-foreground focus-visible:ring-1 focus-visible:ring-primary placeholder:text-muted-foreground/60 font-medium"
+                  required
                 />
               </div>
               <div className="space-y-1.5">
@@ -116,17 +171,21 @@ export default function RegisterPage() {
                 <Input
                   id="confirm-password"
                   type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder={t("auth.confirm_placeholder")}
                   className="w-full bg-muted/30 border-2 border-border rounded-xl px-4 py-6 text-foreground focus-visible:ring-1 focus-visible:ring-primary placeholder:text-muted-foreground/60 font-medium"
+                  required
                 />
               </div>
             </div>
 
             <Button
               type="submit"
+              disabled={loading}
               className="btn-edu w-full py-6 text-sm border-2 bg-primary text-primary-foreground hover:bg-primary/90 mt-2"
             >
-              {t("auth.register_button")}
+              {loading ? "..." : t("auth.register_button")}
             </Button>
           </form>
 

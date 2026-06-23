@@ -9,7 +9,7 @@ export function proxy(request: Parameters<typeof handleI18n>[0]) {
 
 export const config = {
   matcher: [
-    // Match everything except Next.js internals and static files
-    "/((?!_next|_vercel|.*\\..*).*)",
+    // Match everything except Next.js internals, static files, and API routes
+    "/((?!langora/api|_next|_vercel|.*\\..*).*)",
   ],
 };
