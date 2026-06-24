@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { useRouter } from "@/i18n/navigation";
 import Link from "next/link";
 import { 
-  ArrowLeft, FileText, LayoutList, Play, Save, CheckCircle2, Clock, Zap, BookOpen, PenLine, Award, ChevronRight
+  ArrowLeft, FileText, LayoutList, Play, Save, CheckCircle2, Clock, Zap, BookOpen, PenLine, Award, ChevronRight, Sparkles
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -30,6 +30,10 @@ export default function WritingSessionPage() {
   // Feedback State
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [submittingSentences, setSubmittingSentences] = useState<Record<string, boolean>>({});
+  const [sentenceFeedbacks, setSentenceFeedbacks] = useState<Record<string, { score: number; comment: string; }>>({});
+  const [showFullSuggest, setShowFullSuggest] = useState(false);
+  const [showSentenceSuggest, setShowSentenceSuggest] = useState<Record<string, boolean>>({});
   const feedback = getMockAiFeedback();
   
   // Timer mock
@@ -70,6 +74,30 @@ export default function WritingSessionPage() {
       toast.success("AI has finished evaluating your work!");
     }, 2000);
   };
+
+  const handleSentenceSubmit = (id: string) => {
+    if (!sentenceAnswers[id] || sentenceAnswers[id].trim().length < 5) {
+      toast.error("Please provide a valid translation first.");
+      return;
+    }
+    
+    setSubmittingSentences(prev => ({...prev, [id]: true}));
+    setShowSentenceSuggest(prev => ({...prev, [id]: false})); // hide suggestions on submit
+    setTimeout(() => {
+      setSubmittingSentences(prev => ({...prev, [id]: false}));
+      setSentenceFeedbacks(prev => ({
+        ...prev, 
+        [id]: { 
+          score: 8.5, 
+          comment: "Good translation! You could also use 'Due to health issues' to sound more native." 
+        }
+      }));
+      toast.success("Sentence evaluated!");
+    }, 1200);
+  };
+
+  const allVocabSuggestions = exercise?.sentences.flatMap(s => s.suggestions?.vocab || []) || [];
+  const allGrammarSuggestions = exercise?.sentences.flatMap(s => s.suggestions?.grammar || []) || [];
 
   if (!exercise) {
     return (
@@ -127,9 +155,6 @@ export default function WritingSessionPage() {
               <Button onClick={handleSave} disabled={isSaving} variant="outline" size="icon" className="btn-edu w-9 h-9 border-2 hidden sm:flex">
                 <Save className={`w-4 h-4 ${isSaving ? "animate-pulse text-primary" : ""}`} />
               </Button>
-              <Button onClick={handleSubmit} disabled={isSubmitting} className="btn-edu h-9 px-4 text-xs border-2 bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-1.5">
-                {isSubmitting ? <span className="animate-pulse">Analyzing...</span> : <>Submit to AI <Zap className="w-3.5 h-3.5 fill-current" /></>}
-              </Button>
             </>
           )}
           {showFeedback && (
@@ -146,18 +171,18 @@ export default function WritingSessionPage() {
       <div className="flex-grow flex flex-col md:flex-row overflow-hidden">
         
         {/* Left Panel: Editor Area */}
-        <div className="w-full md:w-1/2 lg:w-[60%] border-r-2 border-border/60 bg-background overflow-y-auto p-6 scrollbar-thin flex flex-col relative">
+        <div className="w-full md:w-1/2 lg:w-[60%] border-r-2 border-border/60 bg-background overflow-y-auto p-4 md:p-5 scrollbar-thin flex flex-col relative">
           
           {/* Prompt Area at the Top */}
-          <div className="mb-6 card-edu p-5 bg-muted/20 border-2 border-border/50">
-            <h3 className="text-sm font-bold uppercase tracking-wider text-primary mb-2 flex items-center gap-2">
+          <div className="mb-4 card-edu p-4 bg-muted/20 border-2 border-border/50">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-primary mb-1 flex items-center gap-2">
               <FileText className="w-4 h-4" /> Context / Yêu cầu
             </h3>
-            <p className="text-sm font-medium text-foreground leading-relaxed mb-4">{exercise.description}</p>
+            <p className="text-sm font-medium text-foreground leading-relaxed mb-3">{exercise.description}</p>
             
             {mode === "full" && (
-              <div className="p-4 bg-background rounded-lg border border-border mt-4">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">Đoạn tiếng Việt cần dịch:</h4>
+              <div className="p-3 bg-background rounded-lg border border-border mt-2">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">Đoạn tiếng Việt cần dịch:</h4>
                 <p className="text-sm font-medium text-foreground leading-relaxed">
                   {exercise.sentences.map(s => s.content).join(" ")}
                 </p>
@@ -176,114 +201,217 @@ export default function WritingSessionPage() {
                   placeholder="Type your English translation here..."
                   className="flex-grow min-h-[300px] resize-none bg-background border-2 border-border rounded-xl focus-visible:ring-1 focus-visible:ring-primary text-base leading-relaxed font-medium p-4 disabled:opacity-70"
                 />
+                
+                {/* Actions below Textarea */}
+                {!showFeedback && (
+                  <div className="flex justify-end gap-3 mt-4 relative">
+                    {showFullSuggest && (
+                      <div className="absolute bottom-full mb-3 right-0 w-80 bg-background text-foreground border-2 border-primary ring-4 ring-primary/20 rounded-xl p-4 z-50 animate-in fade-in zoom-in-95">
+                        <div className="space-y-4">
+                          <div>
+                            <h4 className="text-xs font-bold uppercase tracking-wider text-primary mb-2 flex items-center gap-1.5"><BookOpen className="w-3.5 h-3.5" /> Vocabulary Hints</h4>
+                            <div className="flex flex-wrap gap-1.5">
+                              {allVocabSuggestions.slice(0, 8).map((v, i) => <Badge key={i} variant="secondary" className="bg-primary/10 text-primary border-primary/20 text-[10px]">{v}</Badge>)}
+                            </div>
+                          </div>
+                          <div>
+                            <h4 className="text-xs font-bold uppercase tracking-wider text-pink-500 mb-2 flex items-center gap-1.5"><PenLine className="w-3.5 h-3.5" /> Grammar Hints</h4>
+                            <ul className="space-y-1.5 max-h-40 overflow-y-auto scrollbar-thin pr-1">
+                              {allGrammarSuggestions.slice(0, 5).map((g, i) => (
+                                <li key={i} className="text-[11px] font-medium bg-muted/50 p-2 rounded-lg border border-border/50">{g}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    <Button 
+                      variant="outline" 
+                      onClick={() => setShowFullSuggest(!showFullSuggest)}
+                      className={`btn-edu h-10 px-6 text-sm border-2 flex items-center gap-2 ${showFullSuggest ? "bg-primary/10 border-primary text-primary" : "text-primary hover:bg-primary/10"}`}
+                    >
+                      <Sparkles className="w-4 h-4 fill-current" /> Gợi ý
+                    </Button>
+                    <Button 
+                      onClick={handleSubmit} 
+                      disabled={isSubmitting} 
+                      className="btn-edu h-10 px-6 text-sm border-2 bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2"
+                    >
+                      {isSubmitting ? <span className="animate-pulse">Analyzing...</span> : <>Submit to AI <Zap className="w-4 h-4 fill-current" /></>}
+                    </Button>
+                  </div>
+                )}
               </div>
             ) : (
-              <div className="space-y-6 pb-12">
+              <div className="space-y-4 pb-8">
                 {exercise.sentences.map((s, idx) => (
-                  <div key={s.id} className="space-y-3 p-4 bg-muted/10 rounded-xl border border-border/50">
-                    <div className="flex items-start gap-3">
-                      <span className="w-6 h-6 rounded-md bg-primary/10 text-primary flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">
+                  <div key={s.id} className="space-y-2 p-3 bg-muted/10 rounded-xl border border-border/50">
+                    <div className="flex items-start gap-2">
+                      <span className="w-5 h-5 rounded-md bg-primary/10 text-primary flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">
                         {idx + 1}
                       </span>
-                      <p className="text-sm font-medium text-foreground">{s.content}</p>
+                      <p className="text-sm font-medium text-foreground leading-relaxed">{s.content}</p>
                     </div>
                     <Textarea 
                       value={sentenceAnswers[s.id] || ""}
                       onChange={(e) => setSentenceAnswers({...sentenceAnswers, [s.id]: e.target.value})}
-                      disabled={showFeedback || isSubmitting}
+                      disabled={submittingSentences[s.id]}
                       placeholder="Translate this sentence into English..."
-                      className="min-h-[80px] resize-y bg-background border-2 border-border rounded-xl focus-visible:ring-1 focus-visible:ring-primary text-base font-medium p-3 disabled:opacity-70"
+                      className="min-h-[60px] resize-y bg-background border-2 border-border rounded-xl focus-visible:ring-1 focus-visible:ring-primary text-base font-medium p-3 disabled:opacity-70"
                     />
+                    
+                    {/* Sentence Action & Feedback */}
+                    <div className="flex flex-col gap-2 relative">
+                      {showSentenceSuggest[s.id] && s.suggestions && (
+                        <div className="absolute bottom-full mb-3 right-0 w-72 bg-background text-foreground border-2 border-primary ring-4 ring-primary/20 rounded-xl p-3 z-50 animate-in fade-in zoom-in-95">
+                          <div className="space-y-3">
+                            {s.suggestions.vocab && s.suggestions.vocab.length > 0 && (
+                              <div>
+                                <h4 className="text-[10px] font-bold uppercase tracking-wider text-primary mb-1.5 flex items-center gap-1.5"><BookOpen className="w-3 h-3" /> Vocabulary</h4>
+                                <div className="flex flex-wrap gap-1">
+                                  {s.suggestions.vocab.map((v, i) => <Badge key={i} variant="secondary" className="bg-primary/10 text-primary border-primary/20 text-[9px] px-1.5 py-0">{v}</Badge>)}
+                                </div>
+                              </div>
+                            )}
+                            {s.suggestions.grammar && s.suggestions.grammar.length > 0 && (
+                              <div>
+                                <h4 className="text-[10px] font-bold uppercase tracking-wider text-pink-500 mb-1.5 flex items-center gap-1.5"><PenLine className="w-3 h-3" /> Grammar Structure</h4>
+                                <ul className="space-y-1">
+                                  {s.suggestions.grammar.map((g, i) => (
+                                    <li key={i} className="text-[10px] font-medium bg-muted/50 p-1.5 rounded-lg border border-border/50">{g}</li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                      
+                      <div className="flex justify-end gap-2">
+                        <Button 
+                          variant="outline"
+                          onClick={() => setShowSentenceSuggest(prev => ({...prev, [s.id]: !prev[s.id]}))}
+                          className={`btn-edu h-8 px-3 text-xs border-2 flex items-center gap-1.5 ${showSentenceSuggest[s.id] ? "bg-primary/10 border-primary text-primary" : "text-primary hover:bg-primary/10"}`}
+                        >
+                          <Sparkles className="w-3 h-3 fill-current" /> Gợi ý
+                        </Button>
+                        <Button 
+                          onClick={() => handleSentenceSubmit(s.id)}
+                          disabled={submittingSentences[s.id]}
+                          className="btn-edu h-8 px-4 text-xs border-2 bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-1.5"
+                        >
+                          {submittingSentences[s.id] ? "Checking..." : <>Evaluate <Zap className="w-3 h-3 fill-current" /></>}
+                        </Button>
+                      </div>
+
+                      {sentenceFeedbacks[s.id] && (
+                        <div className="p-2.5 bg-green-500/10 border border-green-500/20 rounded-lg animate-in fade-in zoom-in-95">
+                          <div className="flex items-center gap-2 mb-1">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-green-600" />
+                            <span className="text-xs font-bold text-green-700">Band: {sentenceFeedbacks[s.id].score}</span>
+                          </div>
+                          <p className="text-xs text-green-800 font-medium">
+                            {sentenceFeedbacks[s.id].comment}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
                   </div>
                 ))}
               </div>
             )}
           </div>
 
-          {/* Submitting Overlay */}
-          {isSubmitting && (
-            <div className="absolute inset-0 bg-background/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
-              <div className="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin mb-4"></div>
-              <h3 className="text-lg font-black text-foreground">AI is evaluating...</h3>
-              <p className="text-sm text-muted-foreground mt-1">Please wait a moment.</p>
-            </div>
-          )}
-
         </div>
 
         {/* Right Panel: AI Feedback Area */}
-        <div className="w-full md:w-1/2 lg:w-[40%] bg-muted/10 overflow-y-auto p-6 scrollbar-thin relative">
+        <div className="w-full md:w-1/2 lg:w-[40%] bg-muted/10 overflow-y-auto p-4 md:p-5 scrollbar-thin relative">
           
           {!showFeedback ? (
-            <div className="h-full flex flex-col items-center justify-center text-center opacity-50 space-y-4">
-              <Zap className="w-16 h-16 text-muted-foreground" />
-              <div>
-                <h3 className="text-lg font-black text-foreground">AI Feedback Analysis</h3>
-                <p className="text-sm font-medium text-muted-foreground max-w-xs mx-auto mt-2">
-                  Complete your translation and submit to see AI feedback, grammar corrections, and scoring here.
-                </p>
-              </div>
+            <div className={`h-full flex flex-col items-center justify-center text-center space-y-3 transition-opacity ${isSubmitting ? 'opacity-100' : 'opacity-50'}`}>
+              {isSubmitting ? (
+                <>
+                  <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin mb-2"></div>
+                  <div>
+                    <h3 className="text-base font-black text-foreground">AI is evaluating...</h3>
+                    <p className="text-xs font-medium text-muted-foreground max-w-xs mx-auto mt-1">
+                      Please wait a moment while AI analyzes your translation.
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Zap className="w-12 h-12 text-muted-foreground" />
+                  <div>
+                    <h3 className="text-base font-black text-foreground">AI Feedback Analysis</h3>
+                    <p className="text-xs font-medium text-muted-foreground max-w-xs mx-auto mt-1">
+                      Complete your translation and submit to see AI feedback, grammar corrections, and scoring here.
+                    </p>
+                  </div>
+                </>
+              )}
             </div>
           ) : (
-            <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500 fade-in">
+            <div className="space-y-4 animate-in slide-in-from-bottom-4 duration-500 fade-in">
               {/* Header Score */}
-              <div className="card-edu p-6 bg-card border-primary/30 flex items-center gap-6">
-                <div className="w-24 h-24 rounded-full border-4 border-primary/20 flex items-center justify-center relative bg-background shadow-lg flex-shrink-0">
+              <div className="card-edu p-4 md:p-5 bg-card border-primary/30 flex items-center gap-4 md:gap-5">
+                <div className="w-20 h-20 rounded-full border-4 border-primary/20 flex items-center justify-center relative bg-background shadow-lg flex-shrink-0">
                   <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
                     <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" strokeWidth="8" className="text-muted/30" />
                     <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" strokeWidth="8" strokeDasharray="289" strokeDashoffset={289 - (289 * scorePercentage) / 100} className="text-primary transition-all duration-1000 ease-out" strokeLinecap="round" />
                   </svg>
                   <div className="flex flex-col items-center">
-                    <span className="text-2xl font-black text-foreground">{feedback.score}</span>
-                    <span className="text-[8px] uppercase font-bold text-muted-foreground tracking-wider">Band</span>
+                    <span className="text-xl font-black text-foreground">{feedback.score}</span>
+                    <span className="text-[7px] uppercase font-bold text-muted-foreground tracking-wider">Band</span>
                   </div>
                 </div>
                 <div>
-                  <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/20 font-bold mb-2">
-                    <CheckCircle2 className="w-3 h-3 mr-1" /> Evaluated
+                  <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/20 font-bold mb-1.5 text-[10px] px-2 py-0">
+                    <CheckCircle2 className="w-2.5 h-2.5 mr-1" /> Evaluated
                   </Badge>
-                  <p className="text-sm font-medium text-foreground leading-relaxed">
+                  <p className="text-xs font-medium text-foreground leading-relaxed">
                     {feedback.overallComment}
                   </p>
                 </div>
               </div>
 
               {/* Detail Scores */}
-              <div className="grid grid-cols-1 gap-4">
-                <div className="card-edu p-4 bg-card flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-pink-500/10 text-pink-500 flex items-center justify-center flex-shrink-0">
-                    <PenLine className="w-5 h-5" />
+              <div className="grid grid-cols-1 gap-3">
+                <div className="card-edu p-3 md:p-4 bg-card flex items-center gap-3 md:gap-4">
+                  <div className="w-8 h-8 rounded-md bg-pink-500/10 text-pink-500 flex items-center justify-center flex-shrink-0">
+                    <PenLine className="w-4 h-4" />
                   </div>
                   <div className="flex-grow">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-bold text-foreground">Grammar</span>
-                      <span className="text-sm font-black">{feedback.grammarScore}</span>
+                    <div className="flex justify-between items-center mb-1.5">
+                      <span className="text-xs font-bold text-foreground">Grammar</span>
+                      <span className="text-xs font-black">{feedback.grammarScore}</span>
                     </div>
                     <Progress value={(feedback.grammarScore / 9) * 100} className="h-1.5" />
                   </div>
                 </div>
 
-                <div className="card-edu p-4 bg-card flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-500 flex items-center justify-center flex-shrink-0">
-                    <BookOpen className="w-5 h-5" />
+                <div className="card-edu p-3 md:p-4 bg-card flex items-center gap-3 md:gap-4">
+                  <div className="w-8 h-8 rounded-md bg-purple-500/10 text-purple-500 flex items-center justify-center flex-shrink-0">
+                    <BookOpen className="w-4 h-4" />
                   </div>
                   <div className="flex-grow">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-bold text-foreground">Vocabulary</span>
-                      <span className="text-sm font-black">{feedback.vocabularyScore}</span>
+                    <div className="flex justify-between items-center mb-1.5">
+                      <span className="text-xs font-bold text-foreground">Vocabulary</span>
+                      <span className="text-xs font-black">{feedback.vocabularyScore}</span>
                     </div>
                     <Progress value={(feedback.vocabularyScore / 9) * 100} className="h-1.5" />
                   </div>
                 </div>
 
-                <div className="card-edu p-4 bg-card flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-cyan-500/10 text-cyan-500 flex items-center justify-center flex-shrink-0">
-                    <Award className="w-5 h-5" />
+                <div className="card-edu p-3 md:p-4 bg-card flex items-center gap-3 md:gap-4">
+                  <div className="w-8 h-8 rounded-md bg-cyan-500/10 text-cyan-500 flex items-center justify-center flex-shrink-0">
+                    <Award className="w-4 h-4" />
                   </div>
                   <div className="flex-grow">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-bold text-foreground">Coherence</span>
-                      <span className="text-sm font-black">{feedback.coherenceScore}</span>
+                    <div className="flex justify-between items-center mb-1.5">
+                      <span className="text-xs font-bold text-foreground">Coherence</span>
+                      <span className="text-xs font-black">{feedback.coherenceScore}</span>
                     </div>
                     <Progress value={(feedback.coherenceScore / 9) * 100} className="h-1.5" />
                   </div>
@@ -291,18 +419,18 @@ export default function WritingSessionPage() {
               </div>
 
               {/* Improvements */}
-              <div className="space-y-3">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-                  <Zap className="w-3.5 h-3.5 text-primary" /> Key Improvements
+              <div className="space-y-2.5">
+                <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+                  <Zap className="w-3 h-3 text-primary" /> Key Improvements
                 </h3>
-                <div className="card-edu p-5 bg-card">
-                  <ul className="space-y-3">
+                <div className="card-edu p-3 md:p-4 bg-card">
+                  <ul className="space-y-2">
                     {feedback.improvements.map((imp, idx) => (
-                      <li key={idx} className="flex gap-3 items-start">
-                        <div className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <ChevronRight className="w-3 h-3" />
+                      <li key={idx} className="flex gap-2 items-start">
+                        <div className="w-4 h-4 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <ChevronRight className="w-2.5 h-2.5" />
                         </div>
-                        <p className="text-xs font-medium text-foreground">{imp}</p>
+                        <p className="text-[11px] font-medium text-foreground">{imp}</p>
                       </li>
                     ))}
                   </ul>

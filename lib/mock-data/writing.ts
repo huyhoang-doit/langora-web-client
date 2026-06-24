@@ -15,7 +15,10 @@ export type WritingExerciseSentence = {
   id: string;
   order: number;
   content: string; // The prompt/hint for this sentence
-  expectedStructure?: string;
+  suggestions?: {
+    vocab: string[];
+    grammar: string[];
+  };
 };
 
 export type WritingExercise = {
@@ -53,12 +56,48 @@ export const MOCK_WRITING_EXERCISES: WritingExercise[] = [
     wordCountTarget: 100,
     timeLimitMinutes: 15,
     sentences: [
-      { id: "s1", order: 1, content: "Chào buổi sáng sếp, tôi viết email này để xin nghỉ phép 2 ngày vào thứ Năm và thứ Sáu tuần này." },
-      { id: "s2", order: 2, content: "Tôi cảm thấy không được khỏe từ tối qua và bác sĩ khuyên tôi nên nghỉ ngơi." },
-      { id: "s3", order: 3, content: "Tôi đã bàn giao lại các công việc khẩn cấp cho Mai trong lúc tôi vắng mặt." },
-      { id: "s4", order: 4, content: "Tôi sẽ kiểm tra email thỉnh thoảng nếu có việc thực sự gấp." },
-      { id: "s5", order: 5, content: "Cảm ơn sếp đã hiểu và thông cảm." },
-      { id: "s6", order: 6, content: "Trân trọng," }
+      { 
+        id: "s1", order: 1, content: "Chào buổi sáng sếp, tôi viết email này để xin nghỉ phép 2 ngày vào thứ Năm và thứ Sáu tuần này.",
+        suggestions: {
+          vocab: ["Leave of absence", "Take some time off", "This coming Thursday and Friday"],
+          grammar: ["I am writing to request...", "I would like to request a leave of absence for..."]
+        }
+      },
+      { 
+        id: "s2", order: 2, content: "Tôi cảm thấy không được khỏe từ tối qua và bác sĩ khuyên tôi nên nghỉ ngơi.",
+        suggestions: {
+          vocab: ["Under the weather", "Unwell", "Advised to rest", "Doctor's orders"],
+          grammar: ["I have been feeling unwell since...", "My doctor has advised me to..."]
+        }
+      },
+      { 
+        id: "s3", order: 3, content: "Tôi đã bàn giao lại các công việc khẩn cấp cho Mai trong lúc tôi vắng mặt.",
+        suggestions: {
+          vocab: ["Hand over", "Urgent tasks", "During my absence"],
+          grammar: ["I have handed over my urgent tasks to...", "Mai will cover for me while I am away."]
+        }
+      },
+      { 
+        id: "s4", order: 4, content: "Tôi sẽ kiểm tra email thỉnh thoảng nếu có việc thực sự gấp.",
+        suggestions: {
+          vocab: ["Check email occasionally", "Real emergencies"],
+          grammar: ["I will check my emails periodically for...", "If there is an absolute emergency, I can be reached via..."]
+        }
+      },
+      { 
+        id: "s5", order: 5, content: "Cảm ơn sếp đã hiểu và thông cảm.",
+        suggestions: {
+          vocab: ["Understanding", "Support"],
+          grammar: ["Thank you for your understanding.", "I appreciate your support in this matter."]
+        }
+      },
+      { 
+        id: "s6", order: 6, content: "Trân trọng,",
+        suggestions: {
+          vocab: ["Sincerely", "Best regards", "Kind regards"],
+          grammar: []
+        }
+      }
     ]
   },
   {
@@ -71,10 +110,34 @@ export const MOCK_WRITING_EXERCISES: WritingExercise[] = [
     wordCountTarget: 150,
     timeLimitMinutes: 25,
     sentences: [
-      { id: "s1", order: 1, content: "Đọc sách mỗi ngày mang lại rất nhiều lợi ích thiết thực cho chúng ta." },
-      { id: "s2", order: 2, content: "Đầu tiên, nó giúp mở rộng vốn từ vựng và cải thiện khả năng viết." },
-      { id: "s3", order: 3, content: "Thứ hai, việc đắm chìm vào một cuốn sách hay có thể làm giảm căng thẳng sau một ngày dài làm việc." },
-      { id: "s4", order: 4, content: "Cuối cùng, nó kích thích trí não và cải thiện sự tập trung tốt hơn so với việc lướt mạng xã hội." }
+      { 
+        id: "s1", order: 1, content: "Đọc sách mỗi ngày mang lại rất nhiều lợi ích thiết thực cho chúng ta.",
+        suggestions: {
+          vocab: ["Practical benefits", "Daily habit", "Bring about"],
+          grammar: ["Reading books on a daily basis brings...", "There are numerous practical benefits to..."]
+        }
+      },
+      { 
+        id: "s2", order: 2, content: "Đầu tiên, nó giúp mở rộng vốn từ vựng và cải thiện khả năng viết.",
+        suggestions: {
+          vocab: ["Expand vocabulary", "Enhance writing skills", "Firstly"],
+          grammar: ["First and foremost, it helps to...", "Not only does it expand..., but it also improves..."]
+        }
+      },
+      { 
+        id: "s3", order: 3, content: "Thứ hai, việc đắm chìm vào một cuốn sách hay có thể làm giảm căng thẳng sau một ngày dài làm việc.",
+        suggestions: {
+          vocab: ["Immerse oneself in", "Relieve stress", "A long day at work", "Secondly"],
+          grammar: ["Secondly, immersing oneself in a good book can...", "It serves as a great way to relieve stress after..."]
+        }
+      },
+      { 
+        id: "s4", order: 4, content: "Cuối cùng, nó kích thích trí não và cải thiện sự tập trung tốt hơn so với việc lướt mạng xã hội.",
+        suggestions: {
+          vocab: ["Stimulate the brain", "Improve concentration", "Scroll through social media", "Finally"],
+          grammar: ["Finally, it stimulates the brain and improves...", "Compared to scrolling through social media, it is much better at..."]
+        }
+      }
     ]
   }
 ];
