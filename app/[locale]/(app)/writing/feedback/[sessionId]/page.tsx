@@ -4,21 +4,43 @@ import Link from "next/link";
 import { ArrowLeft, CheckCircle2, Award, BookOpen, PenLine, ChevronRight, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { getMockAiFeedback } from "@/lib/mock-data/writing";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { useParams } from "next/navigation";
+import { writingService } from "@/services/writing.service";
+import { WritingAiFeedback } from "@/types/writing";
 
 export default function WritingFeedbackPage() {
+  const params = useParams();
+  const sessionId = params.sessionId as string;
+  
   const [loading, setLoading] = useState(true);
-  const feedback = getMockAiFeedback();
+  const [fullFeedback, setFullFeedback] = useState<WritingAiFeedback[] | null>(null);
 
   useEffect(() => {
-    // Simulate AI grading delay
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
+    const fetchFeedbacks = async () => {
+      try {
+        const res = await writingService.getAiFeedbacks(sessionId);
+        if (res.success && res.data) {
+          setFullFeedback(res.data);
+        }
+      } catch (error) {
+        console.error("Failed to load feedbacks:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFeedbacks();
+  }, [sessionId]);
+
+  const aggregatedFeedback = fullFeedback && fullFeedback.length > 0 ? {
+    score: (fullFeedback.reduce((acc, f) => acc + f.overallScore, 0) / fullFeedback.length).toFixed(1),
+    grammarScore: (fullFeedback.reduce((acc, f) => acc + f.grammarScore, 0) / fullFeedback.length).toFixed(1),
+    vocabularyScore: (fullFeedback.reduce((acc, f) => acc + f.vocabularyScore, 0) / fullFeedback.length).toFixed(1),
+    coherenceScore: (fullFeedback.reduce((acc, f) => acc + f.coherenceScore, 0) / fullFeedback.length).toFixed(1),
+    overallComment: "Overall feedback is aggregated from your individual sentence performances.",
+    improvements: fullFeedback.map(f => f.feedbackText).filter((v, i, a) => v && a.indexOf(v) === i) // Unique improvements
+  } : null;
 
   if (loading) {
     return (
@@ -37,7 +59,7 @@ export default function WritingFeedbackPage() {
     );
   }
 
-  const scorePercentage = (feedback.score / 9) * 100; // Assuming IELTS scale of 9
+  const scorePercentage = aggregatedFeedback ? (Number(aggregatedFeedback.score) / 9) * 100 : 0; // Assuming IELTS scale of 9
 
   return (
     <div className="flex flex-col h-full overflow-hidden bg-background" id="writing-feedback-page">
@@ -77,7 +99,7 @@ export default function WritingFeedbackPage() {
                   <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" strokeWidth="8" strokeDasharray="289" strokeDashoffset={289 - (289 * scorePercentage) / 100} className="text-primary transition-all duration-1000 ease-out" strokeLinecap="round" />
                 </svg>
                 <div className="flex flex-col items-center">
-                  <span className="text-4xl font-black text-foreground">{feedback.score}</span>
+                  <span className="text-4xl font-black text-foreground">{aggregatedFeedback?.score || 0}</span>
                   <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">Overall Band</span>
                 </div>
               </div>
@@ -93,7 +115,7 @@ export default function WritingFeedbackPage() {
                 </Badge>
               </div>
               <p className="text-base font-medium text-foreground leading-relaxed">
-                {feedback.overallComment}
+                {aggregatedFeedback?.overallComment || "No feedback available."}
               </p>
             </div>
           </div>
@@ -109,9 +131,9 @@ export default function WritingFeedbackPage() {
                   </div>
                   <h3 className="font-bold text-foreground">Grammar</h3>
                 </div>
-                <span className="text-lg font-black">{feedback.grammarScore}</span>
+                <span className="text-lg font-black">{aggregatedFeedback?.grammarScore || 0}</span>
               </div>
-              <Progress value={(feedback.grammarScore / 9) * 100} className="h-2 bg-muted" />
+              <Progress value={((Number(aggregatedFeedback?.grammarScore) || 0) / 9) * 100} className="h-2 bg-muted" />
             </div>
 
             {/* Vocabulary */}
@@ -123,9 +145,9 @@ export default function WritingFeedbackPage() {
                   </div>
                   <h3 className="font-bold text-foreground">Vocabulary</h3>
                 </div>
-                <span className="text-lg font-black">{feedback.vocabularyScore}</span>
+                <span className="text-lg font-black">{aggregatedFeedback?.vocabularyScore || 0}</span>
               </div>
-              <Progress value={(feedback.vocabularyScore / 9) * 100} className="h-2 bg-muted" />
+              <Progress value={((Number(aggregatedFeedback?.vocabularyScore) || 0) / 9) * 100} className="h-2 bg-muted" />
             </div>
 
             {/* Coherence */}
@@ -137,9 +159,9 @@ export default function WritingFeedbackPage() {
                   </div>
                   <h3 className="font-bold text-foreground">Coherence</h3>
                 </div>
-                <span className="text-lg font-black">{feedback.coherenceScore}</span>
+                <span className="text-lg font-black">{aggregatedFeedback?.coherenceScore || 0}</span>
               </div>
-              <Progress value={(feedback.coherenceScore / 9) * 100} className="h-2 bg-muted" />
+              <Progress value={((Number(aggregatedFeedback?.coherenceScore) || 0) / 9) * 100} className="h-2 bg-muted" />
             </div>
           </div>
 
@@ -151,14 +173,18 @@ export default function WritingFeedbackPage() {
             </h3>
             <div className="card-edu p-6 bg-card">
               <ul className="space-y-4">
-                {feedback.improvements.map((imp, idx) => (
+                {(aggregatedFeedback?.improvements || []).length > 0 ? aggregatedFeedback?.improvements.map((imp, idx) => (
                   <li key={idx} className="flex gap-4 items-start">
                     <div className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5">
                       <ChevronRight className="w-4 h-4" />
                     </div>
                     <p className="text-sm font-medium text-foreground">{imp}</p>
                   </li>
-                ))}
+                )) : (
+                  <li className="flex gap-4 items-start">
+                    <p className="text-sm font-medium text-muted-foreground">No specific improvements to suggest.</p>
+                  </li>
+                )}
               </ul>
             </div>
           </div>

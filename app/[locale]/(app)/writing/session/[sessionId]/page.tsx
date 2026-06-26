@@ -10,17 +10,19 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { MOCK_WRITING_EXERCISES, getMockAiFeedback } from "@/lib/mock-data/writing";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { writingService } from "@/services/writing.service";
+import { WritingSession, WritingExercise, WritingAiFeedback } from "@/types/writing";
 
 export default function WritingSessionPage() {
   const params = useParams();
   const router = useRouter();
   const sessionId = params.sessionId as string;
-  const exerciseId = sessionId.replace("-session", "");
   
-  const exercise = MOCK_WRITING_EXERCISES.find(e => e.id === exerciseId);
+  const [sessionLoading, setSessionLoading] = useState(true);
+  const [session, setSession] = useState<WritingSession | null>(null);
+  const exercise = session?.exercise;
   
   const [mode, setMode] = useState<"full" | "sentence">("full");
   const [fullText, setFullText] = useState("");
@@ -31,21 +33,45 @@ export default function WritingSessionPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
   const [submittingSentences, setSubmittingSentences] = useState<Record<string, boolean>>({});
-  const [sentenceFeedbacks, setSentenceFeedbacks] = useState<Record<string, { score: number; comment: string; }>>({});
+  const [sentenceFeedbacks, setSentenceFeedbacks] = useState<Record<string, WritingAiFeedback>>({});
   const [showFullSuggest, setShowFullSuggest] = useState(false);
   const [showSentenceSuggest, setShowSentenceSuggest] = useState<Record<string, boolean>>({});
-  const feedback = getMockAiFeedback();
+  const [fullFeedback, setFullFeedback] = useState<WritingAiFeedback[] | null>(null);
   
   // Timer mock
-  const [timeLeft, setTimeLeft] = useState((exercise?.timeLimitMinutes || 20) * 60);
+  const [timeLeft, setTimeLeft] = useState(20 * 60);
 
   useEffect(() => {
-    if (showFeedback) return; // Stop timer if submitted
+    const fetchSession = async () => {
+      try {
+        setSessionLoading(true);
+        const res = await writingService.getSessionById(sessionId);
+        if (res.success && res.data) {
+          setSession(res.data);
+          setTimeLeft((res.data.exercise?.timeLimitMinutes || 20) * 60);
+          
+          // Khôi phục câu trả lời cũ (nếu có trong api)
+          if (res.data.answers) {
+             // Tuỳ thuộc format backend trả về, ví dụ có field content hoặc userAnswer
+             // Logic ánh xạ nếu cần
+          }
+        }
+      } catch (error) {
+        console.error("Failed to load session:", error);
+      } finally {
+        setSessionLoading(false);
+      }
+    };
+    fetchSession();
+  }, [sessionId]);
+
+  useEffect(() => {
+    if (showFeedback || !exercise) return;
     const timer = setInterval(() => {
       setTimeLeft(prev => (prev > 0 ? prev - 1 : 0));
     }, 1000);
     return () => clearInterval(timer);
-  }, [showFeedback]);
+  }, [showFeedback, exercise]);
 
   const formatTime = (seconds: number) => {
     const m = Math.floor(seconds / 60);
@@ -53,51 +79,100 @@ export default function WritingSessionPage() {
     return `${m}:${s.toString().padStart(2, "0")}`;
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     setIsSaving(true);
-    setTimeout(() => {
+    try {
+      await writingService.updateSession(sessionId, { content: mode === 'full' ? fullText : JSON.stringify(sentenceAnswers) });
+      toast.success("Draft saved.");
+    } catch (error) {
+      toast.error("Failed to save draft.");
+    } finally {
       setIsSaving(false);
-      toast.success("Draft saved automatically.");
-    }, 1000);
+    }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (mode === "full" && fullText.trim().length < 10) {
       toast.error("Please write something before submitting.");
       return;
     }
     
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      // 1. Save latest content
+      await writingService.updateSession(sessionId, { content: mode === 'full' ? fullText : JSON.stringify(sentenceAnswers), status: 'COMPLETED' });
+      // 2. Submit session
+      await writingService.submitSession(sessionId);
+      // 3. Fetch AI feedbacks
+      const fbRes = await writingService.getAiFeedbacks(sessionId);
+      if (fbRes.success && fbRes.data) {
+        setFullFeedback(fbRes.data);
+      }
+      
       setShowFeedback(true);
       toast.success("AI has finished evaluating your work!");
-    }, 2000);
+    } catch (error) {
+      toast.error("An error occurred during submission.");
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handleSentenceSubmit = (id: string) => {
+  const handleSentenceSubmit = async (id: string) => {
     if (!sentenceAnswers[id] || sentenceAnswers[id].trim().length < 5) {
       toast.error("Please provide a valid translation first.");
       return;
     }
     
     setSubmittingSentences(prev => ({...prev, [id]: true}));
-    setShowSentenceSuggest(prev => ({...prev, [id]: false})); // hide suggestions on submit
-    setTimeout(() => {
+    setShowSentenceSuggest(prev => ({...prev, [id]: false}));
+    
+    try {
+      // In a real scenario, the backend might return the AI Feedback directly from this endpoint
+      // based on the previous plan.
+      const res = await writingService.submitSentenceAnswer(sessionId, {
+        sentenceId: id,
+        userAnswer: sentenceAnswers[id]
+      });
+      
+      if (res.success && res.data) {
+        // Assuming the backend returns the feedback directly or we need to fetch it
+        setSentenceFeedbacks(prev => ({
+          ...prev, 
+          [id]: res.data as WritingAiFeedback
+        }));
+        toast.success("Sentence evaluated!");
+      } else {
+         // Fallback if data is not directly returned
+         const allFbRes = await writingService.getAiFeedbacks(sessionId);
+         if (allFbRes.success && allFbRes.data) {
+           const specificFb = allFbRes.data.find(f => f.sentenceId === id);
+           if (specificFb) {
+             setSentenceFeedbacks(prev => ({ ...prev, [id]: specificFb }));
+             toast.success("Sentence evaluated!");
+           }
+         }
+      }
+    } catch (error) {
+      toast.error("Failed to evaluate sentence.");
+      console.error(error);
+    } finally {
       setSubmittingSentences(prev => ({...prev, [id]: false}));
-      setSentenceFeedbacks(prev => ({
-        ...prev, 
-        [id]: { 
-          score: 8.5, 
-          comment: "Good translation! You could also use 'Due to health issues' to sound more native." 
-        }
-      }));
-      toast.success("Sentence evaluated!");
-    }, 1200);
+    }
   };
 
-  const allVocabSuggestions = exercise?.sentences.flatMap(s => s.suggestions?.vocab || []) || [];
-  const allGrammarSuggestions = exercise?.sentences.flatMap(s => s.suggestions?.grammar || []) || [];
+  const allVocabSuggestions = exercise?.sentences?.flatMap(s => s.suggestions?.vocab || []) || [];
+  const allGrammarSuggestions = exercise?.sentences?.flatMap(s => s.suggestions?.grammar || []) || [];
+
+  if (sessionLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-[calc(100vh-64px)] bg-background">
+        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p className="text-muted-foreground font-medium">Loading session...</p>
+      </div>
+    );
+  }
 
   if (!exercise) {
     return (
@@ -112,7 +187,16 @@ export default function WritingSessionPage() {
     ? fullText.trim().split(/\s+/).filter(w => w.length > 0).length
     : Object.values(sentenceAnswers).join(" ").trim().split(/\s+/).filter(w => w.length > 0).length;
 
-  const scorePercentage = (feedback.score / 9) * 100;
+  const aggregatedFeedback = fullFeedback && fullFeedback.length > 0 ? {
+    score: (fullFeedback.reduce((acc, f) => acc + f.overallScore, 0) / fullFeedback.length),
+    grammarScore: (fullFeedback.reduce((acc, f) => acc + f.grammarScore, 0) / fullFeedback.length),
+    vocabularyScore: (fullFeedback.reduce((acc, f) => acc + f.vocabularyScore, 0) / fullFeedback.length),
+    coherenceScore: (fullFeedback.reduce((acc, f) => acc + f.coherenceScore, 0) / fullFeedback.length),
+    overallComment: "Overall feedback is aggregated from your individual sentence performances.",
+    improvements: fullFeedback.map(f => f.feedbackText).filter((v, i, a) => v && a.indexOf(v) === i)
+  } : null;
+
+  const scorePercentage = aggregatedFeedback ? (aggregatedFeedback.score / 9) * 100 : 0;
 
   return (
     <div className="flex flex-col h-[calc(100vh-64px)] overflow-hidden bg-background" id="writing-session-page">
@@ -355,68 +439,72 @@ export default function WritingSessionPage() {
           ) : (
             <div className="space-y-4 animate-in slide-in-from-bottom-4 duration-500 fade-in">
               {/* Header Score */}
-              <div className="card-edu p-4 md:p-5 bg-card border-primary/30 flex items-center gap-4 md:gap-5">
-                <div className="w-20 h-20 rounded-full border-4 border-primary/20 flex items-center justify-center relative bg-background shadow-lg flex-shrink-0">
-                  <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" strokeWidth="8" className="text-muted/30" />
-                    <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" strokeWidth="8" strokeDasharray="289" strokeDashoffset={289 - (289 * scorePercentage) / 100} className="text-primary transition-all duration-1000 ease-out" strokeLinecap="round" />
-                  </svg>
-                  <div className="flex flex-col items-center">
-                    <span className="text-xl font-black text-foreground">{feedback.score}</span>
-                    <span className="text-[7px] uppercase font-bold text-muted-foreground tracking-wider">Band</span>
+              {aggregatedFeedback && (
+                <div className="card-edu p-4 md:p-5 bg-card border-primary/30 flex items-center gap-4 md:gap-5">
+                  <div className="w-20 h-20 rounded-full border-4 border-primary/20 flex items-center justify-center relative bg-background shadow-lg flex-shrink-0">
+                    <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" strokeWidth="8" className="text-muted/30" />
+                      <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" strokeWidth="8" strokeDasharray="289" strokeDashoffset={289 - (289 * scorePercentage) / 100} className="text-primary transition-all duration-1000 ease-out" strokeLinecap="round" />
+                    </svg>
+                    <div className="flex flex-col items-center">
+                      <span className="text-xl font-black text-foreground">{aggregatedFeedback.score}</span>
+                      <span className="text-[7px] uppercase font-bold text-muted-foreground tracking-wider">Band</span>
+                    </div>
+                  </div>
+                  <div>
+                    <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/20 font-bold mb-1.5 text-[10px] px-2 py-0">
+                      <CheckCircle2 className="w-2.5 h-2.5 mr-1" /> Evaluated
+                    </Badge>
+                    <p className="text-xs font-medium text-foreground leading-relaxed">
+                      {aggregatedFeedback.overallComment}
+                    </p>
                   </div>
                 </div>
-                <div>
-                  <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/20 font-bold mb-1.5 text-[10px] px-2 py-0">
-                    <CheckCircle2 className="w-2.5 h-2.5 mr-1" /> Evaluated
-                  </Badge>
-                  <p className="text-xs font-medium text-foreground leading-relaxed">
-                    {feedback.overallComment}
-                  </p>
-                </div>
-              </div>
+              )}
 
               {/* Detail Scores */}
-              <div className="grid grid-cols-1 gap-3">
-                <div className="card-edu p-3 md:p-4 bg-card flex items-center gap-3 md:gap-4">
-                  <div className="w-8 h-8 rounded-md bg-pink-500/10 text-pink-500 flex items-center justify-center flex-shrink-0">
-                    <PenLine className="w-4 h-4" />
-                  </div>
-                  <div className="flex-grow">
-                    <div className="flex justify-between items-center mb-1.5">
-                      <span className="text-xs font-bold text-foreground">Grammar</span>
-                      <span className="text-xs font-black">{feedback.grammarScore}</span>
+              {aggregatedFeedback && (
+                <div className="grid grid-cols-1 gap-3">
+                  <div className="card-edu p-3 md:p-4 bg-card flex items-center gap-3 md:gap-4">
+                    <div className="w-8 h-8 rounded-md bg-pink-500/10 text-pink-500 flex items-center justify-center flex-shrink-0">
+                      <PenLine className="w-4 h-4" />
                     </div>
-                    <Progress value={(feedback.grammarScore / 9) * 100} className="h-1.5" />
+                    <div className="flex-grow">
+                      <div className="flex justify-between items-center mb-1.5">
+                        <span className="text-xs font-bold text-foreground">Grammar</span>
+                        <span className="text-xs font-black">{aggregatedFeedback.grammarScore}</span>
+                      </div>
+                      <Progress value={(Number(aggregatedFeedback.grammarScore) / 9) * 100} className="h-1.5" />
+                    </div>
                   </div>
-                </div>
 
-                <div className="card-edu p-3 md:p-4 bg-card flex items-center gap-3 md:gap-4">
-                  <div className="w-8 h-8 rounded-md bg-purple-500/10 text-purple-500 flex items-center justify-center flex-shrink-0">
-                    <BookOpen className="w-4 h-4" />
-                  </div>
-                  <div className="flex-grow">
-                    <div className="flex justify-between items-center mb-1.5">
-                      <span className="text-xs font-bold text-foreground">Vocabulary</span>
-                      <span className="text-xs font-black">{feedback.vocabularyScore}</span>
+                  <div className="card-edu p-3 md:p-4 bg-card flex items-center gap-3 md:gap-4">
+                    <div className="w-8 h-8 rounded-md bg-purple-500/10 text-purple-500 flex items-center justify-center flex-shrink-0">
+                      <BookOpen className="w-4 h-4" />
                     </div>
-                    <Progress value={(feedback.vocabularyScore / 9) * 100} className="h-1.5" />
+                    <div className="flex-grow">
+                      <div className="flex justify-between items-center mb-1.5">
+                        <span className="text-xs font-bold text-foreground">Vocabulary</span>
+                        <span className="text-xs font-black">{aggregatedFeedback.vocabularyScore}</span>
+                      </div>
+                      <Progress value={(Number(aggregatedFeedback.vocabularyScore) / 9) * 100} className="h-1.5" />
+                    </div>
                   </div>
-                </div>
 
-                <div className="card-edu p-3 md:p-4 bg-card flex items-center gap-3 md:gap-4">
-                  <div className="w-8 h-8 rounded-md bg-cyan-500/10 text-cyan-500 flex items-center justify-center flex-shrink-0">
-                    <Award className="w-4 h-4" />
-                  </div>
-                  <div className="flex-grow">
-                    <div className="flex justify-between items-center mb-1.5">
-                      <span className="text-xs font-bold text-foreground">Coherence</span>
-                      <span className="text-xs font-black">{feedback.coherenceScore}</span>
+                  <div className="card-edu p-3 md:p-4 bg-card flex items-center gap-3 md:gap-4">
+                    <div className="w-8 h-8 rounded-md bg-cyan-500/10 text-cyan-500 flex items-center justify-center flex-shrink-0">
+                      <Award className="w-4 h-4" />
                     </div>
-                    <Progress value={(feedback.coherenceScore / 9) * 100} className="h-1.5" />
+                    <div className="flex-grow">
+                      <div className="flex justify-between items-center mb-1.5">
+                        <span className="text-xs font-bold text-foreground">Coherence</span>
+                        <span className="text-xs font-black">{aggregatedFeedback.coherenceScore}</span>
+                      </div>
+                      <Progress value={(Number(aggregatedFeedback.coherenceScore) / 9) * 100} className="h-1.5" />
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
 
               {/* Improvements */}
               <div className="space-y-2.5">
@@ -425,7 +513,7 @@ export default function WritingSessionPage() {
                 </h3>
                 <div className="card-edu p-3 md:p-4 bg-card">
                   <ul className="space-y-2">
-                    {feedback.improvements.map((imp, idx) => (
+                    {(aggregatedFeedback?.improvements || ["Review your grammar and vocabulary usage for better fluency."]).map((imp, idx) => (
                       <li key={idx} className="flex gap-2 items-start">
                         <div className="w-4 h-4 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5">
                           <ChevronRight className="w-2.5 h-2.5" />

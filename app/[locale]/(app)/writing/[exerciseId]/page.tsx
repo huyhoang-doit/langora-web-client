@@ -4,19 +4,46 @@ import Link from "next/link";
 import { ArrowLeft, Clock, FileText, Target, Play, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MOCK_WRITING_EXERCISES } from "@/lib/mock-data/writing";
 import { useParams } from "next/navigation";
 import { useRouter } from "@/i18n/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import { writingService } from "@/services/writing.service";
+import { WritingExercise } from "@/types/writing";
 
 export default function ExerciseDetailPage() {
   const params = useParams();
   const router = useRouter();
   const exerciseId = params.exerciseId as string;
   const [loading, setLoading] = useState(false);
+  const [fetchLoading, setFetchLoading] = useState(true);
+  const [exercise, setExercise] = useState<WritingExercise | null>(null);
 
-  const exercise = MOCK_WRITING_EXERCISES.find(e => e.id === exerciseId);
+  useEffect(() => {
+    const fetchExercise = async () => {
+      try {
+        setFetchLoading(true);
+        const res = await writingService.getExerciseById(exerciseId);
+        if (res.success && res.data) {
+          setExercise(res.data);
+        }
+      } catch (error) {
+        console.error("Failed to load exercise details:", error);
+      } finally {
+        setFetchLoading(false);
+      }
+    };
+    fetchExercise();
+  }, [exerciseId]);
+
+  if (fetchLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full p-6 text-center">
+        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p className="text-muted-foreground font-medium">Loading exercise details...</p>
+      </div>
+    );
+  }
 
   if (!exercise) {
     return (
@@ -32,14 +59,22 @@ export default function ExerciseDetailPage() {
     );
   }
 
-  const handleStartSession = () => {
-    setLoading(true);
-    // Simulate API call to create session: POST /api/v1/writing-sessions
-    setTimeout(() => {
-      toast.success("Session started successfully!");
-      // Mock sessionId = exerciseId + "-session"
-      router.push(`/writing/session/${exerciseId}-session`);
-    }, 800);
+  const handleStartSession = async () => {
+    try {
+      setLoading(true);
+      const res = await writingService.createSession(exerciseId);
+      if (res.success && res.data) {
+        toast.success("Session started successfully!");
+        router.push(`/writing/session/${res.data.id}`);
+      } else {
+        toast.error("Failed to start session.");
+      }
+    } catch (error) {
+      console.error("Error starting session:", error);
+      toast.error("An error occurred while starting the session.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -69,7 +104,7 @@ export default function ExerciseDetailPage() {
                   {exercise.title}
                 </h1>
                 <Badge variant="outline" className="bg-background border-2 border-primary/30 text-primary font-bold px-2 py-0.5 whitespace-nowrap text-xs">
-                  {exercise.level}
+                  {exercise.levelId}
                 </Badge>
               </div>
 
@@ -102,7 +137,7 @@ export default function ExerciseDetailPage() {
                   </div>
                   <div>
                     <p className="text-[9px] uppercase font-bold text-muted-foreground tracking-wider">Sentences</p>
-                    <p className="text-sm font-black text-foreground">{exercise.sentences.length} parts</p>
+                    <p className="text-sm font-black text-foreground">{exercise.sentences?.length || exercise.totalSentences || 0} parts</p>
                   </div>
                 </div>
               </div>
@@ -117,7 +152,7 @@ export default function ExerciseDetailPage() {
             </h3>
             <div className="card-edu p-5 bg-card border-2 border-border/50">
               <p className="text-base font-medium text-foreground leading-relaxed">
-                {exercise.sentences.map(s => s.content).join(" ")}
+                {exercise.sentences ? exercise.sentences.map(s => s.originalText).join(" ") : exercise.scenario || "No source text provided."}
               </p>
             </div>
           </div>

@@ -5,7 +5,11 @@ import { Edit3, Settings, Bell, CreditCard, Receipt, ArrowRight } from "lucide-r
 import { useAuthStore } from "@/stores/auth.store";
 import AvatarUpload from "@/components/customize/avatar-upload";
 import { UserService } from "@/services/user.service";
+import { learningService } from "@/services/learning.service";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
+import { UserLearningProfile } from "@/types/user";
+import { Language } from "@/types/learning";
 
 export default function ProfilePage() {
   const menuItems = [
@@ -22,6 +26,29 @@ export default function ProfilePage() {
   const email = user?.email || "";
   const role = user?.roles?.includes("PRO") ? "Pro Member" : "Free Member";
 
+  const [learningProfile, setLearningProfile] = useState<UserLearningProfile | null>(null);
+  const [languages, setLanguages] = useState<Language[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [profileRes, languagesRes] = await Promise.all([
+          UserService.getLearningProfile(),
+          learningService.getLanguages()
+        ]);
+        if (profileRes.success && profileRes.data) {
+          setLearningProfile(profileRes.data);
+        }
+        if (languagesRes.success && languagesRes.data) {
+          setLanguages(languagesRes.data);
+        }
+      } catch (error) {
+        console.error("Failed to load profile data", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   const handleAvatarUpload = async (file: File) => {
     try {
       const res = await UserService.updateAvatar(file);
@@ -37,6 +64,19 @@ export default function ProfilePage() {
       console.error(error);
     }
   };
+
+  const getLanguageName = (langId?: string) => {
+    if (!langId) return "Not Set";
+    return languages.find(l => l.id === langId)?.name || langId;
+  };
+
+  const getLevelDisplay = (levelId?: string) => {
+    return levelId ? ` • Level ${levelId.toUpperCase()}` : "";
+  };
+
+  const activeTargetDisplay = learningProfile 
+    ? `Active target: ${getLanguageName(learningProfile.targetLanguageId)}${getLevelDisplay(learningProfile.currentLevelId)}`
+    : "Active target: Not Set";
 
   return (
     <div className="flex flex-col h-full overflow-hidden bg-background" id="profile-main-page">
@@ -65,7 +105,7 @@ export default function ProfilePage() {
                 <span className="text-[10px] font-black text-primary uppercase bg-primary/10 border-2 border-primary/20 px-2 py-0.5 rounded-full">{role}</span>
               </div>
               <p className="text-xs text-muted-foreground font-semibold">{email}</p>
-              <p className="text-[10px] text-muted-foreground font-black uppercase tracking-wider">Active target: English B2 • IELTS 8.0</p>
+              <p className="text-[10px] text-muted-foreground font-black uppercase tracking-wider">{activeTargetDisplay}</p>
             </div>
           </div>
 
