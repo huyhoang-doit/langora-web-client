@@ -1,6 +1,6 @@
 export interface WritingTopic {
   id: string;
-  title: string;
+  name: string;
   description?: string;
   levelId?: string;
   languageId: string;
@@ -20,15 +20,26 @@ export interface WritingContentType {
 
 export interface WritingExercise {
   id: string;
+  languageId: string;
   topicId: string;
+  topicName?: string;
   contentTypeId: string;
+  contentTypeName?: string;
   title: string;
   description?: string;
+  summary?: string | null;
+  content?: string;
+  thumbnailUrl?: string | null;
+  levelName?: string;
   scenario?: string;
   timeLimitMinutes?: number;
+  estimatedMinutes?: number | null;
   wordCountTarget?: number;
   totalSentences: number;
+  creditsReward?: number;
+  xpReward?: number;
   levelId: string;
+  isActive?: boolean;
   sentences?: WritingExerciseSentence[];
 }
 

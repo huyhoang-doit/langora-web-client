@@ -9,12 +9,14 @@ import { useRouter } from "@/i18n/navigation";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { writingService } from "@/services/writing.service";
+import { UserService } from "@/services/user.service";
 import { WritingExercise } from "@/types/writing";
 
 export default function ExerciseDetailPage() {
   const params = useParams();
   const router = useRouter();
   const exerciseId = params.exerciseId as string;
+  console.log("exer", exerciseId)
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(true);
   const [exercise, setExercise] = useState<WritingExercise | null>(null);
@@ -23,7 +25,19 @@ export default function ExerciseDetailPage() {
     const fetchExercise = async () => {
       try {
         setFetchLoading(true);
-        const res = await writingService.getExerciseById(exerciseId);
+        
+        // 1. Fetch user profile to get language ID
+        const profileRes = await UserService.getLearningProfile();
+        if (!profileRes.data || !profileRes.data.targetLanguageId) {
+          toast.error("Failed to load learning profile.");
+          router.push("/profile");
+          return;
+        }
+        
+        const langId = profileRes.data.targetLanguageId;
+
+        // 2. Fetch exercise details
+        const res = await writingService.getExerciseById(langId, exerciseId);
         if (res.success && res.data) {
           setExercise(res.data);
         }
@@ -95,33 +109,47 @@ export default function ExerciseDetailPage() {
       {/* Content */}
       <div className="flex-grow overflow-y-auto p-4 md:p-6 scrollbar-thin">
         <div className="max-w-2xl mx-auto space-y-6 pt-2">
-          
+
           {/* Main Info Card */}
           <div className="card-edu p-5 md:p-6 bg-card relative overflow-hidden border-2 border-border/50">
             <div className="relative z-10 space-y-4">
               <div className="flex justify-between items-start gap-4">
-                <h1 className="text-xl md:text-2xl font-black text-foreground text-heading leading-tight">
-                  {exercise.title}
-                </h1>
-                <Badge variant="outline" className="bg-background border-2 border-primary/30 text-primary font-bold px-2 py-0.5 whitespace-nowrap text-xs">
-                  {exercise.levelId}
-                </Badge>
+                <div>
+                  {exercise.topicName && (
+                    <p className="text-xs font-bold text-primary uppercase tracking-wider mb-2">{exercise.topicName}</p>
+                  )}
+                  <h1 className="text-xl md:text-2xl font-black text-foreground text-heading leading-tight">
+                    {exercise.title}
+                  </h1>
+                </div>
+                <div className="flex flex-col items-end gap-2">
+                  <Badge variant="outline" className="bg-background border-2 border-primary/30 text-primary font-bold px-2 py-0.5 whitespace-nowrap text-xs">
+                    {exercise.levelName || exercise.levelId}
+                  </Badge>
+                  {exercise.contentTypeName && (
+                    <Badge variant="secondary" className="border-2 font-bold uppercase tracking-wider text-xs px-2 py-0.5 whitespace-nowrap bg-secondary/50 text-secondary-foreground">
+                      {exercise.contentTypeName}
+                    </Badge>
+                  )}
+                </div>
               </div>
 
               <p className="text-sm text-muted-foreground font-medium leading-relaxed">
-                {exercise.description}
+                {exercise.description || exercise.summary || exercise.content || "No description provided."}
               </p>
 
               <div className="flex flex-wrap gap-3 pt-3 border-t-2 border-border/60">
-                <div className="bg-muted/30 px-4 py-2 rounded-lg border border-border/50 flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-md bg-blue-500/10 text-blue-500 flex items-center justify-center">
-                    <Clock className="w-3.5 h-3.5" />
+                {(exercise.timeLimitMinutes || exercise.estimatedMinutes) && (
+                  <div className="bg-muted/30 px-4 py-2 rounded-lg border border-border/50 flex items-center gap-2">
+                    <div className="w-6 h-6 rounded-md bg-blue-500/10 text-blue-500 flex items-center justify-center">
+                      <Clock className="w-3.5 h-3.5" />
+                    </div>
+                    <div>
+                      <p className="text-[9px] uppercase font-bold text-muted-foreground tracking-wider">Time Limit</p>
+                      <p className="text-sm font-black text-foreground">{exercise.timeLimitMinutes || exercise.estimatedMinutes} min</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-[9px] uppercase font-bold text-muted-foreground tracking-wider">Time Limit</p>
-                    <p className="text-sm font-black text-foreground">{exercise.timeLimitMinutes} min</p>
-                  </div>
-                </div>
+                )}
                 <div className="bg-muted/30 px-4 py-2 rounded-lg border border-border/50 flex items-center gap-2">
                   <div className="w-6 h-6 rounded-md bg-green-500/10 text-green-500 flex items-center justify-center">
                     <FileText className="w-3.5 h-3.5" />
@@ -151,16 +179,16 @@ export default function ExerciseDetailPage() {
               Source Text (Đoạn cần dịch)
             </h3>
             <div className="card-edu p-5 bg-card border-2 border-border/50">
-              <p className="text-base font-medium text-foreground leading-relaxed">
-                {exercise.sentences ? exercise.sentences.map(s => s.originalText).join(" ") : exercise.scenario || "No source text provided."}
+              <p className="text-base font-medium text-foreground leading-relaxed whitespace-pre-wrap">
+                {exercise.sentences?.length ? exercise.sentences.map(s => s.originalText).join("\n") : (exercise.content || exercise.scenario || "No source text provided.")}
               </p>
             </div>
           </div>
 
           {/* Actions */}
           <div className="pt-2 pb-8 flex justify-center">
-            <Button 
-              onClick={handleStartSession} 
+            <Button
+              onClick={handleStartSession}
               disabled={loading}
               className="btn-edu h-12 px-10 text-sm border-2 bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2 w-full sm:w-auto shadow-[0_4px_0_0_rgba(99,102,241,0.2)] hover:translate-y-1 hover:shadow-none transition-all"
             >
