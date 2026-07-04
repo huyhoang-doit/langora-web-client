@@ -15,6 +15,7 @@ import { ImageLogoWeb } from "@/components/image-logo-web";
 import { AuthService } from "@/services/auth.service";
 import { UserService } from "@/services/user.service";
 import { useAuthStore } from "@/stores/auth.store";
+import { useLearningStore } from "@/stores/learning.store";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -39,6 +40,17 @@ export default function LoginPage() {
         const profileRes = await UserService.getProfile();
         if (profileRes.data) {
           setAuth(profileRes.data);
+          
+          // Fetch and store learning profile
+          try {
+            const lpRes = await UserService.getLearningProfile();
+            if (lpRes.data) {
+              useLearningStore.getState().setProfile(lpRes.data);
+            }
+          } catch (e) {
+            console.error("Could not fetch learning profile during login", e);
+          }
+
           toast.success(res.message || "Login Successful");
           router.push("/dashboard");
         } else {

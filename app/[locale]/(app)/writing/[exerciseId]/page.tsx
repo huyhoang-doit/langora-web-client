@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { writingService } from "@/services/writing.service";
 import { UserService } from "@/services/user.service";
+import { useLearningStore } from "@/stores/learning.store";
 import { WritingExercise } from "@/types/writing";
 
 export default function ExerciseDetailPage() {
@@ -26,15 +27,27 @@ export default function ExerciseDetailPage() {
       try {
         setFetchLoading(true);
         
-        // 1. Fetch user profile to get language ID
-        const profileRes = await UserService.getLearningProfile();
-        if (!profileRes.data || !profileRes.data.targetLanguageId) {
+        // 1. Get user profile from store or fetch fallback
+        let currentProfile = useLearningStore.getState().profile;
+        if (!currentProfile) {
+          try {
+            const profileRes = await UserService.getLearningProfile();
+            if (profileRes.data) {
+              currentProfile = profileRes.data;
+              useLearningStore.getState().setProfile(profileRes.data);
+            }
+          } catch (e) {
+            console.error("Failed to fetch profile fallback", e);
+          }
+        }
+
+        if (!currentProfile || !currentProfile.targetLanguageId) {
           toast.error("Failed to load learning profile.");
           router.push("/profile");
           return;
         }
         
-        const langId = profileRes.data.targetLanguageId;
+        const langId = currentProfile.targetLanguageId;
 
         // 2. Fetch exercise details
         const res = await writingService.getExerciseById(langId, exerciseId);

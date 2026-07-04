@@ -5,6 +5,7 @@ import { Filter, Layers, BookOpen } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { writingService } from "@/services/writing.service";
 import { UserService } from "@/services/user.service";
+import { useLearningStore } from "@/stores/learning.store";
 import { WritingTopic, WritingExercise, WritingContentType } from "@/types/writing";
 
 import { TopicSelector } from "./_components/topic-selector";
@@ -37,19 +38,28 @@ export default function WritingHubPage() {
       try {
         setMasterLoading(true);
         let langId = "en";
-        const profileRes = await UserService.getLearningProfile();
+        let currentProfile = useLearningStore.getState().profile;
+        if (!currentProfile) {
+          try {
+            const profileRes = await UserService.getLearningProfile();
+            if (profileRes.data) {
+              currentProfile = profileRes.data;
+              useLearningStore.getState().setProfile(profileRes.data);
+            }
+          } catch (e) {
+            console.error("Failed to fetch profile fallback", e);
+          }
+        }
 
-        if (!profileRes.data || !profileRes.data.targetLanguageId || !profileRes.data.currentLevelId) {
+        if (!currentProfile || !currentProfile.targetLanguageId || !currentProfile.currentLevelId) {
           toast.error("Failed to load learning profile. Please select a language and level");
           router.push("/profile");
           return;
         }
 
-        if (profileRes.success && profileRes.data && profileRes.data.targetLanguageId && profileRes.data.currentLevelId) {
-          langId = profileRes.data.targetLanguageId;
-          setLearningLevelId(profileRes.data.currentLevelId);
-          setTargetLanguageId(langId);
-        }
+        langId = currentProfile.targetLanguageId;
+        setLearningLevelId(currentProfile.currentLevelId);
+        setTargetLanguageId(langId);
 
         const [topicsRes, contentTypesRes] = await Promise.all([
           writingService.getTopics(langId),
