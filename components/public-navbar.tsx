@@ -8,11 +8,14 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSelector } from "@/components/language-selector";
 import { ImageLogoWeb } from "@/components/image-logo-web";
+import { useAuthStore } from "@/stores/auth.store";
 
 export function PublicNavbar() {
   const t = useTranslations();
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   const navGroups = [
     {
@@ -65,9 +68,8 @@ export function PublicNavbar() {
               >
                 {group.label}
                 <ChevronDown
-                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                    openGroup === group.label ? "rotate-180" : ""
-                  }`}
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${openGroup === group.label ? "rotate-180" : ""
+                    }`}
                 />
               </button>
               {openGroup === group.label && (
@@ -106,19 +108,29 @@ export function PublicNavbar() {
 
           <ThemeToggle />
 
-          <Link href="/login" className="hidden sm:block">
-            <Button
-              variant="outline"
-              className="btn-edu h-9 px-4 text-xs border-2 bg-transparent text-foreground hover:bg-muted font-black uppercase tracking-wide"
-            >
-              {t("navbar.sign_in")}
-            </Button>
-          </Link>
-          <Link href="/register">
-            <Button className="btn-edu h-9 px-4 text-xs border-2 bg-primary text-primary-foreground hover:bg-primary/90 font-black uppercase tracking-wide">
-              {t("navbar.get_started")}
-            </Button>
-          </Link>
+          {isAuthenticated ? (
+            <Link href="/dashboard" className="hidden sm:block">
+              <Button className="btn-edu h-9 px-4 text-xs border-2 bg-primary text-primary-foreground hover:bg-primary/90 font-black uppercase tracking-wide">
+                {t("navbar.learn")}
+              </Button>
+            </Link>
+          ) : (
+            <>
+              <Link href="/login" className="hidden sm:block">
+                <Button
+                  variant="outline"
+                  className="btn-edu h-9 px-4 text-xs border-2 bg-transparent text-foreground hover:bg-muted font-black uppercase tracking-wide"
+                >
+                  {t("navbar.sign_in")}
+                </Button>
+              </Link>
+              <Link href="/register">
+                <Button className="btn-edu h-9 px-4 text-xs border-2 bg-primary text-primary-foreground hover:bg-primary/90 font-black uppercase tracking-wide">
+                  {t("navbar.get_started")}
+                </Button>
+              </Link>
+            </>
+          )}
 
           {/* Mobile hamburger */}
           <button
@@ -170,19 +182,29 @@ export function PublicNavbar() {
           </div>
 
           <div className="pt-3 border-t-2 border-border/60 grid grid-cols-2 gap-3">
-            <Link href="/login" onClick={() => setMobileOpen(false)}>
-              <Button
-                variant="outline"
-                className="btn-edu w-full h-10 text-xs border-2 font-black uppercase tracking-wide"
-              >
-                Đăng nhập
-              </Button>
-            </Link>
-            <Link href="/register" onClick={() => setMobileOpen(false)}>
-              <Button className="btn-edu w-full h-10 text-xs border-2 bg-primary text-primary-foreground font-black uppercase tracking-wide">
-                Bắt đầu
-              </Button>
-            </Link>
+            {isAuthenticated ? (
+              <Link href="/dashboard" onClick={() => setMobileOpen(false)} className="col-span-2">
+                <Button className="btn-edu w-full h-10 text-xs border-2 bg-primary text-primary-foreground font-black uppercase tracking-wide">
+                  Trang Quản Trị
+                </Button>
+              </Link>
+            ) : (
+              <>
+                <Link href="/login" onClick={() => setMobileOpen(false)}>
+                  <Button
+                    variant="outline"
+                    className="btn-edu w-full h-10 text-xs border-2 font-black uppercase tracking-wide"
+                  >
+                    Đăng nhập
+                  </Button>
+                </Link>
+                <Link href="/register" onClick={() => setMobileOpen(false)}>
+                  <Button className="btn-edu w-full h-10 text-xs border-2 bg-primary text-primary-foreground font-black uppercase tracking-wide">
+                    Bắt đầu
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}

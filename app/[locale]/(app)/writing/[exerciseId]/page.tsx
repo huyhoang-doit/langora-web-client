@@ -26,7 +26,7 @@ export default function ExerciseDetailPage() {
     const fetchExercise = async () => {
       try {
         setFetchLoading(true);
-        
+
         // 1. Get user profile from store or fetch fallback
         let currentProfile = useLearningStore.getState().profile;
         if (!currentProfile) {
@@ -46,7 +46,7 @@ export default function ExerciseDetailPage() {
           router.push("/profile");
           return;
         }
-        
+
         const langId = currentProfile.targetLanguageId;
 
         // 2. Fetch exercise details
@@ -78,7 +78,7 @@ export default function ExerciseDetailPage() {
         <h2 className="text-xl font-bold text-destructive mb-2">Exercise Not Found</h2>
         <p className="text-muted-foreground mb-6">The exercise you are looking for does not exist.</p>
         <Link href="/writing">
-          <Button className="btn-edu border-2 bg-primary text-primary-foreground hover:bg-primary/90">
+          <Button className="btn-edu px-8 h-12 text-sm border-2 bg-primary text-primary-foreground hover:bg-primary/90 font-black uppercase tracking-wide">
             Back to Writing Hub
           </Button>
         </Link>
@@ -193,7 +193,7 @@ export default function ExerciseDetailPage() {
             </h3>
             <div className="card-edu p-5 bg-card border-2 border-border/50">
               <p className="text-base font-medium text-foreground leading-relaxed whitespace-pre-wrap">
-                {exercise.sentences?.length ? exercise.sentences.map(s => s.originalText).join("\n") : (exercise.content || exercise.scenario || "No source text provided.")}
+                {exercise.sentences?.length ? exercise.sentences.map(s => s.sourceText).join("\n") : (exercise.content || exercise.scenario || "No source text provided.")}
               </p>
             </div>
           </div>

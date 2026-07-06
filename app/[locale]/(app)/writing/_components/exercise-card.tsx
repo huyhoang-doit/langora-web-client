@@ -52,7 +52,7 @@ export function ExerciseCard({ exercise }: { exercise: WritingExercise }) {
               <span>{exercise.estimatedMinutes || exercise.timeLimitMinutes} min</span>
             </div>
           )}
-          
+
           <div className="flex items-center gap-1.5 bg-background px-2 py-1 rounded-md border shadow-sm">
             <FileText className="w-3.5 h-3.5 text-emerald-500" />
             <span>{exercise.totalSentences} sentences</span>
@@ -71,7 +71,7 @@ export function ExerciseCard({ exercise }: { exercise: WritingExercise }) {
               <span className="text-amber-600 dark:text-amber-400">{exercise.xpReward} XP</span>
             </div>
           )}
-          
+
           {exercise.creditsReward && (
             <div className="flex items-center gap-1.5 bg-background px-2 py-1 rounded-md border shadow-sm">
               <Coins className="w-3.5 h-3.5 text-yellow-500" />

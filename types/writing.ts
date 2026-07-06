@@ -40,16 +40,34 @@ export interface WritingExercise {
   xpReward?: number;
   levelId: string;
   isActive?: boolean;
-  sentences?: WritingExerciseSentence[];
+  sentences?: WritingExerciseSentenceResponse[];
 }
 
 export interface WritingExerciseSentence {
   id: string;
   exerciseId: string;
   originalText: string;
+  content?: string; // Tạm thời để support code cũ
   translation?: string;
   hint?: string;
+  suggestions?: {
+    vocab?: string[];
+    grammar?: string[];
+  };
   orderIndex: number;
+}
+
+export interface WritingExerciseSentenceResponse {
+  id: string;
+  exerciseId: string;
+  sentenceOrder: number;
+  sourceText: string;
+  targetText: string;
+  vocabularyHints: string[];
+  grammarHints: string[];
+  difficultyScore: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface WritingSession {

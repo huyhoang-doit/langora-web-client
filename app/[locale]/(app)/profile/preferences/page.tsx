@@ -11,6 +11,7 @@ import { UserLearningProfile } from "@/types/user";
 import { Language, Level } from "@/types/learning";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useLearningStore } from "@/stores/learning.store";
 
 export default function LearningPreferencesPage() {
   const router = useRouter();
@@ -34,11 +35,11 @@ export default function LearningPreferencesPage() {
           UserService.getLearningProfile(),
           learningService.getLanguages()
         ]);
-        
+
         if (languagesRes.success && languagesRes.data) {
           setLanguages(languagesRes.data);
         }
-        
+
         if (profileRes.success && profileRes.data) {
           setProfile(profileRes.data);
           if (profileRes.data.targetLanguageId) setTargetLanguageId(profileRes.data.targetLanguageId);
@@ -86,7 +87,8 @@ export default function LearningPreferencesPage() {
         currentLevelId,
         dailyGoalMinutes: Number(dailyGoalMinutes)
       });
-      if (res.success) {
+      if (res.success && res.data) {
+        useLearningStore.getState().setProfile(res.data);
         toast.success("Learning preferences saved successfully!");
         router.push("/profile");
       }
@@ -127,8 +129,8 @@ export default function LearningPreferencesPage() {
                 <label className="text-xs font-black text-muted-foreground block uppercase tracking-widest ml-1 flex items-center gap-1.5 text-heading">
                   <Globe className="w-4 h-4 text-primary" /> Target Language
                 </label>
-                <Select 
-                  value={targetLanguageId} 
+                <Select
+                  value={targetLanguageId}
                   onValueChange={(val) => {
                     setTargetLanguageId(val);
                     setCurrentLevelId(""); // Reset level when language changes
@@ -152,9 +154,9 @@ export default function LearningPreferencesPage() {
                 <label className="text-xs font-black text-muted-foreground block uppercase tracking-widest ml-1 flex items-center gap-1.5 text-heading">
                   <GraduationCap className="w-4 h-4 text-primary" /> Current Level
                 </label>
-                <Select 
-                  value={currentLevelId} 
-                  onValueChange={setCurrentLevelId} 
+                <Select
+                  value={currentLevelId}
+                  onValueChange={setCurrentLevelId}
                   disabled={!targetLanguageId || levelsLoading}
                 >
                   <SelectTrigger className="w-full bg-muted/30 border-2 border-border rounded-xl px-6 h-12 text-foreground focus:ring-1 focus:ring-primary focus:border-primary transition-all text-sm font-bold text-heading">
@@ -189,8 +191,8 @@ export default function LearningPreferencesPage() {
               </div>
 
               <div className="flex justify-end pt-2">
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   disabled={saving || !targetLanguageId || !currentLevelId}
                   className="btn-edu h-10 px-5 text-xs border-2 bg-primary text-primary-foreground hover:bg-primary/95 gap-1.5"
                 >

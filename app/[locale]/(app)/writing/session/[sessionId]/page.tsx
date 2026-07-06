@@ -13,6 +13,8 @@ import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { writingService } from "@/services/writing.service";
+import { UserService } from "@/services/user.service";
+import { useLearningStore } from "@/stores/learning.store";
 import { WritingSession, WritingExercise, WritingAiFeedback } from "@/types/writing";
 
 export default function WritingSessionPage() {
@@ -47,8 +49,27 @@ export default function WritingSessionPage() {
         setSessionLoading(true);
         const res = await writingService.getSessionById(sessionId);
         if (res.success && res.data) {
-          setSession(res.data);
-          setTimeLeft((res.data.exercise?.timeLimitMinutes || 20) * 60);
+          let sessionData = res.data;
+          
+          if (sessionData.exerciseId && !sessionData.exercise) {
+            let langId = useLearningStore.getState().profile?.targetLanguageId;
+            if (!langId) {
+              const profileRes = await UserService.getLearningProfile();
+              if (profileRes.data) {
+                useLearningStore.getState().setProfile(profileRes.data);
+                langId = profileRes.data.targetLanguageId;
+              }
+            }
+            if (langId) {
+              const exerciseRes = await writingService.getExerciseById(langId, sessionData.exerciseId);
+              if (exerciseRes.success && exerciseRes.data) {
+                sessionData = { ...sessionData, exercise: exerciseRes.data };
+              }
+            }
+          }
+          
+          setSession(sessionData);
+          setTimeLeft((sessionData.exercise?.timeLimitMinutes || 20) * 60);
           
           // Khôi phục câu trả lời cũ (nếu có trong api)
           if (res.data.answers) {
@@ -162,8 +183,8 @@ export default function WritingSessionPage() {
     }
   };
 
-  const allVocabSuggestions = exercise?.sentences?.flatMap(s => s.suggestions?.vocab || []) || [];
-  const allGrammarSuggestions = exercise?.sentences?.flatMap(s => s.suggestions?.grammar || []) || [];
+  const allVocabSuggestions = exercise?.sentences?.flatMap(s => s.vocabularyHints || []) || [];
+  const allGrammarSuggestions = exercise?.sentences?.flatMap(s => s.grammarHints || []) || [];
 
   if (sessionLoading) {
     return (
@@ -178,7 +199,11 @@ export default function WritingSessionPage() {
     return (
       <div className="flex flex-col items-center justify-center h-full">
         <h2 className="text-xl font-bold text-destructive">Session Not Found</h2>
-        <Link href="/writing"><Button className="mt-4">Back to Hub</Button></Link>
+        <Link href="/writing">
+          <Button className="btn-edu mt-4 px-8 h-12 text-sm border-2 bg-primary text-primary-foreground hover:bg-primary/90 font-black uppercase tracking-wide">
+            Back to Hub
+          </Button>
+        </Link>
       </div>
     );
   }
@@ -203,7 +228,7 @@ export default function WritingSessionPage() {
       {/* Header */}
       <header className="flex justify-between items-center px-4 md:px-6 h-16 bg-background/80 backdrop-blur-xl border-b-2 border-border/60 flex-shrink-0">
         <div className="flex items-center gap-4">
-          <Link href={`/writing/${exerciseId}`}>
+          <Link href={`/writing/${exercise?.id}`}>
             <Button variant="ghost" size="icon" className="btn-edu w-9 h-9 border-2 border-border bg-transparent text-foreground hover:bg-muted">
               <ArrowLeft className="w-4 h-4" />
             </Button>
@@ -268,7 +293,7 @@ export default function WritingSessionPage() {
               <div className="p-3 bg-background rounded-lg border border-border mt-2">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">Đoạn tiếng Việt cần dịch:</h4>
                 <p className="text-sm font-medium text-foreground leading-relaxed">
-                  {exercise.sentences.map(s => s.content).join(" ")}
+                  {exercise.sentences.map(s => s.sourceText).join(" ")}
                 </p>
               </div>
             )}
@@ -334,7 +359,7 @@ export default function WritingSessionPage() {
                       <span className="w-5 h-5 rounded-md bg-primary/10 text-primary flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">
                         {idx + 1}
                       </span>
-                      <p className="text-sm font-medium text-foreground leading-relaxed">{s.content}</p>
+                      <p className="text-sm font-medium text-foreground leading-relaxed">{s.sourceText}</p>
                     </div>
                     <Textarea 
                       value={sentenceAnswers[s.id] || ""}
@@ -346,22 +371,22 @@ export default function WritingSessionPage() {
                     
                     {/* Sentence Action & Feedback */}
                     <div className="flex flex-col gap-2 relative">
-                      {showSentenceSuggest[s.id] && s.suggestions && (
+                      {showSentenceSuggest[s.id] && (s.vocabularyHints?.length > 0 || s.grammarHints?.length > 0) && (
                         <div className="absolute bottom-full mb-3 right-0 w-72 bg-background text-foreground border-2 border-primary ring-4 ring-primary/20 rounded-xl p-3 z-50 animate-in fade-in zoom-in-95">
                           <div className="space-y-3">
-                            {s.suggestions.vocab && s.suggestions.vocab.length > 0 && (
+                            {s.vocabularyHints && s.vocabularyHints.length > 0 && (
                               <div>
                                 <h4 className="text-[10px] font-bold uppercase tracking-wider text-primary mb-1.5 flex items-center gap-1.5"><BookOpen className="w-3 h-3" /> Vocabulary</h4>
                                 <div className="flex flex-wrap gap-1">
-                                  {s.suggestions.vocab.map((v, i) => <Badge key={i} variant="secondary" className="bg-primary/10 text-primary border-primary/20 text-[9px] px-1.5 py-0">{v}</Badge>)}
+                                  {s.vocabularyHints.map((v, i) => <Badge key={i} variant="secondary" className="bg-primary/10 text-primary border-primary/20 text-[9px] px-1.5 py-0">{v}</Badge>)}
                                 </div>
                               </div>
                             )}
-                            {s.suggestions.grammar && s.suggestions.grammar.length > 0 && (
+                            {s.grammarHints && s.grammarHints.length > 0 && (
                               <div>
                                 <h4 className="text-[10px] font-bold uppercase tracking-wider text-pink-500 mb-1.5 flex items-center gap-1.5"><PenLine className="w-3 h-3" /> Grammar Structure</h4>
                                 <ul className="space-y-1">
-                                  {s.suggestions.grammar.map((g, i) => (
+                                  {s.grammarHints.map((g, i) => (
                                     <li key={i} className="text-[10px] font-medium bg-muted/50 p-1.5 rounded-lg border border-border/50">{g}</li>
                                   ))}
                                 </ul>
