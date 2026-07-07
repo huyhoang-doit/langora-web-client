@@ -293,7 +293,7 @@ export default function WritingSessionPage() {
               <div className="p-3 bg-background rounded-lg border border-border mt-2">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">Đoạn tiếng Việt cần dịch:</h4>
                 <p className="text-sm font-medium text-foreground leading-relaxed">
-                  {exercise.sentences.map(s => s.sourceText).join(" ")}
+                  {exercise.sentences?.map(s => s.sourceText).join(" ")}
                 </p>
               </div>
             )}
@@ -353,7 +353,7 @@ export default function WritingSessionPage() {
               </div>
             ) : (
               <div className="space-y-4 pb-8">
-                {exercise.sentences.map((s, idx) => (
+                {exercise.sentences?.map((s, idx) => (
                   <div key={s.id} className="space-y-2 p-3 bg-muted/10 rounded-xl border border-border/50">
                     <div className="flex items-start gap-2">
                       <span className="w-5 h-5 rounded-md bg-primary/10 text-primary flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">
@@ -417,10 +417,10 @@ export default function WritingSessionPage() {
                         <div className="p-2.5 bg-green-500/10 border border-green-500/20 rounded-lg animate-in fade-in zoom-in-95">
                           <div className="flex items-center gap-2 mb-1">
                             <CheckCircle2 className="w-3.5 h-3.5 text-green-600" />
-                            <span className="text-xs font-bold text-green-700">Band: {sentenceFeedbacks[s.id].score}</span>
+                            <span className="text-xs font-bold text-green-700">Band: {sentenceFeedbacks[s.id].overallScore}</span>
                           </div>
                           <p className="text-xs text-green-800 font-medium">
-                            {sentenceFeedbacks[s.id].comment}
+                            {sentenceFeedbacks[s.id].feedbackText}
                           </p>
                         </div>
                       )}
