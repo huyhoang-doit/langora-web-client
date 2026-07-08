@@ -77,7 +77,12 @@ export interface WritingSession {
   status: 'IN_PROGRESS' | 'COMPLETED' | 'ABANDONED';
   startedAt: string;
   completedAt?: string;
-  score?: number;
+  totalScore?: number;
+  grammarScore?: number;
+  vocabularyScore?: number;
+  fluencyScore?: number;
+  accuracyScore?: number;
+  submittedAt?: string;
   exercise?: WritingExercise;
   answers?: any[];
 }
@@ -92,11 +97,10 @@ export interface WritingAiFeedback {
   id: string;
   sessionId: string;
   sentenceId: string;
-  overallScore: number;
-  grammarScore: number;
-  vocabularyScore: number;
-  coherenceScore: number;
-  feedbackText: string;
+  overallFeedback: string;
+  grammarFeedback: string;
+  vocabularyFeedback: string;
+  fluencyFeedback: string;
   corrections?: any; // JSON
 }
 

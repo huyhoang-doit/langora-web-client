@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useRouter } from "@/i18n/navigation";
 import Link from "next/link";
-import { 
+import {
   ArrowLeft, FileText, LayoutList, Play, Save, CheckCircle2, Clock, Zap, BookOpen, PenLine, Award, ChevronRight, Sparkles
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -21,16 +21,16 @@ export default function WritingSessionPage() {
   const params = useParams();
   const router = useRouter();
   const sessionId = params.sessionId as string;
-  
+
   const [sessionLoading, setSessionLoading] = useState(true);
   const [session, setSession] = useState<WritingSession | null>(null);
   const exercise = session?.exercise;
-  
+
   const [mode, setMode] = useState<"full" | "sentence">("full");
   const [fullText, setFullText] = useState("");
   const [sentenceAnswers, setSentenceAnswers] = useState<Record<string, string>>({});
   const [isSaving, setIsSaving] = useState(false);
-  
+
   // Feedback State
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -39,7 +39,7 @@ export default function WritingSessionPage() {
   const [showFullSuggest, setShowFullSuggest] = useState(false);
   const [showSentenceSuggest, setShowSentenceSuggest] = useState<Record<string, boolean>>({});
   const [fullFeedback, setFullFeedback] = useState<WritingAiFeedback[] | null>(null);
-  
+
   // Timer mock
   const [timeLeft, setTimeLeft] = useState(20 * 60);
 
@@ -50,7 +50,7 @@ export default function WritingSessionPage() {
         const res = await writingService.getSessionById(sessionId);
         if (res.success && res.data) {
           let sessionData = res.data;
-          
+
           if (sessionData.exerciseId && !sessionData.exercise) {
             let langId = useLearningStore.getState().profile?.targetLanguageId;
             if (!langId) {
@@ -67,14 +67,14 @@ export default function WritingSessionPage() {
               }
             }
           }
-          
+
           setSession(sessionData);
           setTimeLeft((sessionData.exercise?.timeLimitMinutes || 20) * 60);
-          
+
           // Khôi phục câu trả lời cũ (nếu có trong api)
           if (res.data.answers) {
-             // Tuỳ thuộc format backend trả về, ví dụ có field content hoặc userAnswer
-             // Logic ánh xạ nếu cần
+            // Tuỳ thuộc format backend trả về, ví dụ có field content hoặc userAnswer
+            // Logic ánh xạ nếu cần
           }
         }
       } catch (error) {
@@ -117,11 +117,28 @@ export default function WritingSessionPage() {
       toast.error("Please write something before submitting.");
       return;
     }
-    
+
     setIsSubmitting(true);
     try {
+      if (mode === "sentence") {
+        const answers = Object.entries(sentenceAnswers).map(([id, text]) => ({
+          sentenceId: id,
+          userAnswer: text
+        }));
+
+        await writingService.bulkSubmitSentenceAnswers(sessionId, {
+          submitSession: true,
+          answers
+        });
+
+        toast.success("AI has finished evaluating your work!");
+        router.push(`/writing/feedback/${sessionId}`);
+        return;
+      }
+
+      // Existing logic for full mode
       // 1. Save latest content
-      await writingService.updateSession(sessionId, { content: mode === 'full' ? fullText : JSON.stringify(sentenceAnswers), status: 'COMPLETED' });
+      await writingService.updateSession(sessionId, { content: fullText, status: 'COMPLETED' });
       // 2. Submit session
       await writingService.submitSession(sessionId);
       // 3. Fetch AI feedbacks
@@ -129,7 +146,7 @@ export default function WritingSessionPage() {
       if (fbRes.success && fbRes.data) {
         setFullFeedback(fbRes.data);
       }
-      
+
       setShowFeedback(true);
       toast.success("AI has finished evaluating your work!");
     } catch (error) {
@@ -145,10 +162,10 @@ export default function WritingSessionPage() {
       toast.error("Please provide a valid translation first.");
       return;
     }
-    
-    setSubmittingSentences(prev => ({...prev, [id]: true}));
-    setShowSentenceSuggest(prev => ({...prev, [id]: false}));
-    
+
+    setSubmittingSentences(prev => ({ ...prev, [id]: true }));
+    setShowSentenceSuggest(prev => ({ ...prev, [id]: false }));
+
     try {
       // In a real scenario, the backend might return the AI Feedback directly from this endpoint
       // based on the previous plan.
@@ -156,30 +173,30 @@ export default function WritingSessionPage() {
         sentenceId: id,
         userAnswer: sentenceAnswers[id]
       });
-      
+
       if (res.success && res.data) {
         // Assuming the backend returns the feedback directly or we need to fetch it
         setSentenceFeedbacks(prev => ({
-          ...prev, 
+          ...prev,
           [id]: res.data as WritingAiFeedback
         }));
         toast.success("Sentence evaluated!");
       } else {
-         // Fallback if data is not directly returned
-         const allFbRes = await writingService.getAiFeedbacks(sessionId);
-         if (allFbRes.success && allFbRes.data) {
-           const specificFb = allFbRes.data.find(f => f.sentenceId === id);
-           if (specificFb) {
-             setSentenceFeedbacks(prev => ({ ...prev, [id]: specificFb }));
-             toast.success("Sentence evaluated!");
-           }
-         }
+        // Fallback if data is not directly returned
+        const allFbRes = await writingService.getAiFeedbacks(sessionId);
+        if (allFbRes.success && allFbRes.data) {
+          const specificFb = allFbRes.data.find(f => f.sentenceId === id);
+          if (specificFb) {
+            setSentenceFeedbacks(prev => ({ ...prev, [id]: specificFb }));
+            toast.success("Sentence evaluated!");
+          }
+        }
       }
     } catch (error) {
       toast.error("Failed to evaluate sentence.");
       console.error(error);
     } finally {
-      setSubmittingSentences(prev => ({...prev, [id]: false}));
+      setSubmittingSentences(prev => ({ ...prev, [id]: false }));
     }
   };
 
@@ -208,17 +225,17 @@ export default function WritingSessionPage() {
     );
   }
 
-  const wordCount = mode === "full" 
+  const wordCount = mode === "full"
     ? fullText.trim().split(/\s+/).filter(w => w.length > 0).length
     : Object.values(sentenceAnswers).join(" ").trim().split(/\s+/).filter(w => w.length > 0).length;
 
-  const aggregatedFeedback = fullFeedback && fullFeedback.length > 0 ? {
-    score: (fullFeedback.reduce((acc, f) => acc + f.overallScore, 0) / fullFeedback.length),
-    grammarScore: (fullFeedback.reduce((acc, f) => acc + f.grammarScore, 0) / fullFeedback.length),
-    vocabularyScore: (fullFeedback.reduce((acc, f) => acc + f.vocabularyScore, 0) / fullFeedback.length),
-    coherenceScore: (fullFeedback.reduce((acc, f) => acc + f.coherenceScore, 0) / fullFeedback.length),
-    overallComment: "Overall feedback is aggregated from your individual sentence performances.",
-    improvements: fullFeedback.map(f => f.feedbackText).filter((v, i, a) => v && a.indexOf(v) === i)
+  const aggregatedFeedback = session?.totalScore !== undefined ? {
+    score: session.totalScore,
+    grammarScore: session.grammarScore || 0,
+    vocabularyScore: session.vocabularyScore || 0,
+    coherenceScore: session.fluencyScore || 0,
+    overallComment: "Overall feedback is calculated based on your performance in this session.",
+    improvements: fullFeedback?.map(f => f.overallFeedback).filter((v, i, a) => v && a.indexOf(v) === i) || []
   } : null;
 
   const scorePercentage = aggregatedFeedback ? (aggregatedFeedback.score / 9) * 100 : 0;
@@ -244,14 +261,14 @@ export default function WritingSessionPage() {
 
         <div className="flex items-center gap-3">
           <div className="bg-muted p-1 rounded-xl flex">
-            <button 
+            <button
               onClick={() => setMode("full")}
               disabled={showFeedback}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-2 transition-all ${mode === "full" ? "bg-background shadow-sm text-foreground" : "text-muted-foreground hover:text-foreground"} disabled:opacity-50`}
             >
               <FileText className="w-3.5 h-3.5" /> Full Text
             </button>
-            <button 
+            <button
               onClick={() => setMode("sentence")}
               disabled={showFeedback}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-2 transition-all ${mode === "sentence" ? "bg-background shadow-sm text-foreground" : "text-muted-foreground hover:text-foreground"} disabled:opacity-50`}
@@ -278,17 +295,17 @@ export default function WritingSessionPage() {
 
       {/* Workspace */}
       <div className="flex-grow flex flex-col md:flex-row overflow-hidden">
-        
+
         {/* Left Panel: Editor Area */}
         <div className="w-full md:w-1/2 lg:w-[60%] border-r-2 border-border/60 bg-background overflow-y-auto p-4 md:p-5 scrollbar-thin flex flex-col relative">
-          
+
           {/* Prompt Area at the Top */}
           <div className="mb-4 card-edu p-4 bg-muted/20 border-2 border-border/50">
             <h3 className="text-sm font-bold uppercase tracking-wider text-primary mb-1 flex items-center gap-2">
               <FileText className="w-4 h-4" /> Context / Yêu cầu
             </h3>
             <p className="text-sm font-medium text-foreground leading-relaxed mb-3">{exercise.description}</p>
-            
+
             {mode === "full" && (
               <div className="p-3 bg-background rounded-lg border border-border mt-2">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">Đoạn tiếng Việt cần dịch:</h4>
@@ -303,14 +320,14 @@ export default function WritingSessionPage() {
           <div className="flex-grow flex flex-col">
             {mode === "full" ? (
               <div className="flex-grow flex flex-col h-full relative">
-                <Textarea 
+                <Textarea
                   value={fullText}
                   onChange={(e) => setFullText(e.target.value)}
                   disabled={showFeedback || isSubmitting}
                   placeholder="Type your English translation here..."
                   className="flex-grow min-h-[300px] resize-none bg-background border-2 border-border rounded-xl focus-visible:ring-1 focus-visible:ring-primary text-base leading-relaxed font-medium p-4 disabled:opacity-70"
                 />
-                
+
                 {/* Actions below Textarea */}
                 {!showFeedback && (
                   <div className="flex justify-end gap-3 mt-4 relative">
@@ -334,16 +351,16 @@ export default function WritingSessionPage() {
                         </div>
                       </div>
                     )}
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       onClick={() => setShowFullSuggest(!showFullSuggest)}
                       className={`btn-edu h-10 px-6 text-sm border-2 flex items-center gap-2 ${showFullSuggest ? "bg-primary/10 border-primary text-primary" : "text-primary hover:bg-primary/10"}`}
                     >
                       <Sparkles className="w-4 h-4 fill-current" /> Gợi ý
                     </Button>
-                    <Button 
-                      onClick={handleSubmit} 
-                      disabled={isSubmitting} 
+                    <Button
+                      onClick={handleSubmit}
+                      disabled={isSubmitting}
                       className="btn-edu h-10 px-6 text-sm border-2 bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2"
                     >
                       {isSubmitting ? <span className="animate-pulse">Analyzing...</span> : <>Submit to AI <Zap className="w-4 h-4 fill-current" /></>}
@@ -361,14 +378,14 @@ export default function WritingSessionPage() {
                       </span>
                       <p className="text-sm font-medium text-foreground leading-relaxed">{s.sourceText}</p>
                     </div>
-                    <Textarea 
+                    <Textarea
                       value={sentenceAnswers[s.id] || ""}
-                      onChange={(e) => setSentenceAnswers({...sentenceAnswers, [s.id]: e.target.value})}
+                      onChange={(e) => setSentenceAnswers({ ...sentenceAnswers, [s.id]: e.target.value })}
                       disabled={submittingSentences[s.id]}
                       placeholder="Translate this sentence into English..."
                       className="min-h-[60px] resize-y bg-background border-2 border-border rounded-xl focus-visible:ring-1 focus-visible:ring-primary text-base font-medium p-3 disabled:opacity-70"
                     />
-                    
+
                     {/* Sentence Action & Feedback */}
                     <div className="flex flex-col gap-2 relative">
                       {showSentenceSuggest[s.id] && (s.vocabularyHints?.length > 0 || s.grammarHints?.length > 0) && (
@@ -395,16 +412,16 @@ export default function WritingSessionPage() {
                           </div>
                         </div>
                       )}
-                      
+
                       <div className="flex justify-end gap-2">
-                        <Button 
+                        <Button
                           variant="outline"
-                          onClick={() => setShowSentenceSuggest(prev => ({...prev, [s.id]: !prev[s.id]}))}
+                          onClick={() => setShowSentenceSuggest(prev => ({ ...prev, [s.id]: !prev[s.id] }))}
                           className={`btn-edu h-8 px-3 text-xs border-2 flex items-center gap-1.5 ${showSentenceSuggest[s.id] ? "bg-primary/10 border-primary text-primary" : "text-primary hover:bg-primary/10"}`}
                         >
                           <Sparkles className="w-3 h-3 fill-current" /> Gợi ý
                         </Button>
-                        <Button 
+                        <Button
                           onClick={() => handleSentenceSubmit(s.id)}
                           disabled={submittingSentences[s.id]}
                           className="btn-edu h-8 px-4 text-xs border-2 bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-1.5"
@@ -417,10 +434,10 @@ export default function WritingSessionPage() {
                         <div className="p-2.5 bg-green-500/10 border border-green-500/20 rounded-lg animate-in fade-in zoom-in-95">
                           <div className="flex items-center gap-2 mb-1">
                             <CheckCircle2 className="w-3.5 h-3.5 text-green-600" />
-                            <span className="text-xs font-bold text-green-700">Band: {sentenceFeedbacks[s.id].overallScore}</span>
+                            <span className="text-xs font-bold text-green-700">Feedback: {sentenceFeedbacks[s.id].overallFeedback}</span>
                           </div>
                           <p className="text-xs text-green-800 font-medium">
-                            {sentenceFeedbacks[s.id].feedbackText}
+                            {sentenceFeedbacks[s.id].grammarFeedback}
                           </p>
                         </div>
                       )}
@@ -436,7 +453,7 @@ export default function WritingSessionPage() {
 
         {/* Right Panel: AI Feedback Area */}
         <div className="w-full md:w-1/2 lg:w-[40%] bg-muted/10 overflow-y-auto p-4 md:p-5 scrollbar-thin relative">
-          
+
           {!showFeedback ? (
             <div className={`h-full flex flex-col items-center justify-center text-center space-y-3 transition-opacity ${isSubmitting ? 'opacity-100' : 'opacity-50'}`}>
               {isSubmitting ? (

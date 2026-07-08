@@ -42,8 +42,12 @@ export const writingService = {
   },
 
   // --- Answers & Feedback ---
-  submitSentenceAnswer: async (sessionId: string, data: SentenceAnswerRequest): Promise<ApiResponse<any>> => {
-    return axiosInstance.post(`/writing-sessions/${sessionId}/sentence-answers`, data) as unknown as Promise<ApiResponse<any>>;
+  submitSentenceAnswer: async (sessionId: string, data: SentenceAnswerRequest): Promise<ApiResponse<WritingAiFeedback>> => {
+    return axiosInstance.post(`/writing-sessions/${sessionId}/sentence-answers`, data) as unknown as Promise<ApiResponse<WritingAiFeedback>>;
+  },
+
+  bulkSubmitSentenceAnswers: async (sessionId: string, data: { submitSession: boolean, answers: SentenceAnswerRequest[] }): Promise<ApiResponse<WritingSession>> => {
+    return axiosInstance.post(`/writing-sessions/${sessionId}/bulk-sentence-answers`, data) as unknown as Promise<ApiResponse<WritingSession>>;
   },
 
   getAiFeedbacks: async (sessionId: string): Promise<ApiResponse<WritingAiFeedback[]>> => {

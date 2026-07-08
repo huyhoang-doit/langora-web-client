@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { useParams } from "next/navigation";
 import { writingService } from "@/services/writing.service";
-import { WritingAiFeedback } from "@/types/writing";
+import { WritingAiFeedback, WritingSession } from "@/types/writing";
 
 export default function WritingFeedbackPage() {
   const params = useParams();
@@ -16,30 +16,37 @@ export default function WritingFeedbackPage() {
   
   const [loading, setLoading] = useState(true);
   const [fullFeedback, setFullFeedback] = useState<WritingAiFeedback[] | null>(null);
+  const [session, setSession] = useState<WritingSession | null>(null);
 
   useEffect(() => {
-    const fetchFeedbacks = async () => {
+    const fetchFeedbacksAndSession = async () => {
       try {
-        const res = await writingService.getAiFeedbacks(sessionId);
-        if (res.success && res.data) {
-          setFullFeedback(res.data);
+        const [resFb, resSession] = await Promise.all([
+          writingService.getAiFeedbacks(sessionId),
+          writingService.getSessionById(sessionId)
+        ]);
+        if (resFb.success && resFb.data) {
+          setFullFeedback(resFb.data);
+        }
+        if (resSession.success && resSession.data) {
+          setSession(resSession.data);
         }
       } catch (error) {
-        console.error("Failed to load feedbacks:", error);
+        console.error("Failed to load feedbacks or session:", error);
       } finally {
         setLoading(false);
       }
     };
-    fetchFeedbacks();
+    fetchFeedbacksAndSession();
   }, [sessionId]);
 
-  const aggregatedFeedback = fullFeedback && fullFeedback.length > 0 ? {
-    score: (fullFeedback.reduce((acc, f) => acc + f.overallScore, 0) / fullFeedback.length).toFixed(1),
-    grammarScore: (fullFeedback.reduce((acc, f) => acc + f.grammarScore, 0) / fullFeedback.length).toFixed(1),
-    vocabularyScore: (fullFeedback.reduce((acc, f) => acc + f.vocabularyScore, 0) / fullFeedback.length).toFixed(1),
-    coherenceScore: (fullFeedback.reduce((acc, f) => acc + f.coherenceScore, 0) / fullFeedback.length).toFixed(1),
-    overallComment: "Overall feedback is aggregated from your individual sentence performances.",
-    improvements: fullFeedback.map(f => f.feedbackText).filter((v, i, a) => v && a.indexOf(v) === i) // Unique improvements
+  const aggregatedFeedback = session ? {
+    score: (session.totalScore || 0).toFixed(1),
+    grammarScore: (session.grammarScore || 0).toFixed(1),
+    vocabularyScore: (session.vocabularyScore || 0).toFixed(1),
+    coherenceScore: (session.fluencyScore || 0).toFixed(1), // Mapping fluency to coherence for UI compatibility
+    overallComment: "Overall feedback is calculated based on your performance in this session.",
+    improvements: fullFeedback?.map(f => f.overallFeedback).filter((v, i, a) => v && a.indexOf(v) === i) || []
   } : null;
 
   if (loading) {
