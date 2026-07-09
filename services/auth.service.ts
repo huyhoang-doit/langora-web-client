@@ -6,6 +6,7 @@ import {
   EmailVerificationPayload,
   ForgotPasswordPayload,
   LoginPayload,
+  GoogleLoginPayload,
   RefreshTokenPayload,
   RegisterPayload,
   ResetPasswordPayload,
@@ -14,6 +15,15 @@ import {
 export const AuthService = {
   login: async (payload: LoginPayload): Promise<ApiResponse<AuthResponse>> => {
     const response = await axiosInstance.post('/auth/login', payload);
+    const data = response as unknown as ApiResponse<AuthResponse>;
+    if (data.success && data.data && data.data.accessToken) {
+      setTokens(data.data.accessToken, data.data.refreshToken);
+    }
+    return data;
+  },
+
+  googleLogin: async (payload: GoogleLoginPayload): Promise<ApiResponse<AuthResponse>> => {
+    const response = await axiosInstance.post('/auth/google', payload);
     const data = response as unknown as ApiResponse<AuthResponse>;
     if (data.success && data.data && data.data.accessToken) {
       setTokens(data.data.accessToken, data.data.refreshToken);
