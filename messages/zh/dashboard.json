@@ -1,0 +1,26 @@
+{
+  "dashboard": {
+    "dashboard": "仪表盘",
+    "learning_path": "学习路径",
+    "vocabulary": "词汇",
+    "mini_games": "迷你游戏",
+    "writing_coach": "写作教练",
+    "grammar_lab": "语法实验室",
+    "ora_companion": "Ora 助手",
+    "progress_reports": "进度报告",
+    "community_feed": "社区动态",
+    "profile": "个人资料"
+  },
+  "stats": {
+    "words_mastered": "掌握的单词",
+    "daily_streak": "每日连续记录",
+    "writing_band": "写作分数",
+    "study_time": "学习时间"
+  },
+  "sections": {
+    "continue_learning": "继续学习",
+    "recommended": "为您推荐",
+    "community_highlights": "社区亮点",
+    "your_progress": "您的进度"
+  }
+}

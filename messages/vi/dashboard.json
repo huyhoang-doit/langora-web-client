@@ -1,0 +1,26 @@
+{
+  "dashboard": {
+    "dashboard": "Bảng điều khiển",
+    "learning_path": "Lộ trình học tập",
+    "vocabulary": "Từ vựng",
+    "mini_games": "Mini Games",
+    "writing_coach": "Hướng dẫn viết",
+    "grammar_lab": "Phòng ngữ pháp",
+    "ora_companion": "Trợ lý Ora",
+    "progress_reports": "Báo cáo tiến độ",
+    "community_feed": "Cộng đồng",
+    "profile": "Hồ sơ"
+  },
+  "stats": {
+    "words_mastered": "Từ đã thành thạo",
+    "daily_streak": "Chuỗi hàng ngày",
+    "writing_band": "Điểm viết",
+    "study_time": "Thời gian học"
+  },
+  "sections": {
+    "continue_learning": "Tiếp tục học tập",
+    "recommended": "Được đề xuất cho bạn",
+    "community_highlights": "Nổi bật cộng đồng",
+    "your_progress": "Tiến độ của bạn"
+  }
+}

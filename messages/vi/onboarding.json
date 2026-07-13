@@ -1,0 +1,79 @@
+{
+  "welcome": {
+    "step": "Bước 1 / 6",
+    "title": "Chào mừng đến với Langora!",
+    "desc": "Hãy tùy chỉnh lộ trình ngôn ngữ của bạn. Chúng tôi sẽ thiết lập ngôn ngữ mục tiêu, đánh giá mục tiêu và ước tính trình độ ban đầu của bạn.",
+    "time_val": "2 phút",
+    "time_lbl": "Thời gian ước tính",
+    "flow_val": "Có AI hướng dẫn",
+    "flow_lbl": "Kiểu thiết lập",
+    "start_btn": "Bắt đầu nào",
+    "copyright": "© 2024 Langora. Thiết kế cho sự rõ ràng trong nhận thức."
+  },
+  "language": {
+    "step": "Bước 2 / 6",
+    "title": "Bạn muốn học ngôn ngữ nào?",
+    "desc": "Chọn ngôn ngữ mục tiêu của bạn. Bạn có thể thay đổi sau.",
+    "en_label": "Tiếng Anh",
+    "en_native": "English",
+    "en_desc": "Học ngữ pháp, từ vựng chuyên ngành hoặc luyện thi IELTS/TOEIC.",
+    "ja_label": "Tiếng Nhật",
+    "ja_native": "日本語",
+    "ja_desc": "Thành thạo Kanji, từ vựng JLPT và giao tiếp tự nhiên.",
+    "zh_label": "Tiếng Trung",
+    "zh_native": "中文",
+    "zh_desc": "Luyện phát âm, từ vựng HSK và chữ Hán (Sắp ra mắt).",
+    "back": "Quay lại",
+    "continue": "Tiếp tục"
+  },
+  "goal": {
+    "step": "Bước 3 / 6",
+    "title": "Mục tiêu học tập của bạn là gì?",
+    "desc": "Chúng tôi sẽ cá nhân hóa lộ trình của bạn để tập trung vào các chủ đề này.",
+    "ielts_label": "Chứng chỉ IELTS",
+    "ielts_desc": "Tập trung vào từ vựng học thuật, bài luận và sự mạch lạc.",
+    "toeic_label": "Chứng chỉ TOEIC",
+    "toeic_desc": "Tập trung vào từ vựng doanh nghiệp, email và ngữ pháp.",
+    "business_label": "Tiếng Anh Thương mại / Giao tiếp",
+    "business_desc": "Chuẩn bị cho đàm phán, thuyết trình và viết email.",
+    "travel_label": "Du lịch & Giao tiếp hàng ngày",
+    "travel_desc": "Cải thiện các đoạn hội thoại cơ bản, từ vựng và độ trôi chảy.",
+    "back": "Quay lại",
+    "continue": "Tiếp tục"
+  },
+  "level": {
+    "step": "Bước 4 / 6",
+    "title": "Ước tính trình độ hiện tại của bạn",
+    "desc": "Điều này giúp chúng tôi cung cấp nội dung phù hợp cho các đề xuất AI.",
+    "beginner_label": "Người mới bắt đầu",
+    "beginner_desc": "Tôi bắt đầu từ con số 0. Tôi chưa biết từ vựng hoặc ngữ pháp cơ bản.",
+    "intermediate_label": "Người học trung cấp",
+    "intermediate_desc": "Tôi có thể viết các đoạn văn cơ bản và hiểu các cuộc hội thoại chậm.",
+    "advanced_label": "Người nói thành thạo",
+    "advanced_desc": "Tôi giao tiếp trôi chảy nhưng cần nắm vững các cấu trúc ngữ pháp và văn phong phức tạp.",
+    "unsure_label": "Tôi không chắc chắn (Khuyên dùng Bài kiểm tra đầu vào)",
+    "unsure_desc": "Làm bài đánh giá AI dài 5 phút để kiểm tra khả năng đọc, từ vựng và cú pháp của bạn.",
+    "back": "Quay lại",
+    "continue": "Tiếp tục"
+  },
+  "placement": {
+    "title": "Kiểm tra đầu vào AI",
+    "question_progress": "Câu hỏi {current} / {total}",
+    "instruction": "Chọn từ phù hợp nhất với câu dưới đây:",
+    "quit": "Thoát kiểm tra",
+    "next": "Câu hỏi tiếp theo",
+    "loading": "Ora đang phân tích trình độ của bạn..."
+  },
+  "result": {
+    "complete": "Đánh giá AI hoàn tất",
+    "level": "Trình độ của bạn: {level}",
+    "proficiency": "Trình độ tiếng Anh trên trung cấp",
+    "vocab_mastery": "Thành thạo từ vựng: {percent}%",
+    "vocab_desc": "Mạnh về tiếng Anh thương mại tổng quát, trung bình ở tiếng Anh khoa học.",
+    "writing_coherence": "Độ mạch lạc khi viết: {percent}%",
+    "writing_desc": "Luồng logic rõ ràng. Mắc lỗi nhỏ ở các thì phức tạp.",
+    "ai_recommendation": "Đề xuất từ AI",
+    "ai_desc": "Chúng tôi đã tạo một lộ trình tùy chỉnh cho bạn. Bạn nên tập trung vào 'Cấu trúc câu điều kiện' trong ngữ pháp và 'Thành ngữ đàm phán' trong từ vựng.",
+    "enter_dashboard": "Vào Bảng điều khiển"
+  }
+}
