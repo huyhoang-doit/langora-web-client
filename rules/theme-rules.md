@@ -25,20 +25,20 @@ Tài liệu này định nghĩa các quy chuẩn thiết kế, hệ thống typo
 
 ## 2. Đường viền (Border System) & Bo góc (Radius)
 
-Tránh các viền 1px mỏng của SaaS dashboard truyền thống. Giao diện Langora sử dụng hệ thống viền rõ nét để tạo cảm giác tactile (chân thực, tương tác tốt):
-- **Độ dày viền (Border Width)**: Các khối tương tác chính (Cards, Buttons, Inputs) sử dụng viền dày **`2px`** (`border-2 border-border`).
+Giao diện Langora sử dụng hệ thống viền và bo góc gọn gàng, tinh tế:
+- **Độ dày viền (Border Width)**: Các khối tương tác chính (Cards, Buttons, Inputs) sử dụng viền **`1px`** (`border border-border`).
 - **Bo góc (Border Radius)**:
-  - Khối nội dung lớn/Cards học tập: Bo góc **`20px`** (sử dụng class `--radius: 20px` tương ứng `rounded-2xl` hoặc các biến thể `rounded-xl` / `rounded-3xl` tùy chỉnh).
+  - Khối nội dung lớn/Cards học tập: Bo góc **`10px`** (sử dụng class `--radius: 10px` tương ứng `rounded-lg` hoặc các biến thể tùy chỉnh).
   - Nút bấm chính (`.btn-edu`): Thiết kế dạng **`rounded-full`** (viên thuốc) để tạo sự thân thiện, dễ bấm.
 
 ---
 
 ## 3. Hệ thống Bóng đổ (Shadow System)
 
-Dự án áp dụng phong cách **Neo-brutalist nhẹ** (bóng đổ phẳng, có offset rõ ràng và không mờ mịn kiểu truyền thống) để tăng chiều sâu mà không làm giao diện bị rối:
-- **Shadow chuẩn**: `--shadow: 0 6px 0px 0px rgba(99, 102, 241, 0.25)`.
-- **Shadow khi Hover**: `--shadow-md: 0 8px 0px 0px rgba(99, 102, 241, 0.25)`.
-- **Quy tắc Hover**: Khi người dùng trỏ chuột vào card tương tác, card sẽ dịch chuyển lên trên (`translate-y-[-4px]`) đồng thời shadow tăng kích thước để tạo hiệu ứng nổi lên sinh động.
+Dự án áp dụng phong cách bóng đổ gọn gàng, hiện đại để tăng chiều sâu mà không làm giao diện bị rối:
+- **Shadow chuẩn**: `--shadow: 0 4px 0px 0px rgba(99, 102, 241, 0.15)`.
+- **Shadow khi Hover**: `--shadow-md: 0 6px 0px 0px rgba(99, 102, 241, 0.2)`.
+- **Quy tắc Hover**: Khi người dùng trỏ chuột vào card tương tác, card sẽ dịch chuyển lên trên (`translate-y-[-2px]`) đồng thời shadow tăng kích thước để tạo hiệu ứng nổi lên sinh động.
 
 ---
 
@@ -57,8 +57,8 @@ Hãy tái sử dụng các utility class sau được định nghĩa sẵn trong
 ```css
 /* 1. Hộp học tập (Card) tiêu chuẩn */
 .card-edu {
-  border: 2px solid var(--border);
-  border-radius: 20px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
   box-shadow: var(--shadow);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: var(--card);
@@ -66,17 +66,17 @@ Hãy tái sử dụng các utility class sau được định nghĩa sẵn trong
 
 /* 2. Hộp học tập có khả năng tương tác (di chuột có hiệu ứng nổi) */
 .card-edu-interactive:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-md);
   border-color: color-mix(in oklch, var(--primary) 60%, var(--border));
 }
 
 /* 3. Nút bấm phong cách giáo dục gamified (viền dày, hiệu ứng nhấn 3D) */
 .btn-edu {
-  border: 2px solid currentColor;
+  border: 1px solid currentColor;
   border-radius: 9999px;
-  font-weight: 700;
-  height: 48px;
+  font-weight: 600;
+  height: 40px;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   display: inline-flex;
@@ -86,8 +86,8 @@ Hãy tái sử dụng các utility class sau được định nghĩa sẵn trong
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .btn-edu:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 0 currentColor;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 0 currentColor;
 }
 .btn-edu:active {
   transform: translateY(0);
@@ -130,17 +130,17 @@ Rồng con **Ora** là linh vật và là người bạn đồng hành AI xuyên
 
 ## 8. Quy chuẩn Sidebar & Điều hướng (Sidebar & Navigation Rules)
 
-Để đồng bộ phong cách điều hướng cao cấp:
-- **Logo của ứng dụng**: Luôn sử dụng `<ImageLogoWeb variant="big" />` cho các sidebar/header lớn, hoặc `<ImageLogoWeb variant="small" />` nếu chỉ cần hiện icon. Không sử dụng text chay hay emoji để hiển thị logo. Component đã được bo khung viền 2px (`border-2 bg-primary/10 border-primary/20 rounded-xl`) và có text chuẩn.
+Để đồng bộ phong cách điều hướng tinh tế:
+- **Logo của ứng dụng**: Luôn sử dụng `<ImageLogoWeb variant="big" />` cho các sidebar/header lớn, hoặc `<ImageLogoWeb variant="small" />` nếu chỉ cần hiện icon. Không sử dụng text chay hay emoji để hiển thị logo. Component đã được bo khung viền (`border bg-primary/10 border-primary/20 rounded-lg`) và có text chuẩn.
 - **Nút điều hướng đang hoạt động (Active Item)**:
-  - Phải có viền `border-2 border-primary/20` và nền `bg-primary/5`.
-  - Có bóng đổ phẳng tactile nhẹ dưới chân: `shadow-[0_4px_0_0_rgba(99,102,241,0.1)]`.
-  - Có hiệu ứng nhấc nhẹ lên: `translate-y-[-2px]`.
+  - Phải có viền `border border-primary/20` và nền `bg-primary/5`.
+  - Có bóng đổ phẳng nhẹ dưới chân: `shadow-[0_2px_0_0_rgba(99,102,241,0.1)]`.
+  - Có hiệu ứng nhấc nhẹ lên: `translate-y-[-1px]`.
 - **Nút điều hướng thông thường (Inactive Item)**:
-  - Có viền ẩn `border-2 border-transparent` để tránh hiện tượng nhấp nháy hoặc dịch chuyển bố cục khi chuyển trạng thái active.
+  - Có viền ẩn `border border-transparent` để tránh hiện tượng nhấp nháy hoặc dịch chuyển bố cục khi chuyển trạng thái active.
   - Hover chuyển màu nền mờ nhạt: `hover:bg-muted/40 hover:text-foreground`.
 - **Điều hướng Mobile (Mobile Bottom Nav)**:
-  - Sử dụng class `.glass` làm nền kính mờ mượt mà và viền trên dày 2px (`border-t-2 border-border/80`).
+  - Sử dụng class `.glass` làm nền kính mờ mượt mà và viền trên 1px (`border-t border-border/80`).
   - Active item trên mobile có bóng đổ nhẹ và nền nổi bật `bg-primary/10 border border-primary/20`.
 
 ---
