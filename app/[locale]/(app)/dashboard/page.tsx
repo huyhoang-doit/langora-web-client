@@ -23,16 +23,30 @@ import {
   Rocket,
   RefreshCw,
   Lock,
-  BarChart2
+  BarChart2,
+  User,
+  LogOut
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import ImageLogoWeb from "@/components/image-logo-web";
+import { ImageLogoWeb } from "@/components/image-logo-web";
+import { useAuthStore } from "@/stores/auth.store";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useRouter } from "@/i18n/navigation";
+import { useState } from "react";
+import { CustomizeAlert } from "@/components/customize/customize-alert";
+import { toast } from "sonner";
 
 export default function DashboardPage() {
   const t = useTranslations();
@@ -42,9 +56,15 @@ export default function DashboardPage() {
     { label: t("stats.writing_band"), value: "8.5", icon: PenLine, color: "text-pink-500" },
     { label: t("stats.study_time"), value: "12h 30m", icon: Timer, color: "text-cyan-500" },
   ];
+  const { user, clearAuth } = useAuthStore();
+  const userName = user?.displayName || user?.fullName || "Student";
+  const userInitials = userName.substring(0, 2).toUpperCase();
+  const router = useRouter();
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
   return (
-    <div className="flex flex-col h-full overflow-hidden bg-background font-sans" id="langora-dashboard">
+    <>
+      <div className="flex flex-col h-full overflow-hidden bg-background font-sans" id="langora-dashboard">
       {/* Top Bar */}
       <header className="flex justify-between items-center w-full px-8 h-20 bg-background/80 backdrop-blur-xl border-b-2 border-border sticky top-0 z-30 flex-shrink-0">
         <div className="flex items-center gap-6">
@@ -64,15 +84,38 @@ export default function DashboardPage() {
               <BookMarked className="w-5 h-5" />
             </Button>
           </div>
-          <div className="flex items-center gap-3 cursor-pointer group">
-            <div className="text-right hidden sm:block">
-              <p className="text-sm font-bold group-hover:text-primary transition-colors">Hoang</p>
-              <p className="text-[9px] text-primary font-bold uppercase tracking-widest">Pro Member</p>
-            </div>
-            <Avatar className="h-10 w-10 border-2 border-border group-hover:border-primary transition-all">
-              <AvatarFallback className="bg-muted text-foreground font-bold">H</AvatarFallback>
-            </Avatar>
-          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div className="flex items-center gap-3 cursor-pointer group">
+                <div className="text-right hidden sm:block">
+                  <p className="text-sm font-bold group-hover:text-primary transition-colors">{userName}</p>
+                  <p className="text-[9px] text-primary font-bold uppercase tracking-widest">
+                    {user?.roles?.includes("PRO") ? "Pro Member" : "Free Member"}
+                  </p>
+                </div>
+                <Avatar className="h-10 w-10 border-2 border-border group-hover:border-primary transition-all">
+                  <AvatarImage src={user?.avatarUrl} alt={userName} className="object-cover" />
+                  <AvatarFallback className="bg-muted text-foreground font-bold">{userInitials}</AvatarFallback>
+                </Avatar>
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48 mt-2 rounded-xl border-2 border-border shadow-md font-sans">
+              <DropdownMenuItem asChild className="cursor-pointer font-bold focus:bg-primary/10 focus:text-primary">
+                <Link href="/profile" className="flex items-center">
+                  <User className="w-4 h-4 mr-2" />
+                  <span>Profile</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator className="bg-border/60" />
+              <DropdownMenuItem 
+                onSelect={() => setLogoutOpen(true)}
+                className="cursor-pointer font-bold text-destructive focus:bg-destructive/10 focus:text-destructive"
+              >
+                <LogOut className="w-4 h-4 mr-2" />
+                <span>Logout</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </header>
 
@@ -88,7 +131,7 @@ export default function DashboardPage() {
                   <Sparkles className="w-3 h-3" /> Learning Path Active
                 </div>
                 <h1 className="text-3xl md:text-4xl font-black text-foreground tracking-tight">
-                  Welcome back, <span className="text-indigo-500">Hoang</span>!
+                  Welcome back, <span className="text-indigo-500">{userName}</span>!
                 </h1>
                 <p className="text-muted-foreground text-sm max-w-xl leading-relaxed">
                   Ora has optimized your modules for today. You are <span className="text-indigo-500 font-bold">85%</span> of the way to completing your daily milestone. Continue now to secure your streak!
@@ -351,5 +394,35 @@ export default function DashboardPage() {
         </div>
       </div>
     </div>
+
+    <CustomizeAlert
+        open={logoutOpen}
+        onOpenChange={setLogoutOpen}
+        variant="destructive"
+        title={t("common.logout_confirm_title")}
+        description={t("common.logout_confirm_desc")}
+        confirmLabel={t("common.logout")}
+        cancelLabel={t("common.cancel")}
+        onConfirm={async () => {
+          try {
+            // await AuthService.logout(); 
+          } catch (e) {
+            console.error(e);
+          } finally {
+            clearAuth();
+            if (typeof window !== "undefined") {
+              localStorage.removeItem("access_token");
+              localStorage.removeItem("refresh_token");
+            }
+            toast.success("Logged out successfully", {
+              description: "See you next time!",
+            });
+            setLogoutOpen(false);
+            router.push("/login");
+          }
+        }}
+        showOra={true}
+      />
+    </>
   );
 }

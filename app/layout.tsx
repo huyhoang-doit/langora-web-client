@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
 
 export const metadata: Metadata = {
   title: "Langora | Master Languages Smarter with AI",
@@ -12,5 +14,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ''}>
+      {children}
+    </GoogleOAuthProvider>
+  );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { useAuthStore } from "@/stores/auth.store";
 import { UserService } from "@/services/user.service";
@@ -9,6 +9,11 @@ import { Loader2 } from "lucide-react";
 export function AuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { isInitialized, isAuthenticated, setAuth, setInitialized, clearAuth } = useAuthStore();
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -54,6 +59,11 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
       isMounted = false;
     };
   }, [isInitialized, isAuthenticated, router, setAuth, clearAuth]);
+
+  // Tránh hydration mismatch
+  if (!isHydrated) {
+    return null;
+  }
 
   // Trong lúc chờ gọi API kiểm tra token, hiển thị màn hình loading
   if (!isInitialized) {

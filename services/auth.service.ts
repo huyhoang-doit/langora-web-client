@@ -1,10 +1,12 @@
 import axiosInstance, { clearTokens, setTokens } from '@/config/axios';
 import { ApiResponse } from '@/types/api';
+import { LoginHistory } from '@/types/user';
 import {
   AuthResponse,
   EmailVerificationPayload,
   ForgotPasswordPayload,
   LoginPayload,
+  GoogleLoginPayload,
   RefreshTokenPayload,
   RegisterPayload,
   ResetPasswordPayload,
@@ -13,6 +15,15 @@ import {
 export const AuthService = {
   login: async (payload: LoginPayload): Promise<ApiResponse<AuthResponse>> => {
     const response = await axiosInstance.post('/auth/login', payload);
+    const data = response as unknown as ApiResponse<AuthResponse>;
+    if (data.success && data.data && data.data.accessToken) {
+      setTokens(data.data.accessToken, data.data.refreshToken);
+    }
+    return data;
+  },
+
+  googleLogin: async (payload: GoogleLoginPayload): Promise<ApiResponse<AuthResponse>> => {
+    const response = await axiosInstance.post('/auth/google', payload);
     const data = response as unknown as ApiResponse<AuthResponse>;
     if (data.success && data.data && data.data.accessToken) {
       setTokens(data.data.accessToken, data.data.refreshToken);
@@ -49,5 +60,9 @@ export const AuthService = {
     const response = await axiosInstance.post('/auth/logout');
     clearTokens();
     return response as unknown as ApiResponse<null>;
+  },
+
+  getLoginHistories: async (): Promise<ApiResponse<LoginHistory[]>> => {
+    return axiosInstance.get('/login-histories/me') as unknown as Promise<ApiResponse<LoginHistory[]>>;
   },
 };

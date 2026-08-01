@@ -15,6 +15,8 @@ import { ImageLogoWeb } from "@/components/image-logo-web";
 import { AuthService } from "@/services/auth.service";
 import { UserService } from "@/services/user.service";
 import { useAuthStore } from "@/stores/auth.store";
+import { useLearningStore } from "@/stores/learning.store";
+import { useGoogleLogin } from '@react-oauth/google';
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,18 +29,70 @@ export default function LoginPage() {
 
   const t = useTranslations();
 
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: async (credentialResponse: any) => {
+      try {
+        setLoading(true);
+        // credentialResponse may contain access_token instead of credential depending on the flow
+        const token = credentialResponse.credential || credentialResponse.access_token;
+        const res = await AuthService.googleLogin({
+          idToken: token
+        });
+        
+        if (res.success && res.data?.accessToken) {
+          const profileRes = await UserService.getProfile();
+          if (profileRes.data) {
+            setAuth(profileRes.data);
+
+            try {
+              const lpRes = await UserService.getLearningProfile();
+              if (lpRes.data) {
+                useLearningStore.getState().setProfile(lpRes.data);
+              }
+            } catch (lpErr) {
+              console.log("No learning profile found, will require onboarding");
+            }
+
+            toast.success(t("auth.login_success"));
+            router.push("/dashboard");
+          }
+        }
+      } catch (err: any) {
+        toast.error(err.message || t("auth.login_error"));
+        console.error("Google login failed", err);
+      } finally {
+        setLoading(false);
+      }
+    },
+    onError: () => {
+      toast.error(t("auth.login_error"));
+      console.log("Login Failed");
+    },
+  });
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       setLoading(true);
       const res = await AuthService.login({ email, password });
-      
+
       // Theo cấu trúc API response chuẩn, res sẽ có field success (hoặc res.data)
       // Tùy theo logic API thực tế, giả định Interceptor trả về data chuẩn
       if (res.success && res.data?.accessToken) {
         const profileRes = await UserService.getProfile();
         if (profileRes.data) {
           setAuth(profileRes.data);
+
+          // Fetch and store learning profile
+          try {
+            const lpRes = await UserService.getLearningProfile();
+            if (lpRes.data) {
+              useLearningStore.getState().setProfile(lpRes.data);
+            }
+          } catch (e) {
+            console.error("Could not fetch learning profile during login", e);
+          }
+
           toast.success(res.message || "Login Successful");
           router.push("/dashboard");
         } else {
@@ -133,11 +187,13 @@ export default function LoginPage() {
           <div className="space-y-6">
             {/* Social Logins */}
             <div className="grid grid-cols-2 gap-3">
-              <Button variant="outline" className="btn-edu h-12 flex items-center justify-center gap-2 border-2 text-sm">
+              <Button variant="outline" className="btn-edu h-12 flex items-center justify-center gap-2 border-2 text-sm"
+                onClick={() => loginWithGoogle()}
+              >
                 <img src="/icons/google.svg" alt="Google" className="w-5 h-5" />
                 Google
               </Button>
-              <Button variant="outline" className="btn-edu h-12 flex items-center justify-center gap-2 border-2 text-sm">
+              <Button variant="outline" className="btn-edu h-12 flex items-center justify-center gap-2 border-2 text-sm" disabled>
                 <img src="/icons/github.svg" alt="GitHub" className="w-5 h-5 dark:invert" />
                 GitHub
               </Button>

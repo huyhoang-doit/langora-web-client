@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { useAuthStore } from "@/stores/auth.store";
 import { UserService } from "@/services/user.service";
@@ -9,6 +9,11 @@ import { Loader2 } from "lucide-react";
 export function GuestGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { isInitialized, isAuthenticated, setAuth, setInitialized, clearAuth } = useAuthStore();
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -49,8 +54,13 @@ export function GuestGuard({ children }: { children: React.ReactNode }) {
     };
   }, [isInitialized, isAuthenticated, router, setAuth, clearAuth]);
 
+  // Tránh hydration mismatch
+  if (!isHydrated) {
+    return null;
+  }
+
   // Nếu chưa khởi tạo mà có token trong localStorage thì đợi (tránh load giao diện login)
-  const token = typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
+  const token = localStorage.getItem("access_token");
   if (!isInitialized && token) {
     return (
       <div className="flex h-screen w-full items-center justify-center bg-background">
