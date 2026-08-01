@@ -153,7 +153,7 @@ export function CustomizeAlert({
                   {icon ?? <Icon className={cn("w-5 h-5", config.iconColor)} />}
                 </div>
                 {showOra && (
-                  <ImageLogoWeb variant="mascot" className="animate-bounce w-6 h-6" />
+                  <ImageLogoWeb variant="big" className="w-7 h-7" />
                 )}
               </div>
 
