@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "@/i18n/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
+import { useAuthStore } from "@/stores/auth.store";
 import { ThemeToggle } from "./theme-toggle";
 import { LogOut } from "lucide-react";
 import { sidebarNavItems, sidebarBottomItems } from "@/config/sidebar-items";
@@ -17,6 +18,8 @@ export function AppSidebar() {
   const pathname = usePathname();
   const t = useTranslations();
   const [logoutOpen, setLogoutOpen] = useState(false);
+  const { clearAuth } = useAuthStore();
+  const router = useRouter();
 
   return (
     <>
@@ -39,7 +42,7 @@ export function AppSidebar() {
 
         {/* Navigation */}
         <nav className="flex-grow flex flex-col gap-2">
-          {sidebarNavItems.map(({ href, icon: Icon, label, i18nKey }) => {
+          {sidebarNavItems.filter(item => !item.hide).map(({ href, icon: Icon, label, i18nKey }) => {
             const isActive = pathname === href || pathname.startsWith(href + "/");
             const displayLabel = i18nKey ? t(label) : label;
             return (
@@ -63,7 +66,7 @@ export function AppSidebar() {
 
         {/* Bottom section */}
         <div className="mt-auto flex flex-col gap-2 border-t-2 border-border/60 pt-4 flex-shrink-0">
-          {sidebarBottomItems.map(({ href, icon: Icon, label, i18nKey }) => {
+          {sidebarBottomItems.filter(item => !item.hide).map(({ href, icon: Icon, label, i18nKey }) => {
             const isActive = pathname === href || pathname.startsWith(href + "/");
             const displayLabel = i18nKey ? t(label) : label;
             return (
@@ -103,12 +106,24 @@ export function AppSidebar() {
         description={t("common.logout_confirm_desc")}
         confirmLabel={t("common.logout")}
         cancelLabel={t("common.cancel")}
-        onConfirm={() => {
-          // TODO: gọi logout API / clear session
-          toast.error("Logged out successfully", {
-            description: "See you next time!",
-          });
-          setLogoutOpen(false);
+        onConfirm={async () => {
+          try {
+            // Call API if needed (optional since we rely on token)
+            // await AuthService.logout(); 
+          } catch (e) {
+            console.error(e);
+          } finally {
+            clearAuth();
+            if (typeof window !== "undefined") {
+              localStorage.removeItem("access_token");
+              localStorage.removeItem("refresh_token");
+            }
+            toast.success("Logged out successfully", {
+              description: "See you next time!",
+            });
+            setLogoutOpen(false);
+            router.push("/login");
+          }
         }}
         showOra={true}
       />
@@ -120,11 +135,11 @@ export function MobileBottomNav() {
   const pathname = usePathname();
 
   const mobileItems = [
-    { href: "/dashboard", label: "Home" },
-    { href: "/learn", label: "Learn" },
-    { href: "/vocabulary", label: "Vocab" },
-    { href: "/ora", label: "Ora" },
-    { href: "/profile", label: "Profile" },
+    { href: "/dashboard", label: "Home", hide: false },
+    { href: "/learn", label: "Learn", hide: true },
+    { href: "/vocabulary", label: "Vocab", hide: true },
+    { href: "/ora", label: "Ora", hide: true },
+    { href: "/profile", label: "Profile", hide: false },
   ];
 
   const getEmoji = (label: string) => {
@@ -140,7 +155,7 @@ export function MobileBottomNav() {
 
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 glass bg-background/85 border-t-2 border-border/80 h-16 flex items-center justify-around px-2">
-      {mobileItems.map(({ href, label }) => {
+      {mobileItems.filter(item => !item.hide).map(({ href, label }) => {
         const isActive = pathname === href || pathname.startsWith(href + "/");
         return (
           <Link
