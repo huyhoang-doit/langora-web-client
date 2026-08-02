@@ -51,7 +51,7 @@ export default function LandingPage() {
               {t("landing.hero_description")}
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link href="/onboarding/welcome">
+              <Link href="/register">
                 <Button size="lg" className="btn-edu h-14 px-8 text-base border-2 bg-primary text-primary-foreground hover:bg-primary/90">
                   {t("landing.cta_primary")}
                 </Button>

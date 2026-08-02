@@ -12,7 +12,7 @@ export default function OnboardingSelectLanguagePage() {
 
   const languages = [
     { code: "english", label: t("language.en_label"), native: t("language.en_native"), desc: t("language.en_desc"), flag: "🇬🇧" },
-    { code: "japanese", label: t("language.ja_label"), native: t("language.ja_native"), desc: t("language.ja_desc"), flag: "🇯🇵" },
+    { code: "japanese", label: t("language.ja_label"), native: t("language.ja_native"), desc: t("language.ja_desc"), flag: "🇯🇵", soon: true },
     { code: "chinese", label: t("language.zh_label"), native: t("language.zh_native"), desc: t("language.zh_desc"), flag: "🇨🇳", soon: true },
   ];
 
@@ -53,7 +53,7 @@ export default function OnboardingSelectLanguagePage() {
                       </span>
                     )}
                   </span>
-                  <span className="text-xs text-muted-foreground mt-0.5 block font-medium leading-relaxed text-learning">{desc}</span>
+                  {/* <span className="text-xs text-muted-foreground mt-0.5 block font-medium leading-relaxed text-learning">{desc}</span> */}
                 </div>
               </div>
               <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0 ml-2" />
@@ -67,7 +67,7 @@ export default function OnboardingSelectLanguagePage() {
               <ArrowLeft className="w-4 h-4 mr-1.5" /> {t("language.back")}
             </Button>
           </Link>
-          <Link href="/onboarding/learning-goal" className="flex-1">
+          <Link href="/onboarding/current-level" className="flex-1">
             <Button className="btn-edu w-full py-6 border-2 bg-primary text-primary-foreground hover:bg-primary/90">
               {t("language.continue")}
             </Button>

@@ -5,12 +5,16 @@ export interface LoginPayload {
 
 export interface GoogleLoginPayload {
   idToken: string;
+  targetLanguageId?: string;
+  currentLevelId?: string;
 }
 
 export interface RegisterPayload {
   email: string;
   password?: string;
   fullName: string;
+  targetLanguageId?: string;
+  currentLevelId?: string;
 }
 
 export interface AuthResponse {
