@@ -25,15 +25,11 @@ export default function OnboardingResultPage() {
 
         {/* Ora Celebrate */}
         <div className="flex justify-center items-end gap-2 mb-4">
-          <PartyPopper className="w-8 h-8 text-amber-500 animate-bounce" style={{ animationDelay: "0.1s" }} />
-          <ImageLogoWeb variant="mascot" className="w-16 h-16" />
-          <PartyPopper className="w-8 h-8 text-amber-500 animate-bounce" style={{ animationDelay: "0.2s" }} />
+          <ImageLogoWeb variant="big" className="" />
         </div>
 
         <header className="mb-6">
-          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-primary/20 shadow-[0_4px_0_0_rgba(99,102,241,0.25)]">
-            <BrainCircuit className="w-8 h-8 text-primary" />
-          </div>
+
           <span className="text-[10px] font-black text-primary uppercase tracking-widest block mb-2">
             {t("result.complete")}
           </span>
