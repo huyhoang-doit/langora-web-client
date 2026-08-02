@@ -22,7 +22,9 @@ export default function OnboardingWelcomePage() {
 
       <div className="w-full max-w-[500px] card-edu bg-card p-8 md:p-10 shadow-sm relative z-10 text-center">
         <header className="mb-8 flex flex-col items-center justify-center">
-          <ImageLogoWeb variant="big" className="flex-shrink-0 mb-4 mx-auto" />
+          <Link href="/" className="inline-block mb-4 hover:opacity-80 transition-opacity">
+            <ImageLogoWeb variant="big" textClassName="text-xl" />
+          </Link>
           <div className="inline-flex items-center gap-2 bg-primary/10 border-2 border-primary/20 px-4 py-1.5 rounded-full mb-6 mx-auto">
             <Sparkles className="w-3.5 h-3.5 text-primary" />
             <span className="text-xs font-black uppercase tracking-widest text-primary text-heading">{t("welcome.step")}</span>
