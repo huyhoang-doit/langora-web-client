@@ -102,7 +102,7 @@ export function CustomizeAlert({
   cancelLabel = "Cancel",
   onConfirm,
   onCancel,
-  showOra = false,
+  showOra = true,
   icon,
   className,
 }: CustomizeAlertProps) {
@@ -144,14 +144,14 @@ export function CustomizeAlert({
             <AlertDialogHeader className="flex-row items-start gap-4 text-left space-y-0">
               {/* Icon + optional Ora */}
               <div className="flex items-center gap-2 flex-shrink-0">
-                <div
+                {/* <div
                   className={cn(
                     "w-10 h-10 rounded-xl border-2 flex items-center justify-center flex-shrink-0",
                     config.iconBg
                   )}
                 >
                   {icon ?? <Icon className={cn("w-5 h-5", config.iconColor)} />}
-                </div>
+                </div> */}
                 {showOra && (
                   <ImageLogoWeb variant="big" className="w-7 h-7" />
                 )}

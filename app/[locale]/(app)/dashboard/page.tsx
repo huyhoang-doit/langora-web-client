@@ -421,7 +421,7 @@ export default function DashboardPage() {
             router.push("/login");
           }
         }}
-        showOra={false}
+        showOra={true}
       />
     </>
   );

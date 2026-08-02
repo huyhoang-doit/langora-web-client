@@ -2,10 +2,11 @@ export interface Language {
   id: string;
   code: string;
   name: string;
+  nativeName: string;
   flagIconUrl?: string;
-  description?: string;
   isActive: boolean;
   displayOrder: number;
+  status: string; // ACTIVE - INACTIVE
 }
 
 export interface Level {
