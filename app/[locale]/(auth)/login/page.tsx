@@ -38,7 +38,7 @@ export default function LoginPage() {
         const res = await AuthService.googleLogin({
           idToken: token
         });
-        
+
         if (res.success && res.data?.accessToken) {
           const profileRes = await UserService.getProfile();
           if (profileRes.data) {
@@ -241,15 +241,12 @@ export default function LoginPage() {
                     className="w-full bg-muted/30 border-2 border-border rounded-xl px-4 py-6 text-foreground placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-primary pr-12 font-medium"
                     required
                   />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
+                  <div
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground hover:bg-transparent"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground px-2 cursor-pointer hover:text-foreground hover:bg-transparent"
                   >
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                  </Button>
+                  </div>
                 </div>
               </div>
 
