@@ -53,7 +53,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <body className="min-h-screen bg-background text-foreground antialiased">
+      <body className="min-h-screen bg-background text-foreground antialiased" suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
