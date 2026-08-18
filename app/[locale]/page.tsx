@@ -62,12 +62,12 @@ export default function LandingPage() {
                 </Button>
               </Link>
             </div>
-            <Link
+            {/* <Link
               href="/onboarding/welcome"
               className="inline-flex items-center gap-1.5 mt-4 text-xs text-muted-foreground hover:text-primary transition-colors font-semibold group"
             >
               <span>{t("landing.try_onboarding")}</span>
-            </Link>
+            </Link> */}
           </div>
 
           {/* Right: Dashboard Mockup */}
@@ -359,7 +359,7 @@ export default function LandingPage() {
             <p className="text-muted-foreground mb-8 leading-relaxed relative z-10 font-medium">
               {t("landing.cta_description")}
             </p>
-            <Link href="/onboarding/welcome" className="relative z-10 inline-block">
+            <Link href="/register" className="relative z-10 inline-block">
               <Button size="lg" className="btn-edu px-10 h-14 text-base border-2 bg-primary text-primary-foreground hover:bg-primary/90">
                 {t("landing.cta_button")}
                 <ChevronRight className="w-4 h-4 ml-1.5" />

@@ -88,20 +88,52 @@ export interface WritingSession {
 }
 
 export interface SentenceAnswerRequest {
+  // Bắt buộc
   sentenceId: string;
   userAnswer: string;
+  // Context câu — lấy từ WritingExerciseSentenceResponse
+  sourceText?: string;
+  targetText?: string;
+  vocabularyHints?: string[];
+  grammarHints?: string[];
+  difficultyScore?: number;
+  // Tùy chọn
   timeSpentSeconds?: number;
 }
 
+export interface CorrectionItem {
+  word: string;
+  correction: string;
+  explanation: string;
+}
+
 export interface WritingAiFeedback {
+  // Identity
   id: string;
   sessionId: string;
   sentenceId: string;
-  overallFeedback: string;
-  grammarFeedback: string;
-  vocabularyFeedback: string;
-  fluencyFeedback: string;
-  corrections?: any; // JSON
+  // Context câu
+  originalSentence: string | null;
+  userAnswer: string | null;
+  // Điểm số (0.0 – 10.0)
+  aiScore: number | null;
+  grammarScore: number | null;
+  vocabularyScore: number | null;
+  fluencyScore: number | null;
+  accuracyScore: number | null;
+  // Feedback text
+  overallFeedback: string | null;
+  grammarFeedback: string | null;
+  vocabularyFeedback: string | null;
+  fluencyFeedback: string | null;
+  // Gợi ý cải thiện
+  suggestedAnswer: string | null;
+  corrections: CorrectionItem[];
+  // Meta
+  aiProvider: string | null;
+  aiModel: string | null;
+  processingTimeMs: number | null;
+  createdAt: string | null;
 }
 
 export interface WritingAchievement {
