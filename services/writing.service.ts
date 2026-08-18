@@ -2,7 +2,7 @@ import axiosInstance from '@/config/axios';
 import { ApiResponse } from '@/types/api';
 import {
   WritingTopic, WritingContentType, WritingExercise, WritingSession,
-  SentenceAnswerRequest, WritingAiFeedback, WritingAchievement
+  SentenceAnswerRequest, WritingAiFeedback, WritingAchievement, CorrectionItem
 } from '@/types/writing';
 
 export const writingService = {
