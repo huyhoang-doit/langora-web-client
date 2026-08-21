@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Save, Globe, Target, GraduationCap } from "lucide-react";
+import { Save, Globe, Target, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState, useEffect } from "react";
@@ -12,6 +12,7 @@ import { Language, Level } from "@/types/learning";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useLearningStore } from "@/stores/learning.store";
+import { ProfileSubpageHeader } from "@/components/profile/profile-subpage-header";
 
 export default function LearningPreferencesPage() {
   const router = useRouter();
@@ -102,18 +103,10 @@ export default function LearningPreferencesPage() {
 
   return (
     <div className="flex flex-col h-full overflow-hidden bg-background" id="learning-preferences-page">
-      {/* Header */}
-      <header className="flex items-center gap-4 px-6 h-16 bg-background/80 backdrop-blur-xl border-b-2 border-border/60 sticky top-0 z-30 flex-shrink-0">
-        <Link href="/profile">
-          <Button variant="ghost" size="icon" className="btn-edu w-9 h-9 border-2 border-border bg-transparent text-foreground hover:bg-muted flex items-center justify-center">
-            <ArrowLeft className="w-4 h-4" />
-          </Button>
-        </Link>
-        <div>
-          <h2 className="text-xl font-black text-foreground text-heading">Learning Preferences</h2>
-          <p className="text-xs text-muted-foreground font-semibold">Adjust target languages and daily study goals</p>
-        </div>
-      </header>
+      <ProfileSubpageHeader
+        title="Learning Preferences"
+        subtitle="Adjust target languages and daily study goals"
+      />
 
       {/* Content */}
       <div className="flex-grow overflow-y-auto p-6 scrollbar-thin">

@@ -43,7 +43,7 @@ export function TopicSelector({ topics, activeTopic, onSelect }: TopicSelectorPr
           <Button 
             variant="outline" 
             size="icon" 
-            className="w-8 h-8 rounded-full shadow-md bg-background border-2 pointer-events-auto -ml-2 text-foreground hover:bg-muted"
+            className="w-8 h-8 rounded-full shadow-sm bg-background pointer-events-auto -ml-2 text-foreground hover:bg-muted"
             onClick={() => scroll('left')}
           >
             <ChevronLeft className="w-4 h-4" />
@@ -57,7 +57,7 @@ export function TopicSelector({ topics, activeTopic, onSelect }: TopicSelectorPr
           <Button 
             variant="outline" 
             size="icon" 
-            className="w-8 h-8 rounded-full shadow-md bg-background border-2 pointer-events-auto -mr-2 text-foreground hover:bg-muted"
+            className="w-8 h-8 rounded-full shadow-sm bg-background pointer-events-auto -mr-2 text-foreground hover:bg-muted"
             onClick={() => scroll('right')}
           >
             <ChevronRight className="w-4 h-4" />
@@ -74,11 +74,11 @@ export function TopicSelector({ topics, activeTopic, onSelect }: TopicSelectorPr
           {topics.map(topic => (
             <button
               key={topic.id}
-              className={`group relative flex items-center gap-3 px-6 py-3.5 rounded-full border-2 text-left transition-all snap-start ${
+              className={`group relative flex items-center gap-3 px-5 py-3 text-left snap-start card-edu card-edu-interactive flex-shrink-0 min-w-32 !rounded-full ${
                 activeTopic === topic.id 
-                  ? "border-emerald-500 bg-emerald-500/10 shadow-[0_4px_0_0_rgba(16,185,129,0.2)] text-emerald-700 dark:text-emerald-400 translate-y-[-2px]" 
-                  : "border-border bg-card shadow-[0_2px_0_0_rgba(0,0,0,0.02)] hover:border-emerald-500/40 hover:bg-emerald-500/5 hover:translate-y-[-1px] text-foreground"
-              } flex-shrink-0 min-w-32`}
+                  ? "border-emerald-500 bg-emerald-500/10 shadow-sm text-emerald-700 dark:text-emerald-400" 
+                  : "hover:border-emerald-500/40 hover:bg-emerald-500/5 text-foreground"
+              }`}
               onClick={() => onSelect(topic.id)}
             >
               <span className="font-bold text-sm whitespace-nowrap">{topic.name}</span>

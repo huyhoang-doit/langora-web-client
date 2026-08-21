@@ -278,7 +278,7 @@ export default function WritingSessionPage() {
       <header className="flex justify-between items-center px-4 h-14 bg-background/80 backdrop-blur-xl border-b border-border flex-shrink-0">
         <div className="flex items-center gap-3">
           <Link href={`/writing/${exercise?.id}`}>
-            <Button variant="edu-outline" size="icon">
+            <Button size="icon" variant="outline" className="btn-edu border bg-transparent text-foreground hover:bg-muted w-9 h-9">
               <ArrowLeft className="w-3.5 h-3.5" />
             </Button>
           </Link>
@@ -364,7 +364,7 @@ export default function WritingSessionPage() {
                 {!showFeedback && (
                   <div className="flex justify-end gap-2.5 mt-3 relative">
                     {showFullSuggest && (
-                      <div className="absolute bottom-full mb-3 right-0 w-80 bg-background text-foreground border-2 border-primary ring-4 ring-primary/20 rounded-xl p-4 z-50 animate-in fade-in zoom-in-95">
+                      <div className="absolute bottom-full mb-3 right-0 w-80 bg-background text-foreground border border-primary ring-2 ring-primary/20 card-edu p-4 z-50 animate-in fade-in zoom-in-95">
                         <div className="space-y-4">
                           <div>
                             <h4 className="text-xs font-bold uppercase tracking-wider text-primary mb-2 flex items-center gap-1.5 text-heading"><BookOpen className="w-3.5 h-3.5" /> Vocabulary Hints</h4>
@@ -384,18 +384,17 @@ export default function WritingSessionPage() {
                       </div>
                     )}
                     <Button
-                      variant={showFullSuggest ? "edu" : "edu-outline"}
-                      size="edu-sm"
+                      size="sm"
                       onClick={() => setShowFullSuggest(!showFullSuggest)}
-                      className={showFullSuggest ? "bg-primary/10 border-primary text-primary" : ""}
+                      className={`btn-edu ${showFullSuggest ? "bg-primary/10 border-primary text-primary" : "border bg-transparent text-foreground hover:bg-muted"}`}
                     >
                       <Sparkles className="w-3.5 h-3.5 fill-current" /> Gợi ý
                     </Button>
                     <Button
+                      size="sm"
                       onClick={handleSubmit}
                       disabled={isSubmitting}
-                      variant="edu"
-                      size="edu-sm"
+                      className="btn-edu bg-primary text-primary-foreground hover:bg-primary/90"
                     >
                       {isSubmitting ? <span className="animate-pulse">Analyzing...</span> : <>Submit to AI <Zap className="w-3.5 h-3.5 fill-current" /></>}
                     </Button>
@@ -428,7 +427,7 @@ export default function WritingSessionPage() {
                     {/* Sentence Action & Feedback */}
                     <div className="flex flex-col gap-1.5 relative">
                       {showSentenceSuggest[s.id] && (s.vocabularyHints?.length > 0 || s.grammarHints?.length > 0) && (
-                        <div className="absolute bottom-full mb-3 right-0 w-72 bg-background text-foreground border-2 border-primary ring-4 ring-primary/20 rounded-xl p-3 z-50 animate-in fade-in zoom-in-95">
+                        <div className="absolute bottom-full mb-3 right-0 w-72 bg-background text-foreground border border-primary ring-2 ring-primary/20 card-edu p-3 z-50 animate-in fade-in zoom-in-95">
                           <div className="space-y-3">
                             {s.vocabularyHints && s.vocabularyHints.length > 0 && (
                               <div>
@@ -454,18 +453,17 @@ export default function WritingSessionPage() {
 
                       <div className="flex justify-end gap-1.5">
                         <Button
-                          variant={showSentenceSuggest[s.id] ? "edu" : "edu-outline"}
-                          size="edu-sm"
+                          size="sm"
                           onClick={() => setShowSentenceSuggest(prev => ({ ...prev, [s.id]: !prev[s.id] }))}
-                          className={showSentenceSuggest[s.id] ? "bg-primary/10 border-primary text-primary" : ""}
+                          className={`btn-edu ${showSentenceSuggest[s.id] ? "bg-primary/10 border-primary text-primary" : "border bg-transparent text-foreground hover:bg-muted"}`}
                         >
                           <Sparkles className="w-3.5 h-3.5 fill-current" /> Gợi ý
                         </Button>
                         <Button
+                          size="sm"
                           onClick={() => handleSentenceSubmit(s.id)}
                           disabled={submittingSentences[s.id]}
-                          variant="edu"
-                          size="edu-sm"
+                          className="btn-edu bg-primary text-primary-foreground hover:bg-primary/90"
                         >
                           {submittingSentences[s.id] ? "Checking..." : <>Evaluate <Zap className="w-3.5 h-3.5 fill-current" /></>}
                         </Button>
