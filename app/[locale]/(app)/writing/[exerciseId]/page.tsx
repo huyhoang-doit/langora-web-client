@@ -164,15 +164,7 @@ export default function ExerciseDetailPage() {
                     </div>
                   </div>
                 )}
-                <div className="bg-muted/30 px-3 py-1.5 rounded-lg border border-border flex items-center gap-2">
-                  <div className="w-5 h-5 rounded-md bg-green-500/10 text-green-500 flex items-center justify-center">
-                    <FileText className="w-3 h-3" />
-                  </div>
-                  <div>
-                    <p className="text-[8px] uppercase font-bold text-muted-foreground tracking-wider">Mục tiêu từ</p>
-                    <p className="text-xs font-bold text-foreground">~ {exercise.wordCountTarget} từ</p>
-                  </div>
-                </div>
+
                 <div className="bg-muted/30 px-3 py-1.5 rounded-lg border border-border flex items-center gap-2">
                   <div className="w-5 h-5 rounded-md bg-orange-500/10 text-orange-500 flex items-center justify-center">
                     <Target className="w-3 h-3" />
