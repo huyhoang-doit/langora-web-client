@@ -124,13 +124,6 @@ export default function WritingHubPage() {
 
   return (
     <div className="flex flex-col h-full overflow-hidden bg-background" id="writing-hub-page">
-      {/* Header */}
-      <header className="flex justify-between items-center px-6 h-16 bg-background/80 backdrop-blur-xl border-b-2 border-border/60 sticky top-0 z-30 flex-shrink-0">
-        <div>
-          <h2 className="text-xl font-black text-foreground text-heading">Writing Practice</h2>
-          <p className="text-xs text-muted-foreground font-semibold">Select an exercise to start writing and get AI feedback</p>
-        </div>
-      </header>
 
       {/* Content */}
       <div className="flex-grow overflow-y-auto p-6 scrollbar-thin">
