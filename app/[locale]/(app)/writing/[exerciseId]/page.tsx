@@ -108,9 +108,9 @@ export default function ExerciseDetailPage() {
   return (
     <div className="flex flex-col h-full overflow-hidden bg-background" id="exercise-detail-page">
       {/* Header */}
-      <header className="flex items-center gap-3 px-4 md:px-6 h-14 bg-background/80 backdrop-blur-xl border-b border-border sticky top-0 z-30 flex-shrink-0">
+      <header className="flex items-center gap-3 px-4 md:px-5 h-14 bg-background/80 backdrop-blur-xl border-b border-border sticky top-0 z-30 flex-shrink-0">
         <Link href="/writing">
-          <Button variant="edu-outline" size="icon">
+          <Button size="icon" variant="outline" className="btn-edu border bg-transparent text-foreground hover:bg-muted w-9 h-9">
             <ArrowLeft className="w-3.5 h-3.5" />
           </Button>
         </Link>
@@ -121,11 +121,11 @@ export default function ExerciseDetailPage() {
       </header>
 
       {/* Content */}
-      <div className="flex-grow overflow-y-auto p-4 md:p-6 scrollbar-thin">
+      <div className="flex-grow overflow-y-auto p-4 md:p-5 scrollbar-thin">
         <div className="max-w-2xl mx-auto space-y-4 pt-1">
 
           {/* Main Info Card */}
-          <div className="card-edu p-4 md:p-5 bg-card relative overflow-hidden border border-border">
+          <div className="card-edu p-4 md:p-5 bg-card relative overflow-hidden">
             <div className="relative z-10 space-y-3">
               <div className="flex justify-between items-start gap-4">
                 <div>
@@ -179,7 +179,7 @@ export default function ExerciseDetailPage() {
           </div>
 
           {/* Ora Advice Card */}
-          <div className="card-edu p-3.5 bg-primary/5 border-primary/20 flex gap-3.5 items-center">
+          <div className="card-edu p-3.5 bg-primary/5 flex gap-3.5 items-center">
             <ImageLogoWeb variant="mascot" className="w-12 h-12 flex-shrink-0" />
             <div>
               <h4 className="text-xs font-bold text-heading text-primary flex items-center gap-1">
@@ -196,7 +196,7 @@ export default function ExerciseDetailPage() {
             <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5 text-heading">
               Đoạn tiếng Việt cần dịch
             </h3>
-            <div className="card-edu p-4 bg-card border border-border">
+            <div className="card-edu p-4 bg-card">
               <p className="text-xs md:text-sm font-medium text-foreground leading-relaxed whitespace-pre-wrap">
                 {exercise.sentences?.length ? exercise.sentences.map(s => s.sourceText).join("\n") : (exercise.content || exercise.scenario || "Không có văn bản gốc.")}
               </p>
@@ -208,9 +208,7 @@ export default function ExerciseDetailPage() {
             <Button
               onClick={handleStartSession}
               disabled={loading}
-              variant="edu"
-              size="edu"
-              className="w-full sm:w-auto"
+              className="btn-edu w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90"
             >
               <Play className="w-3.5 h-3.5 fill-current" />
               {loading ? "Đang chuẩn bị..." : "Bắt đầu viết ngay"}

@@ -215,14 +215,14 @@ export function OraChatPanel({ isOpen, onClose }: OraChatPanelProps) {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5">
             <span className="font-black text-sm text-heading text-foreground">
-              Ora
+              Ora (Demo UI)
             </span>
             <Sparkles className="w-3.5 h-3.5 text-primary flex-shrink-0" />
           </div>
           <div className="flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0 animate-pulse" />
             <span className="text-xs text-muted-foreground font-semibold text-heading truncate">
-              AI Language Companion
+              AI Language Companion (Demo)
             </span>
           </div>
         </div>
@@ -303,7 +303,7 @@ export function OraChatPanel({ isOpen, onClose }: OraChatPanelProps) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Ask Ora anything..."
+          placeholder="Ask Ora anything... (Demo with mock data)"
           disabled={isLoading}
           className="
             flex-1 text-sm bg-muted/50 border-2 border-border/40 rounded-xl

@@ -43,7 +43,7 @@ export function ContentTypeSelector({ contentTypes, activeContentType, onSelect 
           <Button
             variant="outline"
             size="icon"
-            className="w-8 h-8 rounded-full shadow-sm bg-background border-2 pointer-events-auto -ml-2 text-foreground hover:bg-muted"
+            className="w-8 h-8 rounded-full shadow-sm bg-background pointer-events-auto -ml-2 text-foreground hover:bg-muted"
             onClick={() => scroll('left')}
           >
             <ChevronLeft className="w-4 h-4" />
@@ -57,7 +57,7 @@ export function ContentTypeSelector({ contentTypes, activeContentType, onSelect 
           <Button
             variant="outline"
             size="icon"
-            className="w-8 h-8 rounded-full shadow-sm bg-background border-2 pointer-events-auto -mr-2 text-foreground hover:bg-muted"
+            className="w-8 h-8 rounded-full shadow-sm bg-background pointer-events-auto -mr-2 text-foreground hover:bg-muted"
             onClick={() => scroll('right')}
           >
             <ChevronRight className="w-4 h-4" />
@@ -74,10 +74,10 @@ export function ContentTypeSelector({ contentTypes, activeContentType, onSelect 
           {contentTypes.map(ct => (
             <button
               key={ct.id}
-              className={`group relative flex flex-col items-start justify-between gap-3 w-44 p-4 rounded-2xl border-2 text-left transition-all snap-start ${activeContentType === ct.id
-                ? "border-primary bg-primary/10 shadow-[0_4px_0_0_rgba(99,102,241,0.2)] translate-y-[-4px]"
-                : "border-border bg-card shadow-[0_4px_0_0_rgba(0,0,0,0.02)] hover:border-primary/40 hover:bg-primary/5 hover:translate-y-[-2px]"
-                } flex-shrink-0`}
+              className={`group relative flex flex-col items-start justify-between gap-3 w-44 p-4 text-left snap-start card-edu card-edu-interactive flex-shrink-0 ${activeContentType === ct.id
+                ? "border-primary bg-primary/10 shadow-sm"
+                : "hover:border-primary/40 hover:bg-primary/5"
+                }`}
               onClick={() => onSelect(ct.id)}
             >
               <div className="space-y-1 w-full mt-1">

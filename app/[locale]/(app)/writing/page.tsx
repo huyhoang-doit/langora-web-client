@@ -126,8 +126,8 @@ export default function WritingHubPage() {
     <div className="flex flex-col h-full overflow-hidden bg-background" id="writing-hub-page">
 
       {/* Content */}
-      <div className="flex-grow overflow-y-auto p-6 scrollbar-thin">
-        <div className="max-w-5xl mx-auto space-y-8">
+      <div className="flex-grow overflow-y-auto p-4 md:p-5 scrollbar-thin">
+        <div className="max-w-5xl mx-auto space-y-6">
 
           {masterLoading ? (
             <div className="space-y-6">
@@ -165,7 +165,7 @@ export default function WritingHubPage() {
           )}
 
           {/* Exercises Grid */}
-          <div className="space-y-4 pt-4 border-t-2 border-border/50">
+          <div className="space-y-4 pt-4 border-t border-border/50">
             <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
               <BookOpen className="w-4 h-4" /> Available Exercises
             </h3>
