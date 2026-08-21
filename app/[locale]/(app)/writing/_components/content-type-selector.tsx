@@ -43,7 +43,7 @@ export function ContentTypeSelector({ contentTypes, activeContentType, onSelect 
           <Button
             variant="outline"
             size="icon"
-            className="w-8 h-8 rounded-full shadow-md bg-background border-2 pointer-events-auto -ml-2 text-foreground hover:bg-muted"
+            className="w-8 h-8 rounded-full shadow-sm bg-background border-2 pointer-events-auto -ml-2 text-foreground hover:bg-muted"
             onClick={() => scroll('left')}
           >
             <ChevronLeft className="w-4 h-4" />
@@ -57,7 +57,7 @@ export function ContentTypeSelector({ contentTypes, activeContentType, onSelect 
           <Button
             variant="outline"
             size="icon"
-            className="w-8 h-8 rounded-full shadow-md bg-background border-2 pointer-events-auto -mr-2 text-foreground hover:bg-muted"
+            className="w-8 h-8 rounded-full shadow-sm bg-background border-2 pointer-events-auto -mr-2 text-foreground hover:bg-muted"
             onClick={() => scroll('right')}
           >
             <ChevronRight className="w-4 h-4" />

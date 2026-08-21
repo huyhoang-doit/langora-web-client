@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Bell, BookMarked, User, LogOut } from "lucide-react";
+import { Bell, BookMarked, User, LogOut, PanelLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuthStore } from "@/stores/auth.store";
+import { useSidebarStore } from "@/stores/sidebar.store";
 import { CustomizeAlert } from "@/components/customize/customize-alert";
 import { useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
@@ -31,6 +32,7 @@ import { toast } from "sonner";
 export function AppTopbar() {
   const t = useTranslations();
   const { user, clearAuth } = useAuthStore();
+  const { toggle: toggleSidebar } = useSidebarStore();
   const router = useRouter();
   const [logoutOpen, setLogoutOpen] = useState(false);
 
@@ -59,9 +61,17 @@ export function AppTopbar() {
 
   return (
     <>
-      <header className="flex justify-between items-center w-full px-6 md:px-8 h-16 md:h-20 bg-background/80 backdrop-blur-xl border-b-2 border-border sticky top-0 z-30 flex-shrink-0">
-        {/* Left: title area — each page's own h1/p sits here via CSS */}
+      <header className="flex justify-between items-center w-full px-4 md:px-6 h-16 md:h-20 bg-background/80 backdrop-blur-xl border-b-2 border-border sticky top-0 z-30 flex-shrink-0">
+        {/* Left: sidebar toggle + title */}
         <div className="flex items-center gap-3">
+          {/* Sidebar toggle — only visible on md+ where sidebar exists */}
+          <button
+            onClick={toggleSidebar}
+            aria-label="Toggle sidebar"
+            className="hidden md:flex w-8 h-8 rounded-lg border-2 border-border/50 items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200 cursor-pointer flex-shrink-0"
+          >
+            <PanelLeft className="w-4 h-4" />
+          </button>
           <div>
             <h2 className="text-lg md:text-xl font-black text-foreground tracking-tight text-heading">
               Langora Workspace
