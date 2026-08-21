@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Save, Loader2 } from "lucide-react";
+import { Save, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
@@ -10,6 +10,7 @@ import { UserService } from "@/services/user.service";
 import { toast } from "sonner";
 import { useRouter } from "@/i18n/navigation";
 import AvatarUpload from "@/components/customize/avatar-upload";
+import { ProfileSubpageHeader } from "@/components/profile/profile-subpage-header";
 
 export default function EditProfilePage() {
   const { user, setAuth } = useAuthStore();
@@ -67,23 +68,15 @@ export default function EditProfilePage() {
 
   return (
     <div className="flex flex-col h-full overflow-hidden bg-background" id="edit-profile-page">
-      {/* Header */}
-      <header className="flex items-center gap-4 px-6 h-16 bg-background/80 backdrop-blur-xl border-b-2 border-border/60 sticky top-0 z-30 flex-shrink-0">
-        <Link href="/profile">
-          <Button variant="ghost" size="icon" className="btn-edu w-9 h-9 border-2 border-border bg-transparent text-foreground hover:bg-muted flex items-center justify-center">
-            <ArrowLeft className="w-4 h-4" />
-          </Button>
-        </Link>
-        <div>
-          <h2 className="text-xl font-black text-foreground text-heading">Edit Account Information</h2>
-          <p className="text-xs text-muted-foreground font-semibold">Modify credentials and display configurations</p>
-        </div>
-      </header>
+      <ProfileSubpageHeader
+        title="Edit Account Information"
+        subtitle="Modify credentials and display configurations"
+      />
 
       {/* Content */}
       <div className="flex-grow overflow-y-auto p-6 scrollbar-thin">
         <div className="max-w-xl mx-auto space-y-6 pt-4">
-          
+
           {/* Avatar Section */}
           <div className="card-edu p-8 flex flex-col items-center text-center space-y-4 bg-card">
             <AvatarUpload

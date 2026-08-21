@@ -71,7 +71,7 @@ export default function WritingFeedbackPage() {
   return (
     <div className="flex flex-col h-full overflow-hidden bg-background" id="writing-feedback-page">
       {/* Header */}
-      <header className="flex items-center justify-between px-6 h-16 bg-background/80 backdrop-blur-xl border-b-2 border-border/60 sticky top-0 z-30 flex-shrink-0">
+      <header className="flex items-center justify-between px-6 h-16 bg-background/80 backdrop-blur-xl border-b border-border/60 sticky top-0 z-30 flex-shrink-0">
         <div className="flex items-center gap-4">
           <Link href="/writing">
             <Button variant="ghost" size="icon" className="btn-edu w-9 h-9 border-2 border-border bg-transparent text-foreground hover:bg-muted flex items-center justify-center">
@@ -84,7 +84,7 @@ export default function WritingFeedbackPage() {
           </div>
         </div>
         <Link href="/writing">
-          <Button className="btn-edu h-9 px-4 text-xs border-2 bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-1.5 hidden sm:flex">
+          <Button size="sm" className="btn-edu px-4 bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-1.5 hidden sm:flex">
             Try Another Exercise
           </Button>
         </Link>
@@ -95,11 +95,11 @@ export default function WritingFeedbackPage() {
         <div className="max-w-4xl mx-auto space-y-8 pt-4">
           
           {/* Main Score Card */}
-          <div className="card-edu p-8 bg-card relative overflow-hidden flex flex-col md:flex-row items-center gap-8 border-primary/30">
+          <div className="card-edu p-6 bg-card relative overflow-hidden flex flex-col md:flex-row items-center gap-8 border-primary/30">
             <div className="absolute top-0 right-0 w-48 h-48 bg-primary/5 rounded-full blur-3xl"></div>
             
             <div className="relative z-10 flex flex-col items-center justify-center text-center">
-              <div className="w-32 h-32 rounded-full border-4 border-primary/20 flex items-center justify-center relative bg-background shadow-xl">
+              <div className="w-32 h-32 rounded-full border border-primary/20 flex items-center justify-center relative bg-background shadow-xl">
                 {/* SVG Progress Circle */}
                 <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
                   <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" strokeWidth="8" className="text-muted/30" />
@@ -130,7 +130,7 @@ export default function WritingFeedbackPage() {
           {/* Detailed Scores */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Grammar */}
-            <div className="card-edu p-6 bg-card space-y-4">
+            <div className="card-edu p-5 bg-card space-y-4">
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-lg bg-pink-500/10 text-pink-500 flex items-center justify-center">
@@ -144,7 +144,7 @@ export default function WritingFeedbackPage() {
             </div>
 
             {/* Vocabulary */}
-            <div className="card-edu p-6 bg-card space-y-4">
+            <div className="card-edu p-5 bg-card space-y-4">
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-500 flex items-center justify-center">
@@ -158,7 +158,7 @@ export default function WritingFeedbackPage() {
             </div>
 
             {/* Coherence */}
-            <div className="card-edu p-6 bg-card space-y-4">
+            <div className="card-edu p-5 bg-card space-y-4">
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-500 flex items-center justify-center">
@@ -178,7 +178,7 @@ export default function WritingFeedbackPage() {
               <Zap className="w-4 h-4 text-primary" />
               Actionable Improvements
             </h3>
-            <div className="card-edu p-6 bg-card">
+            <div className="card-edu p-5 bg-card">
               <ul className="space-y-4">
                 {(aggregatedFeedback?.improvements || []).length > 0 ? aggregatedFeedback?.improvements.map((imp, idx) => (
                   <li key={idx} className="flex gap-4 items-start">
@@ -198,7 +198,7 @@ export default function WritingFeedbackPage() {
 
           <div className="pt-8 pb-12 sm:hidden">
             <Link href="/writing">
-              <Button className="btn-edu w-full h-12 text-sm border-2 bg-primary text-primary-foreground hover:bg-primary/90 flex items-center justify-center">
+              <Button size="sm" className="btn-edu w-full bg-primary text-primary-foreground hover:bg-primary/90 flex items-center justify-center">
                 Try Another Exercise
               </Button>
             </Link>
