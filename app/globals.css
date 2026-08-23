@@ -311,3 +311,9 @@
     transform: rotateY(180deg);
   }
 }
+
+/* ─── Ora AI streaming cursor ─────────────────────────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}

@@ -17,11 +17,13 @@ interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
 // 2. Constants & Helpers
 // ==============================================================================
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/langora/api/v1';
+/** Base URL dùng chung — cả Axios instance lẫn các service dùng fetch() native (VD: SSE streaming). */
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/langora/api/v1';
 const REQUEST_TIMEOUT = 30000; // 30 seconds
 
 // Token helpers (Có thể điều chỉnh tuỳ theo cách bạn lưu token: localStorage, cookie, hay Zustand/Redux)
-const getAccessToken = (): string | null => {
+/** Lấy access token từ localStorage — export để các service dùng fetch() native cũng có thể đính kèm Bearer token. */
+export const getAccessToken = (): string | null => {
   if (typeof window !== 'undefined') {
     return localStorage.getItem('access_token');
   }
