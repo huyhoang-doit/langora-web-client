@@ -173,13 +173,13 @@ export default function LandingPage() {
                 <div className="w-2.5 h-2.5 rounded-full bg-primary/50" />
               </div>
               <div className="text-[10px] text-muted-foreground font-mono select-none">
-                langora-demo.mov
+                langora-demo.mp4
               </div>
               <div className="w-12" />
             </div>
             <div className="relative aspect-video bg-black flex items-center justify-center">
               <video
-                src="/demo.mov"
+                src="/demo.mp4"
                 className="w-full h-full object-cover"
                 controls
                 playsInline
