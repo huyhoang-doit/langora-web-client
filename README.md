@@ -127,7 +127,11 @@ java/com/langora/<module_name>/
 #### 1. Trang chủ - Màn hình Đăng nhập / Đăng ký
 > Trang chủ hiển thị các thông tin chung của hệ thống, Đăng nhập/Đăng ký bằng Google OAuth2.
 ![Home](./screenshot/home.png)
+
+
 ![Login](./screenshot/login.png)
+
+
 ![Register](./screenshot/register.png)
 
 #### 2. Dashboard Member
@@ -141,7 +145,11 @@ java/com/langora/<module_name>/
 #### 4. Luyện Viết (Writing Exercises)
 > Hệ thống quản lý bài tập luyện viết, tích hợp Spring AI và OpenAI, AI chấm điểm, đánh giá ngữ pháp và độ chính xác, phân tích lỗi sai, gợi ý đáp án và các cách diễn đạt khác.
 ![Writing UI](./screenshot/writing-ui-1.png)
+
+
 ![Writing UI](./screenshot/writing-ui-2.png)
+
+
 ![Writing UI](./screenshot/writing-ui-3.png)
 
 #### 5. Trợ Lý Ảo Ora AI Chat
@@ -161,7 +169,11 @@ java/com/langora/<module_name>/
 #### 3. Quản Lý Học Tập
 > Quản lý ngôn ngữ, trình độ (Level), chủ đề bài viết, bài tập viết.
 ![Content Management](./screenshot/admin-2.png)
+
+
 ![Content Management](./screenshot/admin-3.png)
+
+
 ![Content Management](./screenshot/admin-4.png)
 
 #### 4. Quản Lý Prompt
